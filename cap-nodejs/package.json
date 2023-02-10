@@ -1,0 +1,18 @@
+{
+  "name": "Todoey",
+  "version": "1.0.0",
+  "description": "A simple task management app implemented with SAP Cloud Application Programming Model (for Node.js)",
+  "repository": "github:robertwitt/Todoey",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^6",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "sqlite3": "^5.0.4"
+  },
+  "scripts": {
+    "start": "cds run"
+  }
+}
