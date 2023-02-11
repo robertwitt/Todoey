@@ -22,13 +22,13 @@ entity Tasks : cuid, managed {
   status            : TaskStatus not null default 'O';
   priority          : Association to one TaskPriorities;
   dueDate           : Date;
-  isPlannedForMyDay : Boolean
+  isPlannedForMyDay : Boolean not null default false;
 }
 
 entity TaskCollections : cuid {
   title               : String(40);
   color               : String(6);
-  isDefaultCollection : Boolean;
+  isDefaultCollection : Boolean not null default false;
   tasks               : Association to many Tasks
                           on tasks.collection = $self;
 }
