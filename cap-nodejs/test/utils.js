@@ -4,7 +4,7 @@ async function createDataForEntity(entityName, data) {
   const db = await cds.connect.to("db");
   const entity = db.model.entities("de.robertwitt.todoey")[entityName];
   await db.delete(entity);
-  db.create(entity).entries(data);
+  await db.create(entity).entries(data);
 }
 
 module.exports = { createDataForEntity };

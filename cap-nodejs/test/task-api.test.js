@@ -1,6 +1,6 @@
 const path = require("path");
 const cds = require("@sap/cds/lib");
-const { GET, expect } = cds.test(path.join(__dirname, ".."));
+const { GET, data, expect } = cds.test(path.join(__dirname, ".."));
 const { createDataForEntity } = require("./utils");
 
 describe("Basic querying", () => {
@@ -80,5 +80,19 @@ describe("Basic querying", () => {
       { code: 3 },
       { code: 5 },
     ]);
+  });
+
+  it("should return tasks of a task collection when expanding", async () => {
+    const { status, data } = await GET(
+      "/api/task/TaskCollections(9544e7d6-d136-4b04-848c-1d8ef83b5f81)?$expand=tasks"
+    );
+    expect(status).to.equal(200);
+    expect(data).to.containSubset({
+      ID: "9544e7d6-d136-4b04-848c-1d8ef83b5f81",
+      tasks: [
+        { ID: "bfc8771e-05af-4332-8f9e-258179377e79" },
+        { ID: "6d2536f8-5104-4b5d-be5e-4d241ccf4419" },
+      ],
+    });
   });
 });
