@@ -10,14 +10,16 @@ entity TaskPriorities : CodeList {
   key code : UInt8;
 }
 
-entity TaskStatuses : CodeList {
-  key code : String(1);
+type TaskStatus : String(1) enum {
+  OPEN     = 'O';
+  DONE     = 'D';
+  CANCELED = 'X';
 }
 
 entity Tasks : cuid, managed {
   title             : String(40);
   collection        : Association to one TaskCollections not null;
-  status            : Association to one TaskStatuses not null;
+  status            : TaskStatus not null default 'O';
   priority          : Association to one TaskPriorities;
   dueDate           : Date;
   isPlannedForMyDay : Boolean
