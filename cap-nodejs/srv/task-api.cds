@@ -13,6 +13,10 @@ service TaskAPI {
 
   entity TaskCollections as projection on db.TaskCollections;
 
+  annotate TaskCollections {
+    isDefault @Core.Computed;
+  }
+
   entity Tasks           as projection on db.Tasks {
     ID,
     title,

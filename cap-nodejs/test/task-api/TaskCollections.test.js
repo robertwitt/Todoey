@@ -1,9 +1,16 @@
-const { cdsTest, createDataForEntity } = require("../utils");
+const cds = require("@sap/cds");
+const { cdsTest } = require("../utils");
 const { DELETE, GET, PATCH, POST, expect } = cdsTest();
 
 describe("Task collections", () => {
-  before(async () => {
-    await createDataForEntity("TaskCollections", [
+  beforeEach(async () => {
+    const db = await cds.connect.to("db");
+    const { Tasks, TaskCollections } = db.model.entities(
+      "de.robertwitt.todoey"
+    );
+    await db.delete(Tasks);
+    await db.delete(TaskCollections);
+    await db.create(TaskCollections).entries([
       {
         ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
         title: "Tasks",
@@ -22,7 +29,7 @@ describe("Task collections", () => {
         isDefault: false,
       },
     ]);
-    await createDataForEntity("Tasks", [
+    await db.create(Tasks).entries([
       {
         ID: "bfc8771e-05af-4332-8f9e-258179377e79",
         title: "Prepare customer presentation",
