@@ -1,5 +1,5 @@
 const { cdsTest } = require("../utils");
-const { GET, expect } = cdsTest();
+const { DELETE, GET, POST, PATCH, expect } = cdsTest();
 
 describe("Task priorities", () => {
   it("can be queried", async () => {
@@ -10,5 +10,22 @@ describe("Task priorities", () => {
       { code: 3 },
       { code: 5 },
     ]);
+  });
+
+  it("cannot be created", async () => {
+    const { status } = await POST("/api/task/TaskPriorities", { code: 9 });
+    expect(status).to.equal(405);
+  });
+
+  it("cannot be updated", async () => {
+    const { status } = await PATCH("/api/task/TaskPriorities/1", {
+      name: "critical",
+    });
+    expect(status).to.equal(405);
+  });
+
+  it("cannot be deleted", async () => {
+    const { status } = await DELETE("/api/task/TaskPriorities/1");
+    expect(status).to.equal(405);
   });
 });

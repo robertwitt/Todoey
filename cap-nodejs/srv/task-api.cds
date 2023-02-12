@@ -4,26 +4,31 @@ using {de.robertwitt.todoey as db} from '../db/schema';
 service TaskAPI {
 
   entity TaskPriorities  as projection on db.TaskPriorities;
+
+  annotate TaskPriorities with @(
+    Capabilities.Insertable: false,
+    Capabilities.Updatable : false,
+    Capabilities.Deletable : false
+  );
+
   entity TaskCollections as projection on db.TaskCollections;
 
-  @cds.redirection.target
-  entity Tasks           as projection on db.Tasks excluding {
-    createdAt,
-    createdBy,
-    modifiedAt,
-    modifiedBy
+  entity Tasks           as projection on db.Tasks {
+    ID,
+    title,
+    collection.ID    as collectionID,
+    collection.title as collectionTitle,
+    collection,
+    status,
+    priority.code    as priorityCode,
+    priority.name    as priorityName,
+    dueDate,
+    isPlannedForMyDay,
   };
 
-  entity TodaysTasks     as
-    select from db.Tasks
-    excluding {
-      createdAt,
-      createdBy,
-      modifiedAt,
-      modifiedBy
-    }
-    where
-         dueDate           <= $now
-      or isPlannedForMyDay =  true
+
+  annotate Tasks {
+    collection @cds.api.ignore;
+  }
 
 }

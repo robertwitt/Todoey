@@ -1,4 +1,12 @@
+const path = require("path");
+const cdsLib = require("@sap/cds/lib");
 const cds = require("@sap/cds");
+
+function cdsTest() {
+  const test = cdsLib.test(path.join(__dirname, ".."));
+  test.axios.defaults.validateStatus = (_status) => true;
+  return test;
+}
 
 async function createDataForEntity(entityName, data) {
   const db = await cds.connect.to("db");
@@ -7,4 +15,4 @@ async function createDataForEntity(entityName, data) {
   await db.create(entity).entries(data);
 }
 
-module.exports = { createDataForEntity };
+module.exports = { cdsTest, createDataForEntity };
