@@ -26,9 +26,9 @@ entity Tasks : cuid, managed {
 }
 
 entity TaskCollections : cuid {
-  title               : String(40);
-  color               : String(6);
-  isDefaultCollection : Boolean not null default false;
-  tasks               : Association to many Tasks
-                          on tasks.collection = $self;
+  title     : String(40);
+  color     : String(6);
+  isDefault : Boolean not null default false;
+  tasks     : Association to many Tasks
+                on tasks.collection = $self;
 }

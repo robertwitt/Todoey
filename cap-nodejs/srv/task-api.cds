@@ -26,9 +26,10 @@ service TaskAPI {
     isPlannedForMyDay,
   };
 
-
   annotate Tasks {
     collection @cds.api.ignore;
   }
+
+  action setDefaultTaskCollection(collectionID : UUID);
 
 }
