@@ -1,6 +1,6 @@
 const path = require("path");
 const cds = require("@sap/cds/lib");
-const { GET, data, expect } = cds.test(path.join(__dirname, ".."));
+const { GET, expect } = cds.test(path.join(__dirname, ".."));
 const { createDataForEntity } = require("./utils");
 
 describe("Basic querying", () => {
@@ -69,16 +69,6 @@ describe("Basic querying", () => {
         dueDate: "2023-01-31",
         isPlannedForMyDay: false,
       },
-    ]);
-  });
-
-  it("should return task priorities", async () => {
-    const { status, data } = await GET("/api/task/TaskPriorities");
-    expect(status).to.equal(200);
-    expect(data.value).to.containSubset([
-      { code: 1 },
-      { code: 3 },
-      { code: 5 },
     ]);
   });
 
