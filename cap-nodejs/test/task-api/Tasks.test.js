@@ -75,6 +75,22 @@ describe("Tasks", () => {
     ]);
   });
 
+  it("can be created in default collection", async () => {
+    const { status, data } = await POST("/api/task/Tasks", {
+      title: "New task",
+      status: "O",
+      isPlannedForMyDay: false,
+    });
+    expect(status).to.equal(201);
+    expect(data.ID).not.to.equal(undefined);
+    expect(data).to.containSubset({
+      title: "New task",
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      status: "O",
+      isPlannedForMyDay: false,
+    });
+  });
+
   it("can be created with 'open' as initial status", async () => {
     const { status, data } = await POST("/api/task/Tasks", {
       title: "New task",

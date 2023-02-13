@@ -11,12 +11,21 @@ module.exports = (srv) => {
     }
   });
 
-  srv.before("CREATE", Tasks, (req) => {
+  srv.before("CREATE", Tasks, async (req) => {
     if (!req.data.dueDate && !!req.data.dueTime) {
       req.reject(
         400,
         "Creation with due time but without due date is not allowed"
       );
+    }
+
+    if (!req.data.collection_ID) {
+      const query = SELECT.one
+        .from(TaskCollections)
+        .columns("ID")
+        .where({ isDefault: true });
+      const defaultCollection = await srv.run(query);
+      req.data.collection_ID = defaultCollection.ID;
     }
   });
 
