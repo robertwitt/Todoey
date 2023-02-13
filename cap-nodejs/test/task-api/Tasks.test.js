@@ -86,6 +86,15 @@ describe("Tasks", () => {
     expect(data.status).to.equal("O");
   });
 
+  it("cannot be created with invalid priority", async () => {
+    const { status } = await POST("/api/task/Tasks", {
+      title: "New task",
+      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      priorityCode: 4,
+    });
+    expect(status).to.equal(400);
+  });
+
   it("can be created with due date and due time", async () => {
     const { status, data } = await POST("/api/task/Tasks", {
       title: "New task",
