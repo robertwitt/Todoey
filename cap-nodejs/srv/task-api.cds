@@ -14,6 +14,7 @@ service TaskAPI {
   entity TaskCollections as projection on db.TaskCollections;
 
   annotate TaskCollections {
+    color     @assert.format: '^[a-fA-F0-9]{6}$';
     isDefault @Core.Computed;
   }
 

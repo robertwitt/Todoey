@@ -61,6 +61,7 @@ describe("Task collections", () => {
   it("can be created (non-default)", async () => {
     const { status, data } = await POST("/api/task/TaskCollections", {
       title: "New collection",
+      color: "04B6A9",
     });
     expect(status).to.equal(201);
     expect(data.ID).not.to.equal(undefined);
@@ -73,6 +74,14 @@ describe("Task collections", () => {
     expect(defaultCollections[0].ID).to.equal(
       "f566a466-70d7-4fca-89e2-24a4f686f4a6"
     );
+  });
+
+  it("cannot be created with invalid color hex", async () => {
+    const { status } = await POST("/api/task/TaskCollections", {
+      title: "New collection",
+      color: "4jka",
+    });
+    expect(status).to.equal(400);
   });
 
   it("can be created, even if trying to create a new default collection", async () => {
