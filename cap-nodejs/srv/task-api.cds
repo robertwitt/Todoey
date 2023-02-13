@@ -9,9 +9,9 @@ service TaskAPI {
 
   annotate TaskPriorities with @(
     Capabilities    : {
-      Insertable: false,
-      Updatable : false,
-      Deletable : false,
+      InsertRestrictions.Insertable: false,
+      UpdateRestrictions.Updatable : false,
+      DeleteRestrictions.Deletable : false,
     },
     Core.Description: 'Priority of a task indicate its importance and criticality'
   ) {
