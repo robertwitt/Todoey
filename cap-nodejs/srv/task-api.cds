@@ -27,11 +27,17 @@ service TaskAPI {
     priority.code    as priorityCode,
     priority.name    as priorityName,
     dueDate,
+    dueTime,
     isPlannedForMyDay,
+  } actions {
+    action setToDone();
   };
 
   annotate Tasks {
-    collection @cds.api.ignore;
+    collectionTitle @Core.Computed;
+    collection      @cds.api.ignore;
+    status          @Core.Computed;
+    priorityName    @Core.Computed
   }
 
   action setDefaultTaskCollection(collectionID : UUID);

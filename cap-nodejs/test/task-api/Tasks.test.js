@@ -179,19 +179,19 @@ describe("Tasks", () => {
   });
 
   it("can be updated with due time if due date was set", async () => {
-    const { status } = await PATCH(
+    const { status, data } = await PATCH(
       "/api/task/Tasks/5d41d440-e6c0-4daf-a4d0-221162f32d72",
       { dueTime: "11:30:00" }
     );
     expect(status).to.equal(200);
     expect(data).to.containSubset({
-      dueDate: "2023-02-13",
+      dueDate: "2023-01-10",
       dueTime: "11:30:00",
     });
   });
 
   it("cannot be updated with new status", async () => {
-    const { status } = await PATCH(
+    const { status, data } = await PATCH(
       "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
       { status: "D" }
     );
@@ -215,7 +215,7 @@ describe("Tasks", () => {
 
   it("can set status to 'done'", async () => {
     const { status } = await POST(
-      "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9/setToDone()",
+      "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9/setToDone",
       {}
     );
     expect(status).to.equal(204);
