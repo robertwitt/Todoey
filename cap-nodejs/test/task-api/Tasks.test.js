@@ -31,6 +31,7 @@ describe("Tasks", () => {
         status: "O",
         priority_code: 5,
         isPlannedForMyDay: true,
+        modifiedAt: "2023-01-31T00:00:00.000Z",
       },
       {
         ID: "5d41d440-e6c0-4daf-a4d0-221162f32d72",
@@ -41,6 +42,7 @@ describe("Tasks", () => {
         dueDate: "2023-01-10",
         dueTime: "10:00:00",
         isPlannedForMyDay: false,
+        modifiedAt: "2023-01-31T00:00:00.000Z",
       },
       {
         ID: "568da015-0627-420e-896c-e0e49abd4a6e",
@@ -49,6 +51,7 @@ describe("Tasks", () => {
         status: "D",
         priority_code: 3,
         isPlannedForMyDay: false,
+        modifiedAt: "2023-01-31T00:00:00.000Z",
       },
       {
         ID: "821bbc4e-8395-4ea0-a041-d837cd1cbec7",
@@ -56,6 +59,7 @@ describe("Tasks", () => {
         collection_ID: "9544e7d6-d136-4b04-848c-1d8ef83b5f81",
         status: "O",
         isPlannedForMyDay: true,
+        modifiedAt: "2023-01-31T00:00:00.000Z",
       },
     ]);
   });
@@ -156,7 +160,8 @@ describe("Tasks", () => {
       {
         dueDate: "2023-02-13",
         dueTime: "11:30:00",
-      }
+      },
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(200);
     expect(data).to.containSubset({
@@ -168,7 +173,8 @@ describe("Tasks", () => {
   it("can be updated with due date and no due time", async () => {
     const { status, data } = await PATCH(
       "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
-      { dueDate: "2023-02-13" }
+      { dueDate: "2023-02-13" },
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(200);
     expect(data).to.containSubset({
@@ -183,7 +189,8 @@ describe("Tasks", () => {
       {
         dueDate: null,
         dueTime: "11:30:00",
-      }
+      },
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(400);
   });
@@ -191,7 +198,8 @@ describe("Tasks", () => {
   it("cannot be updated with due time if due date was not set", async () => {
     const { status } = await PATCH(
       "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
-      { dueTime: "11:30:00" }
+      { dueTime: "11:30:00" },
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(400);
   });
@@ -199,7 +207,8 @@ describe("Tasks", () => {
   it("can be updated with due time if due date was set", async () => {
     const { status, data } = await PATCH(
       "/api/task/Tasks/5d41d440-e6c0-4daf-a4d0-221162f32d72",
-      { dueTime: "11:30:00" }
+      { dueTime: "11:30:00" },
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(200);
     expect(data).to.containSubset({
@@ -211,7 +220,8 @@ describe("Tasks", () => {
   it("cannot be updated with new status", async () => {
     const { status, data } = await PATCH(
       "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
-      { status: "D" }
+      { status: "D" },
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(200);
     expect(data.status).to.equal("O");
@@ -219,14 +229,16 @@ describe("Tasks", () => {
 
   it("can be deleted if still open", async () => {
     const { status } = await DELETE(
-      "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9"
+      "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(204);
   });
 
   it("cannot be deleted if status is done", async () => {
     const { status } = await DELETE(
-      "/api/task/Tasks/568da015-0627-420e-896c-e0e49abd4a6e"
+      "/api/task/Tasks/568da015-0627-420e-896c-e0e49abd4a6e",
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(400);
   });
@@ -234,7 +246,8 @@ describe("Tasks", () => {
   it("can set status to 'done'", async () => {
     const { status } = await POST(
       "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9/setToDone",
-      {}
+      {},
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(204);
   });

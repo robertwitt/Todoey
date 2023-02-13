@@ -36,7 +36,10 @@ service TaskAPI {
     tasks     @Core.Description                  : 'List of tasks assigned to a task collection'
   }
 
-  entity Tasks           as projection on db.Tasks excluding {
+  entity Tasks           as projection on db.Tasks {
+    *,
+    modifiedAt as lastModifiedAt
+  } excluding {
     createdBy,
     createdAt,
     modifiedBy,
@@ -60,7 +63,8 @@ service TaskAPI {
     isPlannedForMyDay @Core            : {
       ComputedDefaultValue: true,
       Description         : 'Flag whether or not a task is planned for the day'
-    }
+    };
+    lastModifiedAt    @odata.etag;
   }
 
   action setDefaultTaskCollection(collectionID : UUID);
