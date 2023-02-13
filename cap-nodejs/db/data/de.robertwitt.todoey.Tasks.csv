@@ -1,7 +1,7 @@
-ID,title,collection_ID,status_code,priority_code,dueDate,isPlannedForMyDay
-d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9,Do laundry,f566a466-70d7-4fca-89e2-24a4f686f4a6,O,5,,true
-5d41d440-e6c0-4daf-a4d0-221162f32d72,Wash the car,f566a466-70d7-4fca-89e2-24a4f686f4a6,D,5,2023-01-10,false
-bfc8771e-05af-4332-8f9e-258179377e79,Prepare customer presentation,9544e7d6-d136-4b04-848c-1d8ef83b5f81,O,1,2023-02-23,true
-568da015-0627-420e-896c-e0e49abd4a6e,Groceries shopping,f566a466-70d7-4fca-89e2-24a4f686f4a6,O,3,,false
-821bbc4e-8395-4ea0-a041-d837cd1cbec7,Repair broken table,f566a466-70d7-4fca-89e2-24a4f686f4a6,X,,,true
-6d2536f8-5104-4b5d-be5e-4d241ccf4419,Develop feature 42,9544e7d6-d136-4b04-848c-1d8ef83b5f81,O,1,2023-01-31,false
+ID,title,collection_ID,status,priority_code,dueDate,dueTime,isPlannedForMyDay
+d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9,Do laundry,f566a466-70d7-4fca-89e2-24a4f686f4a6,O,5,,,true
+5d41d440-e6c0-4daf-a4d0-221162f32d72,Wash the car,f566a466-70d7-4fca-89e2-24a4f686f4a6,D,5,2023-01-10,10:00:00,false
+bfc8771e-05af-4332-8f9e-258179377e79,Prepare customer presentation,9544e7d6-d136-4b04-848c-1d8ef83b5f81,O,1,2023-02-23,18:00:00,false
+568da015-0627-420e-896c-e0e49abd4a6e,Groceries shopping,f566a466-70d7-4fca-89e2-24a4f686f4a6,O,3,,,false
+821bbc4e-8395-4ea0-a041-d837cd1cbec7,Repair broken table,f566a466-70d7-4fca-89e2-24a4f686f4a6,X,,,,true
+6d2536f8-5104-4b5d-be5e-4d241ccf4419,Develop feature 42,9544e7d6-d136-4b04-848c-1d8ef83b5f81,O,1,2023-01-31,,false
