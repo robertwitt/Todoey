@@ -11,16 +11,6 @@ module.exports = (srv) => {
     }
   });
 
-  srv.before(["CREATE", "UPDATE"], Tasks, (req) => {
-    const data = req.data;
-    if (!!data.collectionID) {
-      data["collection_ID"] = data.collectionID;
-    }
-    if (!!data.priorityCode) {
-      data["priority_code"] = data.priorityCode;
-    }
-  });
-
   srv.before("CREATE", Tasks, (req) => {
     if (!req.data.dueDate && !!req.data.dueTime) {
       req.reject(

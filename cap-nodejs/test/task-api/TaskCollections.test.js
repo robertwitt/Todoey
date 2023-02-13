@@ -52,7 +52,7 @@ describe("Task collections", () => {
       tasks: [
         {
           ID: "bfc8771e-05af-4332-8f9e-258179377e79",
-          collectionID: "9544e7d6-d136-4b04-848c-1d8ef83b5f81",
+          collection_ID: "9544e7d6-d136-4b04-848c-1d8ef83b5f81",
         },
       ],
     });

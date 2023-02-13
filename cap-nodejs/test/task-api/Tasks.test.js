@@ -1,6 +1,6 @@
 const cds = require("@sap/cds");
 const { cdsTest } = require("../utils");
-const { DELETE, PATCH, POST, expect } = cdsTest();
+const { DELETE, GET, PATCH, POST, expect } = cdsTest();
 
 describe("Tasks", () => {
   beforeEach(async () => {
@@ -52,25 +52,35 @@ describe("Tasks", () => {
       },
       {
         ID: "821bbc4e-8395-4ea0-a041-d837cd1cbec7",
-        title: "Repair broken table",
-        collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
-        status: "X",
+        title: "Prepare customer presentation",
+        collection_ID: "9544e7d6-d136-4b04-848c-1d8ef83b5f81",
+        status: "O",
         isPlannedForMyDay: true,
       },
+    ]);
+  });
+
+  it("can be queried by collection and status", async () => {
+    const { status, data } = await GET(
+      "/api/task/Tasks?$filter=collection_ID eq f566a466-70d7-4fca-89e2-24a4f686f4a6 and status eq 'O'"
+    );
+    expect(status).to.equal(200);
+    expect(data.value).to.containSubset([
+      { ID: "d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9" },
+      { ID: "5d41d440-e6c0-4daf-a4d0-221162f32d72" },
     ]);
   });
 
   it("can be created with 'open' as initial status", async () => {
     const { status, data } = await POST("/api/task/Tasks", {
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
     });
     expect(status).to.equal(201);
     expect(data.ID).not.to.equal(undefined);
     expect(data).to.containSubset({
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
-      collectionTitle: "Tasks",
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
       status: "O",
       isPlannedForMyDay: false,
     });
@@ -79,7 +89,7 @@ describe("Tasks", () => {
   it("can be created, ignoring any other status than 'open'", async () => {
     const { status, data } = await POST("/api/task/Tasks", {
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
       status: "D",
     });
     expect(status).to.equal(201);
@@ -89,8 +99,8 @@ describe("Tasks", () => {
   it("cannot be created with invalid priority", async () => {
     const { status } = await POST("/api/task/Tasks", {
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
-      priorityCode: 4,
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      priority_code: 4,
     });
     expect(status).to.equal(400);
   });
@@ -98,7 +108,7 @@ describe("Tasks", () => {
   it("can be created with due date and due time", async () => {
     const { status, data } = await POST("/api/task/Tasks", {
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
       dueDate: "2023-02-13",
       dueTime: "11:30:00",
       isPlannedForMyDay: true,
@@ -106,7 +116,7 @@ describe("Tasks", () => {
     expect(status).to.equal(201);
     expect(data).to.containSubset({
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
       dueDate: "2023-02-13",
       dueTime: "11:30:00",
       isPlannedForMyDay: true,
@@ -116,16 +126,15 @@ describe("Tasks", () => {
   it("can be created with due date and no due time", async () => {
     const { status, data } = await POST("/api/task/Tasks", {
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
-      priorityCode: 3,
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      priority_code: 3,
       dueDate: "2023-02-13",
     });
     expect(status).to.equal(201);
     expect(data).to.containSubset({
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
-      priorityCode: 3,
-      priorityName: "moderate",
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      priority_code: 3,
       dueDate: "2023-02-13",
       dueTime: null,
     });
@@ -134,7 +143,7 @@ describe("Tasks", () => {
   it("cannot be created with no due date but due time", async () => {
     const { status } = await POST("/api/task/Tasks", {
       title: "New task",
-      collectionID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
+      collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
       dueDate: null,
       dueTime: "11:30:00",
     });
