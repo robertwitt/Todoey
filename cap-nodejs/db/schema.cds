@@ -22,6 +22,7 @@ entity Tasks : cuid, managed {
   status            : TaskStatus not null default 'O';
   priority          : Association to one TaskPriorities;
   dueDate           : Date;
+  dueTime           : Time;
   isPlannedForMyDay : Boolean not null default false;
 }
 
