@@ -76,6 +76,15 @@ describe("Task collections", () => {
     );
   });
 
+  it("can be created with valid color hex", async () => {
+    const { status, data } = await POST("/api/task/TaskCollections", {
+      title: "New collection",
+      color: "0f1afe",
+    });
+    expect(status).to.equal(201);
+    expect(data.color).to.equal("0F1AFE");
+  });
+
   it("cannot be created with invalid color hex", async () => {
     const { status } = await POST("/api/task/TaskCollections", {
       title: "New collection",

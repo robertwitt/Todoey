@@ -25,8 +25,9 @@ service TaskAPI {
     ID        @Core.Description                  : 'Identifier of a task collection';
     title     @Core.Description                  : 'Name or title of a task collection';
     color     @(
-      Core.Description: 'Color of a task collection, represented as 6-digit hexadecimal number',
-      assert.format   : '^[a-fA-F0-9]{6}$',
+      Common.IsUpperCase: true,
+      Core.Description  : 'Color of a task collection, represented as 6-digit hexadecimal number',
+      assert.format     : '^[a-fA-F0-9]{6}$',
     );
     isDefault @Core                              : {
       Computed            : true,

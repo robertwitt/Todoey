@@ -3,6 +3,12 @@ const cds = require("@sap/cds");
 module.exports = (srv) => {
   const { TaskCollections, Tasks } = srv.entities;
 
+  srv.before(["CREATE", "UPDATE"], TaskCollections, (req) => {
+    if (!!req.data.color) {
+      req.data.color = req.data.color.toUpperCase();
+    }
+  });
+
   srv.before("DELETE", TaskCollections, async (req) => {
     const query = SELECT.one.from(req.query.DELETE.from).columns("isDefault");
     const collection = await srv.run(query);
