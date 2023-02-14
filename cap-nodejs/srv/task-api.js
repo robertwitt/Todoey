@@ -68,6 +68,10 @@ module.exports = (srv) => {
     await db.update(Tasks).set({ status: "O" }).where({ ID: task.ID });
   });
 
+  srv.on("getDefaultTaskCollection", (_req) =>
+    SELECT.one.from(TaskCollections).where({ isDefault: true })
+  );
+
   srv.on("setDefaultTaskCollection", async (req) => {
     const db = await cds.connect.to("db");
     const { TaskCollections } = db.entities("de.robertwitt.todoey");
