@@ -1,5 +1,8 @@
 const { cdsTest } = require("../utils");
-const { DELETE, GET, POST, PATCH, expect } = cdsTest();
+const { DELETE, GET, POST, PATCH, expect } = cdsTest({
+  username: "TASK_MANAGER",
+  password: "Welcome1!",
+});
 
 describe("Task priorities", () => {
   it("can be queried", async () => {

@@ -2,9 +2,10 @@ const path = require("path");
 const cdsLib = require("@sap/cds/lib");
 const cds = require("@sap/cds");
 
-function cdsTest() {
+function cdsTest(auth) {
   const test = cdsLib.test(path.join(__dirname, ".."));
   test.axios.defaults.validateStatus = (_status) => true;
+  test.axios.defaults.auth = auth;
   return test;
 }
 

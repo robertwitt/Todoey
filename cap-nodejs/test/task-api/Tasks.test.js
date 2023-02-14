@@ -1,6 +1,9 @@
 const cds = require("@sap/cds");
 const { cdsTest } = require("../utils");
-const { DELETE, GET, PATCH, POST, expect } = cdsTest();
+const { DELETE, GET, PATCH, POST, expect } = cdsTest({
+  username: "TASK_MANAGER",
+  password: "Welcome1!",
+});
 
 describe("Tasks", () => {
   beforeEach(async () => {
