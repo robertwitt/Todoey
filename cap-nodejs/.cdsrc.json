@@ -2,6 +2,19 @@
   "features": {
     "assert_integrity": "db"
   },
+  "requires": {
+    "[production]": {
+      "auth": {
+        "kind": "xsuaa"
+      },
+      "db": {
+        "kind": "hana-cloud"
+      }
+    },
+    "db": {
+      "kind": "sql"
+    }
+  },
   "[development]": {
     "auth": {
       "passport": {
