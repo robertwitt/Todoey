@@ -1,23 +1,54 @@
-# Getting Started
+# SAP Cloud Programming Model (Node.js)
 
-Welcome to your new project.
+This project implements the Todoey app with the [SAP Cloud Programming Model](https://cap.cloud.sap).
 
-It contains these folders and files, following our recommended project layout:
+## Local Setup
 
-| File or Folder | Purpose                              |
-| -------------- | ------------------------------------ |
-| `app/`         | content for UI frontends goes here   |
-| `db/`          | your domain models and data go here  |
-| `srv/`         | your service models and code go here |
-| `package.json` | project metadata and configuration   |
-| `readme.md`    | this getting started guide           |
+Prerequisites:
 
-## Next Steps
+- Node v16 or v18
+- NPM
+- CDS Development Kit (`@sap/cds-dk`)
+- Cloud Foundry CLI
+- MultiApps plugin for Cloud Foundry CLI
+- Cloud BTA Build Tool (MBT)
 
-- Open a new terminal and run `cds watch`
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
+Install dependencies:
 
-## Learn More
+```bash
+npm ci
+```
 
-Learn more at https://cap.cloud.sap/docs/get-started/.
+Run tests locally:
+
+```bash
+npm test
+```
+
+Start the app:
+
+```bash
+cds watch
+```
+
+## Deployment
+
+The app can be deployed to the Cloud Foundry runtime on SAP Business Technology Platform. An instance of SAP HANA Cloud has to be created and activated.
+
+Login to Cloud Foundry:
+
+```bash
+cf login
+```
+
+Build the MTA module:
+
+```bash
+mbt build -t ./
+```
+
+Deploy the module to Cloud Foundry space:
+
+```bash
+cf deploy Todoey_1.0.0.mtar
+```
