@@ -68,7 +68,9 @@ service TaskAPI {
     lastModifiedAt    @odata.etag;
   }
 
-  action setDefaultTaskCollection(collectionID : UUID);
+  function getDefaultTaskCollection() returns TaskCollections;
+  annotate getDefaultTaskCollection with @Core.Description: 'Get the task collection that is marked as default';
+  action   setDefaultTaskCollection(collectionID : UUID);
 
   annotate setDefaultTaskCollection with @Core.Description: 'Set a task collection as new default'
   (collectionID                          @Core.Description: 'Identifier of task collection, to be set as new default' )

@@ -151,7 +151,13 @@ describe("Task collections", () => {
     expect(status).to.equal(204);
   });
 
-  it("can set a new default collection", async () => {
+  it("can be read when they are the default", async () => {
+    const { status, data } = await GET("/api/task/getDefaultTaskCollection()");
+    expect(status).to.equal(200);
+    expect(data.ID).to.equal("f566a466-70d7-4fca-89e2-24a4f686f4a6");
+  });
+
+  it("can be set as default", async () => {
     const { status } = await POST("/api/task/setDefaultTaskCollection", {
       collectionID: "d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
     });
