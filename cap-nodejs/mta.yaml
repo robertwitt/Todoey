@@ -1,0 +1,57 @@
+_schema-version: "3.1"
+ID: Todoey
+version: 1.0.0
+description: "A simple task management app implemented with SAP Cloud Application Programming Model (for Node.js)"
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx -p @sap/cds-dk cds build --production
+
+modules:
+  - name: Todoey-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: Todoey-db
+      - name: Todoey-auth
+
+  - name: Todoey-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: Todoey-db
+
+resources:
+  - name: Todoey-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+
+  - name: Todoey-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: Todoey-${org}-${space}
+        tenant-mode: dedicated
+        role-collections:
+          - name: "TaskManager-${space}"
+            description: Manage Tasks
+            role-template-references:
+              - $XSAPPNAME.TaskManager

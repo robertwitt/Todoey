@@ -1,0 +1,17 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.TaskManager",
+      "description": "Manage Tasks"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "TaskManager",
+      "description": "Manage Tasks",
+      "scope-references": ["$XSAPPNAME.TaskManager"],
+      "attribute-references": []
+    }
+  ]
+}
