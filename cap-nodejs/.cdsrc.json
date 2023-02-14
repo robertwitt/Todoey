@@ -1,5 +1,19 @@
 {
   "features": {
     "assert_integrity": "db"
+  },
+  "[development]": {
+    "auth": {
+      "passport": {
+        "strategy": "mock",
+        "users": {
+          "TASK_MANAGER": {
+            "ID": "TASK_MANAGER",
+            "password": "Welcome1!",
+            "roles": ["TaskManager"]
+          }
+        }
+      }
+    }
   }
 }

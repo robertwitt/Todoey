@@ -1,6 +1,7 @@
 using {de.robertwitt.todoey as db} from '../db/schema';
 
-@path: '/api/task'
+@path    : '/api/task'
+@requires: 'TaskManager'
 service TaskAPI {
 
   entity TaskPriorities  as projection on db.TaskPriorities excluding {
