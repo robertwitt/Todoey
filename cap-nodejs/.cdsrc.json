@@ -11,6 +11,11 @@
             "ID": "TASK_MANAGER",
             "password": "Welcome1!",
             "roles": ["TaskManager"]
+          },
+          "DUMMY": {
+            "ID": "DUMMY",
+            "password": "Welcome1!",
+            "roles": []
           }
         }
       }
