@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>auth</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>oauth2.authorizationEndpoint</key>
+				<string>https://0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com/oauth2/api/v1/authorize</string>
+				<key>oauth2.clients</key>
+				<array>
+					<dict>
+						<key>clientID</key>
+						<string>338b1b0e-a1e4-460f-9445-b4648dadad99</string>
+						<key>grantType</key>
+						<string>authorization_code</string>
+						<key>redirectURL</key>
+						<string>https://0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com</string>
+					</dict>
+				</array>
+				<key>oauth2.pkce</key>
+				<dict>
+					<key>codeChallengeMethod</key>
+					<string>S256</string>
+				</dict>
+				<key>oauth2.tokenEndpoint</key>
+				<string>https://0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com/oauth2/api/v1/token</string>
+				<!--
+				<key>oauth2.xsuaaAuthorizationURL</key>
+				<string>https://0843b473trial.authentication.us10.hana.ondemand.com/oauth/authorize?response_type=code&amp;client_id=sb-Todoey-0843b473trial-dev!t111516&amp;redirect_uri=https%3A%2F%2F0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com%2Flogin%2Fcallback</string>
+				-->
+			</dict>
+			<key>type</key>
+			<string>oauth2</string>
+		</dict>
+	</array>
+	<key>host</key>
+	<string>0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com</string>
+	<key>protocol</key>
+	<string>https</string>
+</dict>
+</plist>
