@@ -9,11 +9,9 @@
 import Foundation
 import UIKit
 import SAPOData
+import TaskServiceFmwk
 
 class TaskListView: TaskList {
-    
-    static let myDay = TaskListView(title: LocalizedStrings.Model.myDayTaskListView, type: .myDay)
-    static let tomorrow = TaskListView(title: LocalizedStrings.Model.tomorrowTaskListView, type: .tomorrow)
     
     let ID: GuidValue? = nil
     let title: String?
@@ -21,10 +19,22 @@ class TaskListView: TaskList {
     let displayColor: UIColor? = nil
     let isDefault: Bool? = false
     let isEditable = false
+    let tasks: [Tasks]
     
-    private init(title: String?, type: TaskListType) {
+    private init(title: String?, type: TaskListType, tasks: [Tasks]) {
         self.title = title
         self.type = type
+        self.tasks = tasks
+    }
+    
+    static func myDay(tasks: [Tasks]) -> TaskListView {
+        // TODO Filter task collections and assign to view
+        return TaskListView(title: LocalizedStrings.Model.myDayTaskListView, type: .myDay, tasks: tasks)
+    }
+    
+    static func tomorrow(tasks: [Tasks]) -> TaskListView {
+        // TODO Filter task collections and assign to view
+        return TaskListView(title: LocalizedStrings.Model.tomorrowTaskListView, type: .tomorrow, tasks: tasks)
     }
     
 }

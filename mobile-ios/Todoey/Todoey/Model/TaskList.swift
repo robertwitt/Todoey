@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SAPOData
+import TaskServiceFmwk
 
 protocol TaskList {
     
@@ -18,6 +19,7 @@ protocol TaskList {
     var displayColor: UIColor? { get }
     var isDefault: Bool? { get }
     var isEditable: Bool { get }
+    var tasks: [Tasks] { get }
     
 }
 
