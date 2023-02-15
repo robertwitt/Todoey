@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLI Project Info</key>
+	<dict>
+		<key>Bundle identifier</key>
+		<string>de.robertwitt.todoey.Todoey</string>
+		<key>Cloud application id</key>
+		<string>Todoey-ios</string>
+		<key>Landscape type</key>
+		<string>cf</string>
+		<key>Mac catalyst support</key>
+		<true/>
+		<key>Organization identifier</key>
+		<string>de.robertwitt.todoey</string>
+		<key>Organization name</key>
+		<string>Robert Witt</string>
+		<key>Project name</key>
+		<string>Todoey</string>
+		<key>SAP mobile services application url</key>
+		<string>https://0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com</string>
+	</dict>
+	<key>Destinations</key>
+	<array>
+		<dict>
+			<key>Additional generation parameters</key>
+			<string></string>
+			<key>Authentication type</key>
+			<string>No Authentication</string>
+			<key>Generated class prefix</key>
+			<string></string>
+			<key>Id</key>
+			<string>Todoey-ios</string>
+			<key>Local metadata URL</key>
+			<string>file:///Users/I509248/Downloads/api_task.xml</string>
+			<key>Service class name</key>
+			<string>TaskService</string>
+			<key>Should generate nullable properties with optional type</key>
+			<true/>
+			<key>Skip proxy class generation</key>
+			<false/>
+		</dict>
+	</array>
+	<key>Features</key>
+	<dict>
+		<key>Client usage</key>
+		<false/>
+		<key>Crash reporting</key>
+		<false/>
+		<key>Discovery service</key>
+		<false/>
+		<key>Discovery service email domain</key>
+		<string></string>
+		<key>Log upload</key>
+		<false/>
+		<key>Logging</key>
+		<false/>
+		<key>OAuth Configuration</key>
+		<dict>
+			<key>Authorization endpoint</key>
+			<string>https://0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com/oauth2/api/v1/authorize</string>
+			<key>Client id</key>
+			<string>338b1b0e-a1e4-460f-9445-b4648dadad99</string>
+			<key>Enable Cross Context SSO</key>
+			<false/>
+			<key>Redirect url</key>
+			<string>https://0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com</string>
+			<key>Token endpoint</key>
+			<string>https://0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com/oauth2/api/v1/token</string>
+			<key>Xsuaa authorization endpoint</key>
+			<string>https://0843b473trial.authentication.us10.hana.ondemand.com/oauth/authorize?response_type=code&amp;client_id=sb-Todoey-0843b473trial-dev!t111516&amp;redirect_uri=https%3A%2F%2F0843b473trial-dev-todoey-ios.cfapps.us10-001.hana.ondemand.com%2Flogin%2Fcallback</string>
+		</dict>
+		<key>OData</key>
+		<true/>
+		<key>Offline OData</key>
+		<false/>
+		<key>Onboarding</key>
+		<true/>
+		<key>Onboarding authentication</key>
+		<string>OAuth Authentication</string>
+		<key>Onboarding destination</key>
+		<string>Todoey-ios</string>
+		<key>Remote notification</key>
+		<true/>
+		<key>Widget extension</key>
+		<false/>
+	</dict>
+</dict>
+</plist>

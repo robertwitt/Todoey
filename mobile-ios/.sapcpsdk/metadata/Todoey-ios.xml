@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+    <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="TaskAPI" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="TaskPriorities" EntityType="TaskAPI.TaskPriorities">
+          <NavigationPropertyBinding Path="texts" Target="TaskPriorities_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="TaskPriorities_texts"/>
+        </EntitySet>
+        <EntitySet Name="TaskCollections" EntityType="TaskAPI.TaskCollections">
+          <NavigationPropertyBinding Path="tasks" Target="Tasks"/>
+        </EntitySet>
+        <EntitySet Name="Tasks" EntityType="TaskAPI.Tasks">
+          <NavigationPropertyBinding Path="collection" Target="TaskCollections"/>
+          <NavigationPropertyBinding Path="priority" Target="TaskPriorities"/>
+        </EntitySet>
+        <EntitySet Name="TaskPriorities_texts" EntityType="TaskAPI.TaskPriorities_texts"/>
+        <FunctionImport Name="getDefaultTaskCollection" Function="TaskAPI.getDefaultTaskCollection" EntitySet="TaskCollections"/>
+        <ActionImport Name="setDefaultTaskCollection" Action="TaskAPI.setDefaultTaskCollection"/>
+      </EntityContainer>
+      <EntityType Name="TaskPriorities">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="code" Type="Edm.Byte" Nullable="false"/>
+        <NavigationProperty Name="texts" Type="Collection(TaskAPI.TaskPriorities_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="TaskAPI.TaskPriorities_texts">
+          <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="TaskCollections">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="title" Type="Edm.String" MaxLength="40"/>
+        <Property Name="color" Type="Edm.String" MaxLength="6"/>
+        <Property Name="isDefault" Type="Edm.Boolean" Nullable="false"/>
+        <NavigationProperty Name="tasks" Type="Collection(TaskAPI.Tasks)" Partner="collection"/>
+      </EntityType>
+      <EntityType Name="Tasks">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="title" Type="Edm.String" MaxLength="40"/>
+        <NavigationProperty Name="collection" Type="TaskAPI.TaskCollections" Nullable="false" Partner="tasks">
+          <ReferentialConstraint Property="collection_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="collection_ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="1" Nullable="false"/>
+        <NavigationProperty Name="priority" Type="TaskAPI.TaskPriorities">
+          <ReferentialConstraint Property="priority_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="priority_code" Type="Edm.Byte"/>
+        <Property Name="dueDate" Type="Edm.Date"/>
+        <Property Name="dueTime" Type="Edm.TimeOfDay"/>
+        <Property Name="isPlannedForMyDay" Type="Edm.Boolean" Nullable="false"/>
+        <Property Name="lastModifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+      </EntityType>
+      <EntityType Name="TaskPriorities_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.Byte" Nullable="false"/>
+      </EntityType>
+      <Action Name="setToDone" IsBound="true">
+        <Parameter Name="in" Type="TaskAPI.Tasks"/>
+      </Action>
+      <Function Name="getDefaultTaskCollection" IsBound="false" IsComposable="false">
+        <ReturnType Type="TaskAPI.TaskCollections"/>
+      </Function>
+      <Action Name="setDefaultTaskCollection" IsBound="false">
+        <Parameter Name="collectionID" Type="Edm.Guid"/>
+      </Action>
+      <Annotations Target="TaskAPI.TaskPriorities">
+        <Annotation Term="Core.Description" String="Priority of a task indicate its importance and criticality"/>
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="TaskAPI.EntityContainer/TaskPriorities">
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskPriorities/name">
+        <Annotation Term="Core.Description" String="Language-dependent description of a task priority"/>
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskPriorities/code">
+        <Annotation Term="Core.Description" String="Identifier of a task priority"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskCollections">
+        <Annotation Term="Core.Description" String="A task collection is listing and grouping multiple tasks together"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskCollections/ID">
+        <Annotation Term="Core.Description" String="Identifier of a task collection"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskCollections/title">
+        <Annotation Term="Core.Description" String="Name or title of a task collection"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskCollections/color">
+        <Annotation Term="Common.IsUpperCase" Bool="true"/>
+        <Annotation Term="Core.Description" String="Color of a task collection, represented as 6-digit hexadecimal number"/>
+        <Annotation Term="Validation.Pattern" String="^[a-fA-F0-9]{6}$"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskCollections/isDefault">
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+        <Annotation Term="Core.Description" String="Flag whether or not a task collection is the default task collection. New tasks are put into the default if no collection is specified. There can only be one default collection."/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskCollections/tasks">
+        <Annotation Term="Core.Description" String="List of tasks assigned to a task collection"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks">
+        <Annotation Term="Core.Description" String="A task is an item to note a specific activity or reminder and assign it a due date"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.EntityContainer/Tasks">
+        <Annotation Term="Core.OptimisticConcurrency">
+          <Collection/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/ID">
+        <Annotation Term="Core.Description" String="Identifier of a task"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/title">
+        <Annotation Term="Core.Description" String="Title or subject of a task"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/collection">
+        <Annotation Term="Core.Description" String="Task collection a task is assigned to"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/collection_ID">
+        <Annotation Term="Core.Description" String="Task collection a task is assigned to"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/status">
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+        <Annotation Term="Core.Description" String="Status of a task. Allowed values are O (open), D (done), and X (canceled)"/>
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="OPEN"/>
+              <PropertyValue Property="Value" String="O"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="DONE"/>
+              <PropertyValue Property="Value" String="D"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="CANCELED"/>
+              <PropertyValue Property="Value" String="X"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/priority">
+        <Annotation Term="Core.Description" String="Priority of a task"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/priority_code">
+        <Annotation Term="Core.Description" String="Priority of a task"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="TaskPriorities"/>
+            <PropertyValue Property="CollectionPath" String="TaskPriorities"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="priority_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/dueDate">
+        <Annotation Term="Core.Description" String="Date when a task is due to be completed"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/dueTime">
+        <Annotation Term="Core.Description" String="Time on the due date when a task is due to be completed. Due date cannot be null if time should be set."/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/isPlannedForMyDay">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+        <Annotation Term="Core.Description" String="Flag whether or not a task is planned for the day"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.Tasks/lastModifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="Changed On"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.getDefaultTaskCollection()">
+        <Annotation Term="Core.Description" String="Get the task collection that is marked as default"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.setDefaultTaskCollection()">
+        <Annotation Term="Core.Description" String="Set a task collection as new default"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.setDefaultTaskCollection()/collectionID">
+        <Annotation Term="Core.Description" String="Identifier of task collection, to be set as new default"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskPriorities_texts/locale">
+        <Annotation Term="Common.Label" String="Language Code"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskPriorities_texts/name">
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="TaskAPI.TaskPriorities_texts/descr">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
