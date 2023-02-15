@@ -8,6 +8,7 @@ import Foundation
 import UIKit
 
 class AlertHelper {
+    
     static let okTitle = NSLocalizedString("keyOkButtonTitle",
                                            value: "OK",
                                            comment: "XBUT: Title of OK button.")
@@ -20,4 +21,5 @@ class AlertHelper {
             viewController.present(alertController, animated: true)
         }
     }
+    
 }

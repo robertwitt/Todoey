@@ -8,10 +8,13 @@ import Foundation
 import SAPFiori
 
 protocol SAPFioriLoadingIndicator: AnyObject {
+    
     var loadingIndicator: FUILoadingIndicatorView? { get set }
+    
 }
 
 extension SAPFioriLoadingIndicator where Self: UIViewController {
+    
     func showFioriLoadingIndicator(_ message: String = "") {
         DispatchQueue.main.async {
             let indicator = FUILoadingIndicatorView(frame: self.view.frame)
@@ -30,4 +33,5 @@ extension SAPFioriLoadingIndicator where Self: UIViewController {
             loadingIndicator.dismiss()
         }
     }
+    
 }

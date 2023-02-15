@@ -10,20 +10,16 @@ import SAPFioriFlows
 import SAPFoundation
 
 class ApplicationUIManager: ApplicationUIManaging {
-    // MARK: – Properties
 
     let window: UIWindow
     var isOnboarding = false
 
     private var coveringViews = [UIView]()
-
-    // MARK: – Init
+    private var isSplashPresented: Bool = false
 
     public init(window: UIWindow) {
         self.window = window
     }
-
-    // MARK: - ApplicationUIManaging
 
     func hideApplicationScreen(completionHandler: @escaping (Error?) -> Void) {
         // Check whether the covering screen is already presented or not
@@ -31,9 +27,7 @@ class ApplicationUIManager: ApplicationUIManaging {
             completionHandler(nil)
             return
         }
-
         coverAppScreen(with: UIViewController().view)
-
         completionHandler(nil)
     }
 
@@ -43,9 +37,7 @@ class ApplicationUIManager: ApplicationUIManaging {
             completionHandler(nil)
             return
         }
-
         setupSplashScreen()
-
         completionHandler(nil)
     }
 
@@ -54,9 +46,7 @@ class ApplicationUIManager: ApplicationUIManaging {
             completionHandler(nil)
             return
         }
-
         setupSplashScreen()
-
         completionHandler(nil)
     }
 
@@ -102,15 +92,10 @@ class ApplicationUIManager: ApplicationUIManaging {
         guard isOnboarding == false else {
             return
         }
-
         window.rootViewController = FUIInfoViewController.createSplashScreenInstanceFromStoryboard()
         isSplashPresented = false
         isOnboarding = true
     }
-
-    // MARK: – Helpers
-
-    private var isSplashPresented: Bool = false
 
     private func setupSplashScreen() {
         let splashViewController = FUIInfoViewController.createSplashScreenInstanceFromStoryboard()
@@ -127,7 +112,7 @@ class ApplicationUIManager: ApplicationUIManaging {
         modalPresenter.animated = true
     }
 
-    // Hide the application screen by adding a view to the top
+    /// Hide the application screen by adding a view to the top
     private func coverAppScreen(with view: UIView?) {
         guard let view = view else {
             return
@@ -141,15 +126,17 @@ class ApplicationUIManager: ApplicationUIManaging {
         }
     }
 
-    // Remove covering views when no more required
+    /// Remove covering views when no more required
     private func removeCoveringViews() {
         _ = coveringViews.map { $0.removeFromSuperview() }
         isSplashPresented = false
     }
+    
 }
 
 extension UIApplication {
-    // Iterate through VC hierarchy up to the top most
+    
+    /// Iterate through VC hierarchy up to the top most
     func topViewController(base: UIViewController? = UIApplication.shared.windows.first { $0.isKeyWindow }?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(base: nav.visibleViewController)
@@ -171,4 +158,5 @@ extension UIApplication {
         }
         return base
     }
+    
 }

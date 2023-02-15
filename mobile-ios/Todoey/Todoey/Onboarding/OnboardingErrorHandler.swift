@@ -8,32 +8,11 @@ import SAPCommon
 import SAPFiori
 import SAPFioriFlows
 import SAPFoundation
-
 import SharedFmwk
 
-// custom data handling of the application
-open class ApplicationOnboardingSession: OnboardingSession {
-    var odataControllers: [String: ODataControlling]
-
-    public required init(flow: OnboardingFlow) {
-        guard let step = flow.steps.first(where: { $0 is ODataOnboardingStep }) as? ODataOnboardingStep else {
-            fatalError("ODataOnboardingStep is missing.")
-        }
-        guard !step.controllers.isEmpty else {
-            fatalError("Controllers are missing for ODataOnboardingStep.")
-        }
-        odataControllers = step.controllers
-
-        super.init(flow: flow)
-    }
-}
-
 public class OnboardingErrorHandler: OnboardingControllerDelegate {
-    // MARK: – Init
 
     public init() {}
-
-    // MARK: - OnboardingControllerDelegate
 
     /// Application specific error handling
     public func onboardingController(_ controller: OnboardingControlling, didFail flow: OnboardingFlow, with error: Error, completionHandler: @escaping (OnboardingErrorDisposition) -> Void) {
@@ -72,7 +51,6 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
             alertController.addAction(UIAlertAction(title: LocalizedStrings.Onboarding.resetTitle, style: .destructive) { _ in
                 self.resetOnboardingSessionManager()
             })
-
             DispatchQueue.main.async {
                 guard let topViewController = ModalUIViewControllerPresenter.topPresentedViewController() else {
                     fatalError("Invalid UI state")
@@ -83,8 +61,6 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
             return
         }
     }
-
-    // MARK: - Private
 
     /// Onboarding related error handling
     private func onboardFailed(with error: Error, completionHandler: @escaping (OnboardingErrorDisposition) -> Void) {
@@ -107,7 +83,6 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
             alertController.addAction(UIAlertAction(title: LocalizedStrings.Onboarding.retryTitle, style: .default) { _ in
                 completionHandler(.retry)
             })
-
             DispatchQueue.main.async {
                 guard let topViewController = ModalUIViewControllerPresenter.topPresentedViewController() else {
                     fatalError("Invalid UI state")
@@ -166,7 +141,7 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
         }
     }
 
-    // Private function that resets the OnboardingSessionManager
+    /// Private function that resets the OnboardingSessionManager
     private func resetOnboardingSessionManager() {
         OnboardingSessionManager.shared.removeSession { _ in
             DispatchQueue.main.async {
@@ -176,4 +151,5 @@ public class OnboardingErrorHandler: OnboardingControllerDelegate {
             }
         }
     }
+    
 }

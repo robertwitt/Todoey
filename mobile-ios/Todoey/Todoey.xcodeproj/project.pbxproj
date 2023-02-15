@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,6 +39,7 @@
 		8CEBA2CBD867A0DDBDB090EE /* TaskService.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52FFC4EAF55E5AE03C0740C2 /* TaskService.storyboard */; };
 		8D0BB946A81680C40487029A /* TaskServiceFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051D9C68714006221269F220 /* TaskServiceFmwk.framework */; };
 		927B4DF53B311A3EE0B6510C /* TaskServiceFmwk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051D9C68714006221269F220 /* TaskServiceFmwk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		96905328299CCAD00046EA01 /* ApplicationOnboardingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96905327299CCAD00046EA01 /* ApplicationOnboardingSession.swift */; };
 		990155B65D59AFAEC98169F9 /* SAPFioriFlows.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E60320830AEAD2DC066604 /* SAPFioriFlows.xcframework */; };
 		9F43F5D84B31727AB52FCA39 /* SAPFoundation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9B0E23748A6189B30AAAF8 /* SAPFoundation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A54EBFCA417597ADAE6C36E9 /* SharedFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C46E087539131CFD8685CE /* SharedFmwk.framework */; };
@@ -117,6 +118,7 @@
 		9137606C255ABF5C0059ABE7 /* Todoey.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Todoey.entitlements; sourceTree = "<group>"; };
 		94C46E087539131CFD8685CE /* SharedFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 1; path = SharedFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9574E9B2158CBD919AD40B56 /* TaskCollectionsMasterViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskCollectionsMasterViewController.swift; path = ViewControllers/TaskService/TaskCollections/TaskCollectionsMasterViewController.swift; sourceTree = "<group>"; };
+		96905327299CCAD00046EA01 /* ApplicationOnboardingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationOnboardingSession.swift; path = Onboarding/ApplicationOnboardingSession.swift; sourceTree = "<group>"; };
 		98374C713FF9D708A7C69355 /* LocalizedStrings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		B91F31C2C5342D74F5F42761 /* ApplicationUIManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApplicationUIManager.swift; path = Onboarding/ApplicationUIManager.swift; sourceTree = "<group>"; };
 		C002C2ED39EF58A412344209 /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskService.storyboard; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				2F3E9747E5B2E4C5876C0BF4 /* OnboardingFlowProvider.swift */,
 				24EC7D32C79493283CBA315B /* OnboardingErrorHandler.swift */,
+				96905327299CCAD00046EA01 /* ApplicationOnboardingSession.swift */,
 				B91F31C2C5342D74F5F42761 /* ApplicationUIManager.swift */,
 				E99B01CCBBA039510688BA31 /* ConfigurationProvider.plist */,
 				E3B8E307A1E0AAB82DB1988C /* AppParameters.plist */,
@@ -206,12 +209,12 @@
 			isa = PBXGroup;
 			children = (
 				9137606C255ABF5C0059ABE7 /* Todoey.entitlements */,
+				7A1315C61D4B982000A5DA56 /* Info.plist */,
 				7A1315B81D4B982000A5DA56 /* AppDelegate.swift */,
 				CBCA7A9B1E3778A9001AF49E /* Main.storyboard */,
-				7A1315C11D4B982000A5DA56 /* Assets.xcassets */,
 				7A1315C31D4B982000A5DA56 /* LaunchScreen.storyboard */,
+				7A1315C11D4B982000A5DA56 /* Assets.xcassets */,
 				1277F7601F8E66AC0060AF58 /* SAPLogo@2x.png */,
-				7A1315C61D4B982000A5DA56 /* Info.plist */,
 				CDB160785C7F8B9EA61D6CC2 /* ViewControllers */,
 				A3EAD42A37F22F9D986A2FC3 /* Utils */,
 				9CC24A9C53B28D7E05DB4894 /* OData */,
@@ -463,6 +466,7 @@
 				0965865E534ABBD32824D0AC /* AlertHelper.swift in Sources */,
 				5112B1131722EE032CDB86CE /* ODataOnboardingStep.swift in Sources */,
 				3C8360F0AD97A17A38A0D46D /* OnboardingFlowProvider.swift in Sources */,
+				96905328299CCAD00046EA01 /* ApplicationOnboardingSession.swift in Sources */,
 				413EE2D02331622E9E256D71 /* OnboardingErrorHandler.swift in Sources */,
 				7CB86349E828354AEC1C4E7A /* ApplicationUIManager.swift in Sources */,
 				289CBF66B1A6852C51AEFDDD /* LocalizedStrings.swift in Sources */,
@@ -662,7 +666,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -685,7 +690,10 @@
 				INFOPLIST_FILE = Todoey/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.robertwitt.todoey.Todoey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -709,7 +717,10 @@
 				INFOPLIST_FILE = Todoey/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.robertwitt.todoey.Todoey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -729,7 +740,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sap.UITests;
@@ -752,7 +767,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sap.UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
