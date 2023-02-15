@@ -38,4 +38,9 @@ class LocalizedStrings {
         static let synchronizingDataMessage = NSLocalizedString("keySynchronizingDataMessage", value: "Synchronizing Data", comment: "XMSG: Message that the application is Synchronizing Data.")
     }
     
+    enum Model {
+        static let myDayTaskListView = NSLocalizedString("myDayTaskListView", value: "My Day", comment: "")
+        static let tomorrowTaskListView = NSLocalizedString("tomorrowTaskListView", value: "Tomorrow", comment: "")
+    }
+    
 }

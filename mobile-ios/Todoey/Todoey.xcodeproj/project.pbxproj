@@ -40,6 +40,9 @@
 		8D0BB946A81680C40487029A /* TaskServiceFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051D9C68714006221269F220 /* TaskServiceFmwk.framework */; };
 		927B4DF53B311A3EE0B6510C /* TaskServiceFmwk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051D9C68714006221269F220 /* TaskServiceFmwk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		96905328299CCAD00046EA01 /* ApplicationOnboardingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96905327299CCAD00046EA01 /* ApplicationOnboardingSession.swift */; };
+		9690532B299CD66B0046EA01 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9690532A299CD66B0046EA01 /* TaskList.swift */; };
+		9690532D299CD8230046EA01 /* TaskCollections+TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9690532C299CD8230046EA01 /* TaskCollections+TaskList.swift */; };
+		9690532F299CD9B50046EA01 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9690532E299CD9B50046EA01 /* TaskListView.swift */; };
 		990155B65D59AFAEC98169F9 /* SAPFioriFlows.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E60320830AEAD2DC066604 /* SAPFioriFlows.xcframework */; };
 		9F43F5D84B31727AB52FCA39 /* SAPFoundation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9B0E23748A6189B30AAAF8 /* SAPFoundation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A54EBFCA417597ADAE6C36E9 /* SharedFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C46E087539131CFD8685CE /* SharedFmwk.framework */; };
@@ -119,6 +122,9 @@
 		94C46E087539131CFD8685CE /* SharedFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 1; path = SharedFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9574E9B2158CBD919AD40B56 /* TaskCollectionsMasterViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskCollectionsMasterViewController.swift; path = ViewControllers/TaskService/TaskCollections/TaskCollectionsMasterViewController.swift; sourceTree = "<group>"; };
 		96905327299CCAD00046EA01 /* ApplicationOnboardingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationOnboardingSession.swift; path = Onboarding/ApplicationOnboardingSession.swift; sourceTree = "<group>"; };
+		9690532A299CD66B0046EA01 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
+		9690532C299CD8230046EA01 /* TaskCollections+TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskCollections+TaskList.swift"; sourceTree = "<group>"; };
+		9690532E299CD9B50046EA01 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		98374C713FF9D708A7C69355 /* LocalizedStrings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		B91F31C2C5342D74F5F42761 /* ApplicationUIManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApplicationUIManager.swift; path = Onboarding/ApplicationUIManager.swift; sourceTree = "<group>"; };
 		C002C2ED39EF58A412344209 /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskService.storyboard; sourceTree = "<group>"; };
@@ -215,6 +221,7 @@
 				7A1315C31D4B982000A5DA56 /* LaunchScreen.storyboard */,
 				7A1315C11D4B982000A5DA56 /* Assets.xcassets */,
 				1277F7601F8E66AC0060AF58 /* SAPLogo@2x.png */,
+				96905329299CD6500046EA01 /* Model */,
 				CDB160785C7F8B9EA61D6CC2 /* ViewControllers */,
 				A3EAD42A37F22F9D986A2FC3 /* Utils */,
 				9CC24A9C53B28D7E05DB4894 /* OData */,
@@ -255,6 +262,16 @@
 				629B38CFC73EFE0D30B3629A /* Tasks.storyboard */,
 			);
 			name = Tasks;
+			sourceTree = "<group>";
+		};
+		96905329299CD6500046EA01 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9690532A299CD66B0046EA01 /* TaskList.swift */,
+				9690532C299CD8230046EA01 /* TaskCollections+TaskList.swift */,
+				9690532E299CD9B50046EA01 /* TaskListView.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		9CC24A9C53B28D7E05DB4894 /* OData */ = {
@@ -450,6 +467,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9690532B299CD66B0046EA01 /* TaskList.swift in Sources */,
+				9690532D299CD8230046EA01 /* TaskCollections+TaskList.swift in Sources */,
 				7A1315B91D4B982000A5DA56 /* AppDelegate.swift in Sources */,
 				826271DC0E2D52AD15A83918 /* TasksMasterViewController.swift in Sources */,
 				DBBCBA56D9A9D86B8BAFC442 /* TasksDetailViewController.swift in Sources */,
@@ -461,6 +480,7 @@
 				08B160AD185DA145B0097A63 /* TaskCollectionsDetailViewController.swift in Sources */,
 				B2F390471A9E48CA4C517E9E /* TaskServiceCollectionsViewController.swift in Sources */,
 				7340E82A60509C4E5778AD4F /* DestinationsViewController.swift in Sources */,
+				9690532F299CD9B50046EA01 /* TaskListView.swift in Sources */,
 				004AF3FC82B1CD30D672FA73 /* SAPFioriLoadingIndicator.swift in Sources */,
 				81C31451C51AE746E46E5FE4 /* CellCreationHelper.swift in Sources */,
 				0965865E534ABBD32824D0AC /* AlertHelper.swift in Sources */,
