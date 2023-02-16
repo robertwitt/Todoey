@@ -16,8 +16,8 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     
     var loadingIndicator: FUILoadingIndicatorView?
     
-    private var selectedIndex: IndexPath?
     private let cellIdentifier = "TaskListCell"
+    private var selectedIndex: IndexPath?
     
     private var isPresentedInSplitView: Bool {
         return !(self.splitViewController?.isCollapsed ?? true)
@@ -40,6 +40,11 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        self.refreshControl = refreshControl
+        tableView.addSubview(refreshControl)
     }
     
     private func setupDataService() {
@@ -87,6 +92,16 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
                 self.tableView.reloadData()
                 self.makeSelection()
                 self.logger.info("Table updated successfully!")
+            }
+        }
+    }
+    
+    @objc func refresh() {
+        DispatchQueue.global().async {
+            self.loadData {
+                DispatchQueue.main.async {
+                    self.refreshControl?.endRefreshing()
+                }
             }
         }
     }
