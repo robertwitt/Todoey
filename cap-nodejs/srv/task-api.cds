@@ -28,7 +28,7 @@ service TaskAPI {
     color     @(
       Common.IsUpperCase: true,
       Core.Description  : 'Color of a task collection, represented as 6-digit hexadecimal number',
-      assert.format     : '^[a-fA-F0-9]{6}$',
+      assert.format     : '^([a-fA-F0-9]{6}|[a-fA-F0-9]{8})$',
     );
     isDefault @Core                              : {
       Computed            : true,
