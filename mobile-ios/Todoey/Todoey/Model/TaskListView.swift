@@ -28,13 +28,24 @@ class TaskListView: TaskList {
     }
     
     static func myDay(tasks: [Tasks]) -> TaskListView {
-        // TODO Filter task collections and assign to view
-        return TaskListView(title: LocalizedStrings.Model.myDayTaskListView, type: .myDay, tasks: tasks)
+        let today = LocalDate.from(utc: Date.now)
+        let myDayTasks = tasks.filter { task in
+            if let isPlannedForMyDay = task.isPlannedForMyDay, isPlannedForMyDay {
+                return true
+            }
+            guard let dueDate = task.dueDate else {
+                return false
+            }
+            return dueDate <= today
+        }
+        
+        return TaskListView(title: LocalizedStrings.Model.myDayTaskListView, type: .myDay, tasks: myDayTasks)
     }
     
     static func tomorrow(tasks: [Tasks]) -> TaskListView {
-        // TODO Filter task collections and assign to view
-        return TaskListView(title: LocalizedStrings.Model.tomorrowTaskListView, type: .tomorrow, tasks: tasks)
+        let tomorrow = LocalDate.from(utc: Date.now.addingTimeInterval(86400))
+        let tomorrowsTasks = tasks.filter{ $0.dueDate != nil && $0.dueDate! == tomorrow }
+        return TaskListView(title: LocalizedStrings.Model.tomorrowTaskListView, type: .tomorrow, tasks: tomorrowsTasks)
     }
     
 }

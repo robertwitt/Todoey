@@ -25,7 +25,7 @@ class TaskListsViewModel {
         let query = DataQuery()
             .select(TaskCollections.id, TaskCollections.title, TaskCollections.color, TaskCollections.isDefault_)
             .expand(TaskCollections.tasks, withQuery: DataQuery()
-                .select(Tasks.id, Tasks.title, Tasks.dueTime, Tasks.dueTime, Tasks.isPlannedForMyDay)
+                .select(Tasks.id, Tasks.title, Tasks.dueDate, Tasks.dueTime, Tasks.isPlannedForMyDay)
                 .expand(Tasks.collection, withQuery: DataQuery().select(TaskCollections.id, TaskCollections.title))
                 .expand(Tasks.priority)
                 .filter(Tasks.status.equal("O")))
@@ -35,11 +35,27 @@ class TaskListsViewModel {
                 let allTasks = taskCollections?.flatMap { $0.tasks } ?? []
                 self.taskLists = [
                     [TaskListView.myDay(tasks: allTasks), TaskListView.tomorrow(tasks: allTasks)],
-                    taskCollections ?? []
+                    taskCollections?.sorted(by: self.defaultThenAlphabetical(_:_:)) ?? []
                 ]
             }
             completionHandler(error)
         }
+    }
+    
+    func defaultThenAlphabetical(_ tc1: TaskCollections, _ tc2: TaskCollections) -> Bool {
+        if let isDefault = tc1.isDefault_, isDefault {
+            return true
+        }
+        if let isDefault = tc2.isDefault_, isDefault {
+            return false
+        }
+        guard let title1 = tc1.title else {
+            return false
+        }
+        guard let title2 = tc2.title else {
+            return true
+        }
+        return title1 < title2
     }
     
     var numberOfSections: Int {
