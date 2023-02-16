@@ -28,6 +28,7 @@ class LocalizedStrings {
         static let resetTitle = NSLocalizedString("keyResetButtonTitle", value: "Reset", comment: "XBUT: Title of Reset button.")
         static let passcodeRetryLimitReachedTitle = NSLocalizedString("keyErrorPasscodeRetryLimitReachedTitle", value: "Passcode Retry Limit Reached!", comment: "XTIT: Title of alert action that the passcode retry limit has been reached.")
         static let passcodeRetryLimitReachedMessage = NSLocalizedString("keyErrorPasscodeRetryLimitReachedMessage", value: "Reached the maximum number of retries. Application should be reset.", comment: "XMSG: Message that the application shall be reseted because the passcode retry limit has been reached.")
+        static let oDataServiceFailedMessage = NSLocalizedString("keyODataServiceFailedMessage", value: "OData service is not reachable, please onboard again.", comment: "")
     }
 
     enum OfflineOData {
@@ -39,8 +40,8 @@ class LocalizedStrings {
     }
     
     enum Model {
-        static let myDayTaskListView = NSLocalizedString("myDayTaskListView", value: "My Day", comment: "")
-        static let tomorrowTaskListView = NSLocalizedString("tomorrowTaskListView", value: "Tomorrow", comment: "")
+        static let myDayTaskListView = NSLocalizedString("keyMyDayTaskListView", value: "My Day", comment: "")
+        static let tomorrowTaskListView = NSLocalizedString("keyTomorrowTaskListView", value: "Tomorrow", comment: "")
     }
     
 }

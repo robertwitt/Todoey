@@ -1,5 +1,5 @@
 //
-//  TaskListTableViewModel.swift
+//  TaskListsViewModel.swift
 //  Todoey
 //
 //  Created by Witt, Robert on 15.02.23.
@@ -10,7 +10,7 @@ import Foundation
 import SAPOData
 import TaskServiceFmwk
 
-class TaskListTableViewModel {
+class TaskListsViewModel {
     
     private let taskService: TaskService<OnlineODataProvider>
     private var taskLists: [[TaskList]] = []
