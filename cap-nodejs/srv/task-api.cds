@@ -53,13 +53,13 @@ service TaskAPI {
   annotate Tasks with @Core.Description: 'A task is an item to note a specific activity or reminder and assign it a due date' {
     ID                @Core.Description: 'Identifier of a task';
     title             @Core.Description: 'Title or subject of a task';
-    collection        @Core.Description: 'Task collection a task is assigned to';
+    collection        @Core.Description: 'Task collection a task is assigned to'  @assert.target: true;
     status            @Core            : {
       Computed            : true,
       ComputedDefaultValue: true,
       Description         : 'Status of a task. Allowed values are O (open), D (done), and X (canceled)',
     };
-    priority          @Core.Description: 'Priority of a task';
+    priority          @Core.Description: 'Priority of a task'                     @assert.target: true;
     dueDate           @Core.Description: 'Date when a task is due to be completed';
     dueTime           @Core.Description: 'Time on the due date when a task is due to be completed. Due date cannot be null if time should be set.';
     isPlannedForMyDay @Core            : {

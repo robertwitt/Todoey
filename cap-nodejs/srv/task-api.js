@@ -10,11 +10,27 @@ module.exports = (srv) => {
   });
 
   srv.before("DELETE", TaskCollections, async (req) => {
-    const query = SELECT.one.from(req.query.DELETE.from).columns("isDefault");
+    const query = SELECT.one
+      .from(req.query.DELETE.from)
+      .columns([
+        { ref: ["isDefault"] },
+        { ref: ["tasks"], expand: [{ ref: ["ID"] }] },
+      ]);
     const collection = await srv.run(query);
     if (collection.isDefault) {
       req.reject(400, "The default collection cannot be deleted");
+      return;
     }
+    if (collection.tasks.length > 0) {
+      req.reject(400, "Collections with assigned tasks cannot be deleted");
+    }
+  });
+
+  srv.before("DELETE", TaskCollections, async (req) => {
+    const query = SELECT.one
+      .from(req.query.DELETE.from)
+      .columns("ID")
+      .where({});
   });
 
   srv.before("CREATE", Tasks, async (req) => {
