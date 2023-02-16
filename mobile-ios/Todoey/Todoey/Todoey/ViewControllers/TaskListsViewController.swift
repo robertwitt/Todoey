@@ -144,21 +144,11 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     private func selectTaskList(at indexPath: IndexPath) {
         selectedIndex = indexPath
 
-        // TODO clean up
         let storyboard = UIStoryboard(name: "Tasks", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "TasksMaster") as! TasksViewController
         viewController.dataService = dataService
-        viewController.entitySetName = "Tasks"
-        func fetchTasks(_ completionHandler: @escaping ([TaskServiceFmwk.Tasks]?, Error?) -> Void) {
-            // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
-            let query = DataQuery().selectAll().top(20)
-            do {
-                dataService.fetchTasks(matching: query, completionHandler: completionHandler)
-            }
-        }
-        viewController.loadEntitiesBlock = fetchTasks
-        viewController.navigationItem.title = "Tasks"
-
+        viewController.taskList = model.object(at: indexPath)
+        
         let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
         let rightNavigationController = mainStoryBoard.instantiateViewController(withIdentifier: "RightNavigationController") as! UINavigationController
         rightNavigationController.viewControllers = [viewController]
@@ -183,7 +173,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         }
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
-        // TODO collectionSelected(at: indexPath)
+        selectTaskList(at: indexPath)
     }
     
 }

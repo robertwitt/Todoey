@@ -112,21 +112,21 @@ class TaskServiceCollectionsViewController: FUIFormTableViewController {
             taskPrioritiesMasterViewController.loadEntitiesBlock = fetchTaskPriorities
             taskPrioritiesMasterViewController.navigationItem.title = "TaskPriorities"
             masterViewController = taskPrioritiesMasterViewController
-        case .tasks:
-            let tasksStoryBoard = UIStoryboard(name: "Tasks", bundle: nil)
-            let tasksMasterViewController = tasksStoryBoard.instantiateViewController(withIdentifier: "TasksMaster") as! TasksViewController
-            tasksMasterViewController.dataService = dataService
-            tasksMasterViewController.entitySetName = "Tasks"
-            func fetchTasks(_ completionHandler: @escaping ([TaskServiceFmwk.Tasks]?, Error?) -> Void) {
-                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
-                let query = DataQuery().selectAll().top(20)
-                do {
-                    dataService.fetchTasks(matching: query, completionHandler: completionHandler)
-                }
-            }
-            tasksMasterViewController.loadEntitiesBlock = fetchTasks
-            tasksMasterViewController.navigationItem.title = "Tasks"
-            masterViewController = tasksMasterViewController
+//        case .tasks:
+//            let tasksStoryBoard = UIStoryboard(name: "Tasks", bundle: nil)
+//            let tasksMasterViewController = tasksStoryBoard.instantiateViewController(withIdentifier: "TasksMaster") as! TasksViewController
+//            tasksMasterViewController.dataService = dataService
+//            tasksMasterViewController.entitySetName = "Tasks"
+//            func fetchTasks(_ completionHandler: @escaping ([TaskServiceFmwk.Tasks]?, Error?) -> Void) {
+//                // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
+//                let query = DataQuery().selectAll().top(20)
+//                do {
+//                    dataService.fetchTasks(matching: query, completionHandler: completionHandler)
+//                }
+//            }
+//            tasksMasterViewController.loadEntitiesBlock = fetchTasks
+//            tasksMasterViewController.navigationItem.title = "Tasks"
+//            masterViewController = tasksMasterViewController
         case .taskPrioritiesTexts:
             let taskPrioritiesTextsStoryBoard = UIStoryboard(name: "TaskPrioritiesTexts", bundle: nil)
             let taskPrioritiesTextsMasterViewController = taskPrioritiesTextsStoryBoard.instantiateViewController(withIdentifier: "TaskPrioritiesTextsMaster") as! TaskPrioritiesTextsMasterViewController
