@@ -135,6 +135,36 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         return cell
     }
     
+    // MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectTaskList(at: indexPath)
+    }
+    
+    private func selectTaskList(at indexPath: IndexPath) {
+        selectedIndex = indexPath
+
+        // TODO clean up
+        let storyboard = UIStoryboard(name: "Tasks", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "TasksMaster") as! TasksViewController
+        viewController.dataService = dataService
+        viewController.entitySetName = "Tasks"
+        func fetchTasks(_ completionHandler: @escaping ([TaskServiceFmwk.Tasks]?, Error?) -> Void) {
+            // Only request the first 20 values. If you want to modify the requested entities, you can do it here.
+            let query = DataQuery().selectAll().top(20)
+            do {
+                dataService.fetchTasks(matching: query, completionHandler: completionHandler)
+            }
+        }
+        viewController.loadEntitiesBlock = fetchTasks
+        viewController.navigationItem.title = "Tasks"
+
+        let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+        let rightNavigationController = mainStoryBoard.instantiateViewController(withIdentifier: "RightNavigationController") as! UINavigationController
+        rightNavigationController.viewControllers = [viewController]
+        splitViewController?.showDetailViewController(rightNavigationController, sender: nil)
+    }
+    
     // MARK: Handle highlighting of selected cell
 
     private func makeSelection() {
@@ -155,17 +185,6 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
         // TODO collectionSelected(at: indexPath)
     }
-
-//    override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        handleClick(at: indexPath)
-//    }
-//
-//    private func handleClick(at indexPath: IndexPath) {
-//        let selectedODataService = odataServiceNames[indexPath.row]
-//        let collectionStoryBoard = UIStoryboard(name: selectedODataService, bundle: nil)
-//        let collectionViewController = collectionStoryBoard.instantiateViewController(withIdentifier: "\(selectedODataService)CollectionsView")
-//        navigationController?.pushViewController(collectionViewController, animated: true)
-//    }
     
 }
 

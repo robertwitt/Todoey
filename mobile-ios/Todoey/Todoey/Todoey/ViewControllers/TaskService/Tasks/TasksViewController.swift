@@ -11,12 +11,12 @@ import SAPFoundation
 import SAPOData
 import TaskServiceFmwk
 
-class TasksMasterViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
+class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     var dataService: TaskService<OnlineODataProvider>!
     public var loadEntitiesBlock: ((_ completionHandler: @escaping ([TaskServiceFmwk.Tasks]?, Error?) -> Void) -> Void)?
     private var entities = [TaskServiceFmwk.Tasks]()
 
-    private let logger = Logger.shared(named: "TasksMasterViewControllerLogger")
+    private let logger = Logger.shared(named: "TasksViewControllerLogger")
     private let okTitle = NSLocalizedString("keyOkButtonTitle",
                                             value: "OK",
                                             comment: "XBUT: Title of OK button.")
@@ -167,7 +167,7 @@ class TasksMasterViewController: FUIFormTableViewController, SAPFioriLoadingIndi
     }
 }
 
-extension TasksMasterViewController: TaskServiceEntitySetUpdaterDelegate {
+extension TasksViewController: TaskServiceEntitySetUpdaterDelegate {
     func entitySetHasChanged() {
         updateTable()
     }

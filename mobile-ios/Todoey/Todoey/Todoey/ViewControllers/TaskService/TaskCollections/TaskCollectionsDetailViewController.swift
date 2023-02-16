@@ -126,10 +126,10 @@ class TaskCollectionsDetailViewController: FUIFormTableViewController, SAPFioriL
                         completionHandler(self.entity.tasks, nil)
                     }
                 }
-                (masterViewController as! TasksMasterViewController).loadEntitiesBlock = loadProperty
+                (masterViewController as! TasksViewController).loadEntitiesBlock = loadProperty
                 masterViewController.navigationItem.title = "Tasks"
-                (masterViewController as! TasksMasterViewController).preventNavigationLoop = true
-                (masterViewController as! TasksMasterViewController).dataService = dataService
+                (masterViewController as! TasksViewController).preventNavigationLoop = true
+                (masterViewController as! TasksViewController).dataService = dataService
                 navigationController?.pushViewController(masterViewController, animated: true)
             }
         default:

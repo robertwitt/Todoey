@@ -114,7 +114,7 @@ class TaskServiceCollectionsViewController: FUIFormTableViewController {
             masterViewController = taskPrioritiesMasterViewController
         case .tasks:
             let tasksStoryBoard = UIStoryboard(name: "Tasks", bundle: nil)
-            let tasksMasterViewController = tasksStoryBoard.instantiateViewController(withIdentifier: "TasksMaster") as! TasksMasterViewController
+            let tasksMasterViewController = tasksStoryBoard.instantiateViewController(withIdentifier: "TasksMaster") as! TasksViewController
             tasksMasterViewController.dataService = dataService
             tasksMasterViewController.entitySetName = "Tasks"
             func fetchTasks(_ completionHandler: @escaping ([TaskServiceFmwk.Tasks]?, Error?) -> Void) {
