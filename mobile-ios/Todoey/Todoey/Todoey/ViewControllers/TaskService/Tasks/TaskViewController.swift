@@ -17,6 +17,8 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     var task: Tasks!
     var loadingIndicator: FUILoadingIndicatorView?
     
+    private var taskCollections = [TaskCollections]()
+    private var taskPriorities = [TaskPriorities]()
     private let logger = Logger.shared(named: "TaskViewControllerLogger")
     
 //    private var validity = [String: Bool]()
@@ -45,6 +47,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
         super.viewDidLoad()
         setupNavigationBar()
         setupTableView()
+        updateValueHelps()
     }
     
     private func setupNavigationBar() {
@@ -54,10 +57,90 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     
     private func setupTableView() {
         tableView.register(FUITextFieldFormCell.self, forCellReuseIdentifier: FUITextFieldFormCell.reuseIdentifier)
+        tableView.register(FUIListPickerFormCell.self, forCellReuseIdentifier: FUIListPickerFormCell.reuseIdentifier)
                 
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+    }
+    
+    // MARK: Load data
+    
+    private func updateValueHelps() {
+        showFioriLoadingIndicator()
+        DispatchQueue.global().async {
+            self.loadValueHelps {
+                self.hideFioriLoadingIndicator()
+            }
+        }
+    }
+
+    private func loadValueHelps(completionHandler: @escaping () -> Void) {
+        requestValueHelps { error in
+            defer {
+                completionHandler()
+            }
+            if let error = error {
+                AlertHelper.displayAlert(with: NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up."), error: error, viewController: self)
+                self.logger.error("Could not update table. Error: \(error)", error: error)
+                return
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.logger.info("Table updated successfully!")
+            }
+        }
+    }
+    
+    private func requestValueHelps(completionHandler: @escaping (Error?) -> Void) {
+        taskCollections = []
+        taskPriorities = []
+        
+        let batch = RequestBatch()
+        let queryCollections = DataQuery()
+            .from(dataService.entitySet(withName: "TaskCollections"))
+            .select(TaskCollections.id, TaskCollections.title)
+            .orderBy(TaskCollections.title)
+        batch.addQuery(queryCollections)
+        let queryPriorities = DataQuery()
+            .from(dataService.entitySet(withName: "TaskPriorities"))
+            .select(TaskPriorities.code, TaskPriorities.name)
+            .orderBy(TaskPriorities.code)
+        batch.addQuery(queryPriorities)
+        
+        dataService.processBatch(batch) { error in
+            if let error = error {
+                completionHandler(error)
+            }
+            do {
+                self.taskCollections = try batch.queryResult(for: queryCollections).entityList().toArray() as! [TaskCollections]
+                self.taskPriorities = try batch.queryResult(for: queryPriorities).entityList().toArray() as! [TaskPriorities]
+                completionHandler(nil)
+            } catch {
+                completionHandler(error)
+            }
+            
+        }
+        
+//        let query = DataQuery().select(TaskCollections.id, TaskCollections.title).orderBy(TaskCollections.title)
+//        dataService.fetchTaskCollections(matching: query) { taskCollections, error in
+//            if let error = error {
+//                completionHandler(error)
+//                return
+//            }
+//            self.taskCollections = taskCollections
+//
+//            dataService.ba
+//        }
+//
+//        loadEntitiesBlock! { entities, error in
+//            if let error = error {
+//                completionHandler(error)
+//                return
+//            }
+//            self.entities = entities!.sorted(by: { ($0.id!) < ($1.id!) })
+//            completionHandler(nil)
+//        }
     }
 
     // MARK: Table view data source
@@ -72,7 +155,24 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
             let cell = tableView.dequeueReusableCell(withIdentifier: FUITextFieldFormCell.reuseIdentifier, for: indexPath) as! FUITextFieldFormCell
             cell.keyName = LocalizedStrings.Model.taskTitle
             cell.value = task.title ?? ""
+            cell.isEditable = true
             cell.isStacked = false
+            cell.onChangeHandler = { newValue in
+                // TODO
+            }
+            return cell
+        case .collection:
+            let cell = tableView.dequeueReusableCell(withIdentifier: FUIListPickerFormCell.reuseIdentifier, for: indexPath) as! FUIListPickerFormCell
+            cell.keyName = "Work Group"
+            cell.value = taskCollections.count == 0 ? [] : [taskCollections.firstIndex { $0.id == task.collectionID }!]
+            cell.isEditable = true
+            cell.allowsMultipleSelection = false
+            cell.allowsEmptySelection = false
+            cell.valueLabel.text = task.collection?.title
+            cell.valueOptions = taskCollections.map { $0.title! }
+            cell.onChangeHandler = { [weak self] newValues in
+                // TODO newValues is array of index of selected item in valueOptions
+            }
             return cell
         default:
             return UITableViewCell()

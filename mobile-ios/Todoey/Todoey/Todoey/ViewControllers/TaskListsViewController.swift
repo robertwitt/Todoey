@@ -49,7 +49,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     
     private func setupDataService() {
         guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.taskService.description] as? TaskServiceOnlineODataController, let dataService = odataController.dataService else {
-            AlertHelper.displayAlert(with: LocalizedStrings.Onboarding.oDataServiceFailedMessage, error: nil, viewController: self)
+            AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.oDataServiceFailedMessage, error: nil, viewController: self)
             return
         }
         self.dataService = dataService
@@ -84,7 +84,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
                 completionHandler()
             }
             if let error = error {
-                AlertHelper.displayAlert(with: NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up."), error: error, viewController: self)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorLoadingData, error: error, viewController: self)
                 self.logger.error("Could not update table. Error: \(error)", error: error)
                 return
             }

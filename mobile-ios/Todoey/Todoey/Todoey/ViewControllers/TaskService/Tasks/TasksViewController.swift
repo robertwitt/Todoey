@@ -101,7 +101,7 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
 fileprivate extension Tasks {
     
     var priorityIcon: UIImage {
-        guard let priorityCode = priority?.code else {
+        guard let priorityCode = priorityCode else {
             return UIImage()
         }
         switch priorityCode {
