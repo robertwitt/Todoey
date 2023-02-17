@@ -61,27 +61,25 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showDetail", sender: tableView.cellForRow(at: indexPath)!)
+    }
 
     // MARK: Segues
 
-//    override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
-//        if segue.identifier == "showDetail" {
-//            // Show the selected Entity on the Detail view
-//            guard let indexPath = tableView.indexPathForSelectedRow else {
-//                return
-//            }
-//            logger.info("Showing details of the chosen element.")
-//            let selectedEntity = entities[indexPath.row]
-//            let detailViewController = segue.destination as! TasksDetailViewController
-//            detailViewController.entity = selectedEntity
-//            detailViewController.navigationItem.leftItemsSupplementBackButton = true
-//            detailViewController.navigationItem.title = "\(entities[(tableView.indexPathForSelectedRow?.row)!].id != nil ? "\(entities[(tableView.indexPathForSelectedRow?.row)!].id!)" : "")"
-//            detailViewController.allowsEditableCells = false
-//            detailViewController.tableUpdater = self
-//            detailViewController.preventNavigationLoop = preventNavigationLoop
-//            detailViewController.dataService = dataService
-//            detailViewController.entitySetName = entitySetName
-//        } else if segue.identifier == "addEntity" {
+    override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
+        if segue.identifier == "showDetail" {
+            // Show the selected Entity on the Detail view
+            guard let indexPath = tableView.indexPathForSelectedRow else {
+                return
+            }
+            logger.info("Showing details of the chosen element.")
+            let detailViewController = segue.destination as! TaskViewController
+            detailViewController.dataService = dataService
+            detailViewController.task = taskList.tasks[indexPath.row]
+        }
+//        else if segue.identifier == "addEntity" {
 //            // Show the Detail view with a new Entity, which can be filled to create on the server
 //            logger.info("Showing view to add new entity.")
 //            let dest = segue.destination as! UINavigationController
@@ -96,7 +94,7 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
 //            detailViewController.dataService = dataService
 //            detailViewController.entitySetName = entitySetName
 //        }
-//    }
+    }
 
 }
 

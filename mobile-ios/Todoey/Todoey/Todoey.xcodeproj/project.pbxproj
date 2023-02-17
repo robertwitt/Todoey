@@ -54,7 +54,7 @@
 		CBCA7A991E3778A9001AF49E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBCA7A9B1E3778A9001AF49E /* Main.storyboard */; };
 		D2FFBEE615A6B73EC38C6EAE /* SAPCommon.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B526ED01DA751139A81D5E9 /* SAPCommon.xcframework */; };
 		D50C0FADD62BFED223081BB2 /* TaskPriorities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E784DD16335A3439F8AF640 /* TaskPriorities.storyboard */; };
-		DBBCBA56D9A9D86B8BAFC442 /* TasksDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41571852A38141EBD215C780 /* TasksDetailViewController.swift */; };
+		DBBCBA56D9A9D86B8BAFC442 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41571852A38141EBD215C780 /* TaskViewController.swift */; };
 		F9AE93BF8F3EC774A7449091 /* SAPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9B0E23748A6189B30AAAF8 /* SAPFoundation.xcframework */; };
 		FE11155AC3CA5F3CD6202B4C /* TaskCollections.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF86DB0FEA658469E2186EB3 /* TaskCollections.storyboard */; };
 		FE13CDD83F3D276F08392C32 /* SAPFiori.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECBD9243464D54DF135741A2 /* SAPFiori.xcframework */; };
@@ -104,7 +104,7 @@
 		24EC7D32C79493283CBA315B /* OnboardingErrorHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OnboardingErrorHandler.swift; path = Onboarding/OnboardingErrorHandler.swift; sourceTree = "<group>"; };
 		2F3E9747E5B2E4C5876C0BF4 /* OnboardingFlowProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OnboardingFlowProvider.swift; path = Onboarding/OnboardingFlowProvider.swift; sourceTree = "<group>"; };
 		33CB2AEE5EAC75A610DCA55D /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskPrioritiesTexts.storyboard; sourceTree = "<group>"; };
-		41571852A38141EBD215C780 /* TasksDetailViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TasksDetailViewController.swift; path = ViewControllers/TaskService/Tasks/TasksDetailViewController.swift; sourceTree = "<group>"; };
+		41571852A38141EBD215C780 /* TaskViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskViewController.swift; path = ViewControllers/TaskService/Tasks/TaskViewController.swift; sourceTree = "<group>"; };
 		423CEF932A15F5602D18B8B9 /* CellCreationHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CellCreationHelper.swift; path = Utils/CellCreationHelper.swift; sourceTree = "<group>"; };
 		5F9B0E23748A6189B30AAAF8 /* SAPFoundation.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFoundation.xcframework; path = "../Release-xcframework/SAPFoundation.xcframework"; sourceTree = "<group>"; };
 		6B526ED01DA751139A81D5E9 /* SAPCommon.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPCommon.xcframework; path = "../Release-xcframework/SAPCommon.xcframework"; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				C8BF4C76C23906B0DD07085B /* TasksViewController.swift */,
-				41571852A38141EBD215C780 /* TasksDetailViewController.swift */,
+				41571852A38141EBD215C780 /* TaskViewController.swift */,
 				629B38CFC73EFE0D30B3629A /* Tasks.storyboard */,
 			);
 			name = Tasks;
@@ -482,7 +482,7 @@
 				9690532D299CD8230046EA01 /* TaskCollections+TaskList.swift in Sources */,
 				7A1315B91D4B982000A5DA56 /* AppDelegate.swift in Sources */,
 				826271DC0E2D52AD15A83918 /* TasksViewController.swift in Sources */,
-				DBBCBA56D9A9D86B8BAFC442 /* TasksDetailViewController.swift in Sources */,
+				DBBCBA56D9A9D86B8BAFC442 /* TaskViewController.swift in Sources */,
 				83B657C43E33EB2E97444810 /* TaskPrioritiesTextsMasterViewController.swift in Sources */,
 				BADFE9A2EE610F24A085B683 /* TaskPrioritiesTextsDetailViewController.swift in Sources */,
 				B9CF2F0D16C93C4231D7CF52 /* TaskPrioritiesMasterViewController.swift in Sources */,

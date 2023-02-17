@@ -53,7 +53,7 @@
         <!--Detail-->
         <scene sceneID="k9g-RP-XuX">
             <objects>
-                <tableViewController storyboardIdentifier="TasksDetailViewController" title="Detail" id="AbA-MP-qfJ" customClass="TasksDetailViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TasksDetailViewController" title="Detail" id="AbA-MP-qfJ" customClass="TaskViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="msU-WP-HoT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
