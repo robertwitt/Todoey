@@ -25,9 +25,9 @@ class TaskListsViewModel {
         let query = DataQuery()
             .select(TaskCollections.id, TaskCollections.title, TaskCollections.color, TaskCollections.isDefault_)
             .expand(TaskCollections.tasks, withQuery: DataQuery()
-                .select(Tasks.id, Tasks.title, Tasks.dueDate, Tasks.dueTime, Tasks.isPlannedForMyDay)
-                .expand(Tasks.collection, withQuery: DataQuery().select(TaskCollections.id, TaskCollections.title))
-                .expand(Tasks.priority)
+                .select(Tasks.id, Tasks.title, Tasks.collectionID, Tasks.priorityCode, Tasks.dueDate, Tasks.dueTime, Tasks.isPlannedForMyDay)
+                .expand(Tasks.collection, withQuery: DataQuery().select(TaskCollections.title))
+                .expand(Tasks.priority, withQuery: DataQuery().select(TaskPriorities.name))
                 .filter(Tasks.status.equal("O")))
         
         taskService.fetchTaskCollections(matching: query) { taskCollections, error in

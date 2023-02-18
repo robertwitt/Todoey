@@ -49,7 +49,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     
     private func setupDataService() {
         guard let odataController = OnboardingSessionManager.shared.onboardingSession?.odataControllers[ODataContainerType.taskService.description] as? TaskServiceOnlineODataController, let dataService = odataController.dataService else {
-            AlertHelper.displayAlert(with: LocalizedStrings.Onboarding.oDataServiceFailedMessage, error: nil, viewController: self)
+            AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.oDataServiceFailedMessage, error: nil, viewController: self)
             return
         }
         self.dataService = dataService
@@ -84,7 +84,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
                 completionHandler()
             }
             if let error = error {
-                AlertHelper.displayAlert(with: NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up."), error: error, viewController: self)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorLoadingData, error: error, viewController: self)
                 self.logger.error("Could not update table. Error: \(error)", error: error)
                 return
             }
@@ -135,6 +135,26 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         return cell
     }
     
+    // MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectTaskList(at: indexPath)
+    }
+    
+    private func selectTaskList(at indexPath: IndexPath) {
+        selectedIndex = indexPath
+
+        let storyboard = UIStoryboard(name: "Tasks", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "TasksMaster") as! TasksViewController
+        viewController.dataService = dataService
+        viewController.taskList = model.object(at: indexPath)
+        
+        let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+        let rightNavigationController = mainStoryBoard.instantiateViewController(withIdentifier: "RightNavigationController") as! UINavigationController
+        rightNavigationController.viewControllers = [viewController]
+        splitViewController?.showDetailViewController(rightNavigationController, sender: nil)
+    }
+    
     // MARK: Handle highlighting of selected cell
 
     private func makeSelection() {
@@ -153,19 +173,8 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         }
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
-        // TODO collectionSelected(at: indexPath)
+        selectTaskList(at: indexPath)
     }
-
-//    override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        handleClick(at: indexPath)
-//    }
-//
-//    private func handleClick(at indexPath: IndexPath) {
-//        let selectedODataService = odataServiceNames[indexPath.row]
-//        let collectionStoryBoard = UIStoryboard(name: selectedODataService, bundle: nil)
-//        let collectionViewController = collectionStoryBoard.instantiateViewController(withIdentifier: "\(selectedODataService)CollectionsView")
-//        navigationController?.pushViewController(collectionViewController, animated: true)
-//    }
     
 }
 
