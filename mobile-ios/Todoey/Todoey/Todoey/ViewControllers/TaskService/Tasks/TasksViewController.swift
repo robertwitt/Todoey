@@ -135,7 +135,7 @@ fileprivate extension Tasks {
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
+        dateFormatter.timeStyle = dueTime != nil ? .short : .none
         return dateFormatter.string(from: dateTime)
     }
     
