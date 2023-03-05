@@ -180,10 +180,23 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
 
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "TaskCollections", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "TaskCollectionCreateViewController")
-        viewController.modalPresentationStyle = .popover
-        viewController.popoverPresentationController?.barButtonItem = sender
-        present(viewController, animated: true)
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "TaskCollectionCreateViewController") as! UINavigationController
+        navigationController.modalPresentationStyle = .popover
+        navigationController.popoverPresentationController?.barButtonItem = sender
+        
+        let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
+        viewController.collection = TaskCollections()
+        viewController.delegate = self
+        
+        present(navigationController, animated: true)
+    }
+    
+}
+
+extension TaskListsViewController: TaskCollectionEditViewControllerDelegate {
+    
+    func taskCollectionViewController(_ viewController: TaskCollectionEditViewController, didEndEditing taskCollection: TaskServiceFmwk.TaskCollections) {
+        
     }
     
 }
