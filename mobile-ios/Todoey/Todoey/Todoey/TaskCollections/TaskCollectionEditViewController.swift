@@ -8,15 +8,18 @@
 
 import UIKit
 import SAPFiori
+import TaskServiceFmwk
 
 class TaskCollectionEditViewController: FUIFormTableViewController {
+    
+    var collection: TaskCollections?
     
     private var colorModel: TaskCollectionColorViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        colorModel = TaskCollectionColorViewModel(color: nil)
+        colorModel = TaskCollectionColorViewModel(color: collection?.displayColor)
     }
     
     private func setupTableView() {
@@ -40,7 +43,7 @@ class TaskCollectionEditViewController: FUIFormTableViewController {
         case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: FUITextFieldFormCell.reuseIdentifier, for: indexPath) as! FUITextFieldFormCell
             cell.keyName = LocalizedStrings.Model.taskListTitle
-            cell.value = ""
+            cell.value = collection?.title ?? ""
             cell.valueTextField.delegate = self
             cell.isStacked = false
             return cell
@@ -61,7 +64,7 @@ class TaskCollectionEditViewController: FUIFormTableViewController {
         case .isDefault:
             let cell = tableView.dequeueReusableCell(withIdentifier: FUISwitchFormCell.reuseIdentifier, for: indexPath) as! FUISwitchFormCell
             cell.keyName = LocalizedStrings.Model.taskListIsDefault
-            cell.value = false
+            cell.value = collection?.isDefault ?? false
             cell.onChangeHandler = { newValue in
                 
             }
