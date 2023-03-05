@@ -57,6 +57,18 @@ class LocalizedStrings {
         static let taskIsPlannedForMyDay = NSLocalizedString("keyTaskIsPlannedForMyDay", value: "Add to My Day", comment: "")
     }
     
+    enum TaskCollectionColor {
+        static let blue = NSLocalizedString("keyBlue", value: "Blue", comment: "")
+        static let teal = NSLocalizedString("keyTeal", value: "Teal",comment: "")
+        static let green = NSLocalizedString("keyGreen", value: "Green", comment: "")
+        static let mango = NSLocalizedString("keyMango", value: "Mango", comment: "")
+        static let red = NSLocalizedString("keyRed", value: "Red", comment: "")
+        static let pink = NSLocalizedString("keyPink", value: "Pink", comment: "")
+        static let indigo = NSLocalizedString("keyIndigo", value: "Indigo", comment: "")
+        static let grey = NSLocalizedString("keyGrey", value: "Grey", comment: "")
+        static let none = NSLocalizedString("keyNone", value: "None", comment: "")
+    }
+    
     enum TaskView {
         static let createTaskTitle = NSLocalizedString("keyCreateTaskTitle", value: "New Task", comment: "")
         static let editTaskTitle = NSLocalizedString("keyEditTaskTitle", value: "Task Details", comment: "")

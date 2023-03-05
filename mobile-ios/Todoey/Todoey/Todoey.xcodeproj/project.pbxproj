@@ -48,6 +48,7 @@
 		96905336299D10F30046EA01 /* TaskListsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96905335299D10F30046EA01 /* TaskListsViewModel.swift */; };
 		96C06DAD29B46EFB006917ED /* TaskCollections.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C06DAC29B46EFB006917ED /* TaskCollections.storyboard */; };
 		96C06DAF29B46FB0006917ED /* TaskCollectionEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C06DAE29B46FB0006917ED /* TaskCollectionEditViewController.swift */; };
+		96C06DB129B47E02006917ED /* TaskCollectionColorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C06DB029B47E02006917ED /* TaskCollectionColorViewModel.swift */; };
 		990155B65D59AFAEC98169F9 /* SAPFioriFlows.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E60320830AEAD2DC066604 /* SAPFioriFlows.xcframework */; };
 		9F43F5D84B31727AB52FCA39 /* SAPFoundation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9B0E23748A6189B30AAAF8 /* SAPFoundation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A54EBFCA417597ADAE6C36E9 /* SharedFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C46E087539131CFD8685CE /* SharedFmwk.framework */; };
@@ -135,6 +136,7 @@
 		96905335299D10F30046EA01 /* TaskListsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListsViewModel.swift; sourceTree = "<group>"; };
 		96C06DAC29B46EFB006917ED /* TaskCollections.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TaskCollections.storyboard; sourceTree = "<group>"; };
 		96C06DAE29B46FB0006917ED /* TaskCollectionEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionEditViewController.swift; sourceTree = "<group>"; };
+		96C06DB029B47E02006917ED /* TaskCollectionColorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionColorViewModel.swift; sourceTree = "<group>"; };
 		98374C713FF9D708A7C69355 /* LocalizedStrings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		B91F31C2C5342D74F5F42761 /* ApplicationUIManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApplicationUIManager.swift; path = Onboarding/ApplicationUIManager.swift; sourceTree = "<group>"; };
 		C002C2ED39EF58A412344209 /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskService.storyboard; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				96C06DAE29B46FB0006917ED /* TaskCollectionEditViewController.swift */,
+				96C06DB029B47E02006917ED /* TaskCollectionColorViewModel.swift */,
 				96C06DAC29B46EFB006917ED /* TaskCollections.storyboard */,
 			);
 			path = TaskCollections;
@@ -510,6 +513,7 @@
 				0D73373926CE48C53FC79E10 /* TaskPrioritiesDetailViewController.swift in Sources */,
 				83D93F3F6D6249C777500F1A /* TaskCollectionsMasterViewController.swift in Sources */,
 				08B160AD185DA145B0097A63 /* TaskCollectionsDetailViewController.swift in Sources */,
+				96C06DB129B47E02006917ED /* TaskCollectionColorViewModel.swift in Sources */,
 				B2F390471A9E48CA4C517E9E /* TaskServiceCollectionsViewController.swift in Sources */,
 				7340E82A60509C4E5778AD4F /* TaskListsViewController.swift in Sources */,
 				9690532F299CD9B50046EA01 /* TaskListView.swift in Sources */,

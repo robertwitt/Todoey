@@ -10,14 +10,18 @@ import UIKit
 import SAPFiori
 
 class TaskCollectionEditViewController: FUIFormTableViewController {
+    
+    private var colorModel: TaskCollectionColorViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        colorModel = TaskCollectionColorViewModel(color: nil)
     }
     
     private func setupTableView() {
         tableView.register(FUITextFieldFormCell.self, forCellReuseIdentifier: FUITextFieldFormCell.reuseIdentifier)
+        tableView.register(FUIListPickerFormCell.self, forCellReuseIdentifier: FUIListPickerFormCell.reuseIdentifier)
                 
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
@@ -38,6 +42,20 @@ class TaskCollectionEditViewController: FUIFormTableViewController {
             cell.value = ""
             cell.valueTextField.delegate = self
             cell.isStacked = false
+            return cell
+        case .color:
+            let cell = tableView.dequeueReusableCell(withIdentifier: FUIListPickerFormCell.reuseIdentifier, for: indexPath) as! FUIListPickerFormCell
+            cell.keyName = LocalizedStrings.Model.taskListColor
+            cell.value = colorModel.selectedColorIndices
+            cell.valueLabel.text = colorModel.selectedColorName
+            cell.valueLabel.textColor = colorModel.selectedColor
+            cell.valueOptions = colorModel.colorNames
+            cell.allowsMultipleSelection = false
+            cell.allowsEmptySelection = true
+            cell.accessoryType = .disclosureIndicator
+            cell.onChangeHandler = { [weak self] newValues in
+                self?.colorModel.selectedColorIndices = newValues
+            }
             return cell
         default:
             return UITableViewCell()
