@@ -54,6 +54,10 @@ class LocalizedStrings {
         static let taskIsPlannedForMyDay = NSLocalizedString("keyTaskIsPlannedForMyDay", value: "Add to My Day", comment: "")
     }
     
+    enum TaskListsView {
+        static let createTaskCollectionButtonTitle = NSLocalizedString("keyCreateTaskCollectionButtonTitle", value: "New Collection", comment: "")
+    }
+    
     enum TaskView {
         static let createTaskTitle = NSLocalizedString("keyCreateTaskTitle", value: "New Task", comment: "")
         static let editTaskTitle = NSLocalizedString("keyEditTaskTitle", value: "Task Details", comment: "")

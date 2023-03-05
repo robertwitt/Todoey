@@ -176,6 +176,16 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         selectTaskList(at: indexPath)
     }
     
+    // MARK: Actions
+
+    @IBAction func addPressed(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard(name: "TaskCollections", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "TaskCollectionCreateViewController")
+        viewController.modalPresentationStyle = .popover
+        viewController.popoverPresentationController?.barButtonItem = sender
+        present(viewController, animated: true)
+    }
+    
 }
 
 fileprivate extension TaskList {
