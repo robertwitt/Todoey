@@ -20,7 +20,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     private var taskCollections = [TaskCollections]()
     private var taskPriorities = [TaskPriorities]()
     private let logger = Logger.shared(named: "TaskViewControllerLogger")
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -39,7 +39,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
         tableView.register(FUIValuePickerFormCell.self, forCellReuseIdentifier: FUIValuePickerFormCell.reuseIdentifier)
         tableView.register(FUIDatePickerFormCell.self, forCellReuseIdentifier: FUIDatePickerFormCell.reuseIdentifier)
         tableView.register(FUISwitchFormCell.self, forCellReuseIdentifier: FUISwitchFormCell.reuseIdentifier)
-                
+        
         tableView.estimatedSectionHeaderHeight = 10
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableView.automaticDimension
@@ -56,7 +56,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
             }
         }
     }
-
+    
     private func loadValueHelps(completionHandler: @escaping () -> Void) {
         requestValueHelps { error in
             defer {
@@ -104,7 +104,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
             
         }
     }
-
+    
     // MARK: Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,7 +142,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
             cell.value = taskPriorities.count == 0 ? 0 : (taskPriorities.firstIndex { $0.code == task.priorityCode } ?? -1) + 1
             cell.valueOptions = [""] + taskPriorities.map { $0.name ?? "" }
             cell.onChangeHandler = { valueIndex in
-                  // TODO
+                // TODO
             }
             return cell
         case .dueDate:
@@ -179,6 +179,8 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
             return UITableViewCell()
         }
     }
+    
+}
 
 fileprivate enum Row: Int {
     case title = 0
