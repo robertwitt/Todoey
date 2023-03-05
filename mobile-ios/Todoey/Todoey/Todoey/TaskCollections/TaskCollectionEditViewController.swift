@@ -22,6 +22,7 @@ class TaskCollectionEditViewController: FUIFormTableViewController {
     private func setupTableView() {
         tableView.register(FUITextFieldFormCell.self, forCellReuseIdentifier: FUITextFieldFormCell.reuseIdentifier)
         tableView.register(FUIListPickerFormCell.self, forCellReuseIdentifier: FUIListPickerFormCell.reuseIdentifier)
+        tableView.register(FUISwitchFormCell.self, forCellReuseIdentifier: FUISwitchFormCell.reuseIdentifier)
                 
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
@@ -55,6 +56,14 @@ class TaskCollectionEditViewController: FUIFormTableViewController {
             cell.accessoryType = .disclosureIndicator
             cell.onChangeHandler = { [weak self] newValues in
                 self?.colorModel.selectedColorIndices = newValues
+            }
+            return cell
+        case .isDefault:
+            let cell = tableView.dequeueReusableCell(withIdentifier: FUISwitchFormCell.reuseIdentifier, for: indexPath) as! FUISwitchFormCell
+            cell.keyName = LocalizedStrings.Model.taskListIsDefault
+            cell.value = false
+            cell.onChangeHandler = { newValue in
+                
             }
             return cell
         default:
