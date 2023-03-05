@@ -46,16 +46,15 @@ class LocalizedStrings {
     enum Model {
         static let myDayTaskListView = NSLocalizedString("keyMyDayTaskListView", value: "My Day", comment: "")
         static let tomorrowTaskListView = NSLocalizedString("keyTomorrowTaskListView", value: "Tomorrow", comment: "")
+        static let taskListTitle = NSLocalizedString("keyTaskListTitle", value: "Title", comment: "")
+        static let taskListColor = NSLocalizedString("keyTaskListColor", value: "Color", comment: "")
+        static let taskListIsDefault = NSLocalizedString("keyTaskListIsDefault", value: "Default", comment: "")
         static let taskTitle = NSLocalizedString("keyTaskTitle", value: "Title", comment: "")
         static let taskCollection = NSLocalizedString("keyTaskCollection", value: "Collection", comment: "")
         static let taskPriority = NSLocalizedString("keyTaskPriority", value: "Priority", comment: "")
         static let taskDueDate = NSLocalizedString("keyTaskDueDate", value: "Due Date", comment: "")
         static let taskDueTime = NSLocalizedString("keyTaskDueTime", value: "Due Time", comment: "")
         static let taskIsPlannedForMyDay = NSLocalizedString("keyTaskIsPlannedForMyDay", value: "Add to My Day", comment: "")
-    }
-    
-    enum TaskListsView {
-        static let createTaskCollectionButtonTitle = NSLocalizedString("keyCreateTaskCollectionButtonTitle", value: "New Collection", comment: "")
     }
     
     enum TaskView {
