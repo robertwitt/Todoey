@@ -23,14 +23,14 @@ class TaskCollectionColorViewModel {
     ]
     
     private let colors = [
-        UIColor.preferredFioriColor(forStyle: .blue4),
-        UIColor.preferredFioriColor(forStyle: .teal4),
-        UIColor.preferredFioriColor(forStyle: .green4),
-        UIColor.preferredFioriColor(forStyle: .mango4),
+        UIColor(hexString: "1B90FFFF"),
+        UIColor(hexString: "04ACA7FF"),
+        UIColor(hexString: "36A41DFF"),
+        UIColor(hexString: "F58B00FF"),
         UIColor(hexString: "EE3939FF"),
-        UIColor.preferredFioriColor(forStyle: .pink4),
-        UIColor.preferredFioriColor(forStyle: .indigo4),
-        UIColor.preferredFioriColor(forStyle: .grey4)
+        UIColor(hexString: "F31DEDFF"),
+        UIColor(hexString: "9B76FFFF"),
+        UIColor(hexString: "8396A8FF")
     ]
     
     var selectedColorIndices = [Int]()
