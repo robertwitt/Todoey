@@ -33,6 +33,8 @@ class LocalizedStrings {
     enum OnlineOData {
         static let oDataServiceFailedMessage = NSLocalizedString("keyODataServiceFailedMessage", value: "OData service is not reachable, please onboard again.", comment: "")
         static let errorLoadingData = NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up.")
+        static let errorEntityCreationTitle = NSLocalizedString("keyErrorEntityCreationTitle", value: "Create entry failed", comment: "XTIT: Title of alert message about entity creation error.")
+        static let entityCreationBody = NSLocalizedString("keyEntityCreationBody", value: "Created", comment: "XMSG: Title of alert message about successful entity creation.")
     }
 
     enum OfflineOData {
@@ -46,12 +48,27 @@ class LocalizedStrings {
     enum Model {
         static let myDayTaskListView = NSLocalizedString("keyMyDayTaskListView", value: "My Day", comment: "")
         static let tomorrowTaskListView = NSLocalizedString("keyTomorrowTaskListView", value: "Tomorrow", comment: "")
+        static let taskListTitle = NSLocalizedString("keyTaskListTitle", value: "Title", comment: "")
+        static let taskListColor = NSLocalizedString("keyTaskListColor", value: "Color", comment: "")
+        static let taskListIsDefault = NSLocalizedString("keyTaskListIsDefault", value: "Default", comment: "")
         static let taskTitle = NSLocalizedString("keyTaskTitle", value: "Title", comment: "")
         static let taskCollection = NSLocalizedString("keyTaskCollection", value: "Collection", comment: "")
         static let taskPriority = NSLocalizedString("keyTaskPriority", value: "Priority", comment: "")
         static let taskDueDate = NSLocalizedString("keyTaskDueDate", value: "Due Date", comment: "")
         static let taskDueTime = NSLocalizedString("keyTaskDueTime", value: "Due Time", comment: "")
         static let taskIsPlannedForMyDay = NSLocalizedString("keyTaskIsPlannedForMyDay", value: "Add to My Day", comment: "")
+    }
+    
+    enum TaskCollectionColor {
+        static let blue = NSLocalizedString("keyBlue", value: "Blue", comment: "")
+        static let teal = NSLocalizedString("keyTeal", value: "Teal",comment: "")
+        static let green = NSLocalizedString("keyGreen", value: "Green", comment: "")
+        static let mango = NSLocalizedString("keyMango", value: "Mango", comment: "")
+        static let red = NSLocalizedString("keyRed", value: "Red", comment: "")
+        static let pink = NSLocalizedString("keyPink", value: "Pink", comment: "")
+        static let indigo = NSLocalizedString("keyIndigo", value: "Indigo", comment: "")
+        static let grey = NSLocalizedString("keyGrey", value: "Grey", comment: "")
+        static let none = NSLocalizedString("keyNone", value: "None", comment: "")
     }
     
     enum TaskView {

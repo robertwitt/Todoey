@@ -70,6 +70,20 @@ class TaskListsViewModel {
         return taskLists[indexPath.section][indexPath.row]
     }
     
+    func appendObject(_ collection: TaskCollections, completionHandler: @escaping (IndexPath?, Error?) -> Void) {
+        taskService.createEntity(collection) { error in
+            if error == nil {
+                var collections = self.taskLists[Section.taskCollections.rawValue]
+                collections.append(collection)
+                self.taskLists[Section.taskCollections.rawValue] = collections
+                let indexPath = IndexPath(row: collections.count - 1, section: Section.taskCollections.rawValue)
+                completionHandler(indexPath, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+    }
+    
 }
 
 fileprivate enum Section: Int {

@@ -85,6 +85,11 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Todoey" id="PEH-PR-IZU">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Btf-Fr-BQl">
+                            <connections>
+                                <action selector="addPressed:" destination="Hg4-SY-Mln" id="EaP-Nv-pmJ"/>
+                            </connections>
+                        </barButtonItem>
                         <attributedString key="userComments">
                             <fragment content="XTIT: Title of Collections screen.">
                                 <attributes>
