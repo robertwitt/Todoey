@@ -33,6 +33,8 @@ class LocalizedStrings {
     enum OnlineOData {
         static let oDataServiceFailedMessage = NSLocalizedString("keyODataServiceFailedMessage", value: "OData service is not reachable, please onboard again.", comment: "")
         static let errorLoadingData = NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up.")
+        static let errorEntityCreationTitle = NSLocalizedString("keyErrorEntityCreationTitle", value: "Create entry failed", comment: "XTIT: Title of alert message about entity creation error.")
+        static let entityCreationBody = NSLocalizedString("keyEntityCreationBody", value: "Created", comment: "XMSG: Title of alert message about successful entity creation.")
     }
 
     enum OfflineOData {

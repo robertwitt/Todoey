@@ -185,7 +185,9 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         navigationController.popoverPresentationController?.barButtonItem = sender
         
         let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
-        viewController.collection = TaskCollections()
+        let collection = TaskCollections()
+        collection.id = GuidValue.random()
+        viewController.collection = collection
         viewController.delegate = self
         
         present(navigationController, animated: true)
@@ -195,8 +197,26 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
 
 extension TaskListsViewController: TaskCollectionEditViewControllerDelegate {
     
-    func taskCollectionViewController(_ viewController: TaskCollectionEditViewController, didEndEditing taskCollection: TaskServiceFmwk.TaskCollections) {
-        
+    func taskCollectionViewController(_ viewController: TaskCollectionEditViewController, didEndEditing taskCollection: TaskCollections) {
+        showFioriLoadingIndicator()
+        logger.info("Creating task collection in backend.")
+        model.appendObject(taskCollection) { indexPath, error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Create task collection failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityCreationTitle, error: error, viewController: self)
+                return
+            }
+            if let indexPath = indexPath {
+                self.logger.info("Create task collection finished successfully.")
+                DispatchQueue.main.async {
+                    viewController.dismiss(animated: true) {
+                        FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityCreationBody)
+                        self.tableView.insertRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+        }
     }
     
 }

@@ -27,7 +27,7 @@ class TaskCollectionColorViewModel {
         UIColor.preferredFioriColor(forStyle: .teal4),
         UIColor.preferredFioriColor(forStyle: .green4),
         UIColor.preferredFioriColor(forStyle: .mango4),
-        UIColor.preferredFioriColor(forStyle: .red4),
+        UIColor(hexString: "EE3939FF"),
         UIColor.preferredFioriColor(forStyle: .pink4),
         UIColor.preferredFioriColor(forStyle: .indigo4),
         UIColor.preferredFioriColor(forStyle: .grey4)
