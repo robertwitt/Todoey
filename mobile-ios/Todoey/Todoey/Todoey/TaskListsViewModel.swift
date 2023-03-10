@@ -84,12 +84,18 @@ class TaskListsViewModel {
         }
     }
     
-    func setObjectAsDefault(_ object: TaskList, completionHandler: @escaping (Error?) -> Void) {
+    func setObjectAsDefault(_ object: TaskList, completionHandler: @escaping (IndexPath?, Error?) -> Void) {
         taskService.setDefaultTaskCollection(collectionID: object.ID) { error in
             if error == nil {
-                self.reloadData(completionHandler: completionHandler)
+                self.reloadData { error in
+                    if error == nil {
+                        completionHandler(IndexPath(row: 0, section: Section.taskCollections.rawValue), nil)
+                    } else {
+                        completionHandler(nil, error)
+                    }
+                }
             } else {
-                completionHandler(error)
+                completionHandler(nil, error)
             }
         }
     }

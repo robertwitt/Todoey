@@ -170,7 +170,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     private func setDefaultTaskList(_ taskList: TaskList, at indexPath: IndexPath, completionHandler: @escaping (Bool) -> Void) {
         showFioriLoadingIndicator()
         logger.info("Setting default task list in backend.")
-        model.setObjectAsDefault(taskList) { error in
+        model.setObjectAsDefault(taskList) { topIndexPath, error in
             self.hideFioriLoadingIndicator()
             if let error = error {
                 self.logger.error("Set default task list failed. Error: \(error)", error: error)
@@ -178,10 +178,12 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
                 completionHandler(false)
                 return
             }
-            self.logger.info("Det default task list finished successfully.")
-            DispatchQueue.main.async {
-                completionHandler(true)
-                self.tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 1))
+            if let topIndexPath = topIndexPath {
+                self.logger.info("Det default task list finished successfully.")
+                DispatchQueue.main.async {
+                    completionHandler(true)
+                    self.tableView.moveRow(at: indexPath, to: topIndexPath)
+                }
             }
         }
     }
