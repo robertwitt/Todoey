@@ -37,6 +37,7 @@ class LocalizedStrings {
         static let entityCreationBody = NSLocalizedString("keyEntityCreationBody", value: "Created", comment: "XMSG: Title of alert message about successful entity creation.")
         static let errorSetDefaultTaskListTitle = NSLocalizedString("keyErrorSetDefaultTaskListTitle", value: "Set default failed", comment: "")
         static let errorEntityDeletionTitle = NSLocalizedString("keyErrorEntityDeletionTitle", value: "Delete entry failed", comment: "")
+        static let entityDeletionBody = NSLocalizedString("keyEntityDeletionBody", value: "Deleted", comment: "XMSG: Title of alert message about successful entity deletion.")
     }
 
     enum OfflineOData {

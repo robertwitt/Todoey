@@ -84,6 +84,20 @@ class TaskListsViewModel {
         }
     }
     
+    func removeObject(at indexPath: IndexPath, completionHandler: @escaping (Error?) -> Void) {
+        guard let collection = object(at: indexPath) as? TaskCollections else {
+            return
+        }
+        taskService.deleteEntity(collection) { error in
+            if error == nil {
+                var collections = self.taskLists[Section.taskCollections.rawValue]
+                collections.remove(at: indexPath.row)
+                self.taskLists[Section.taskCollections.rawValue] = collections
+            }
+            completionHandler(error)
+        }
+    }
+    
     func setObjectAsDefault(_ object: TaskList, completionHandler: @escaping (IndexPath?, Error?) -> Void) {
         taskService.setDefaultTaskCollection(collectionID: object.ID) { error in
             if error == nil {
