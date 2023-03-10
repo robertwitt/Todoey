@@ -155,6 +155,75 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         splitViewController?.showDetailViewController(rightNavigationController, sender: nil)
     }
     
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let taskList = model.object(at: indexPath)
+        guard taskList.isEditable else {
+            return nil
+        }
+        
+        let setDefaultAction = UIContextualAction(style: .normal, title: LocalizedStrings.TaskListView.setDefaultActionTitle) { _, _, completionHandler in
+            self.setDefaultTaskList(taskList, at: indexPath, completionHandler: completionHandler)
+        }
+        return UISwipeActionsConfiguration(actions: [setDefaultAction])
+    }
+    
+    private func setDefaultTaskList(_ taskList: TaskList, at indexPath: IndexPath, completionHandler: @escaping (Bool) -> Void) {
+        showFioriLoadingIndicator()
+        logger.info("Setting default task list in backend.")
+        model.setObjectAsDefault(taskList) { topIndexPath, error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Set default task list failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorSetDefaultTaskListTitle, error: error, viewController: self)
+                completionHandler(false)
+                return
+            }
+            if let topIndexPath = topIndexPath {
+                self.logger.info("Set default task list finished successfully.")
+                DispatchQueue.main.async {
+                    completionHandler(true)
+                    self.tableView.moveRow(at: indexPath, to: topIndexPath)
+                }
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let taskList = model.object(at: indexPath)
+        guard taskList.isEditable else {
+            return nil
+        }
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: LocalizedStrings.TaskListView.deleteActionTitle) { _, _, completionHandler in
+            self.deleteTaskList(at: indexPath, completionHandler: completionHandler)
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    private func deleteTaskList(at indexPath: IndexPath, completionHandler: @escaping (Bool) -> Void) {
+        showFioriLoadingIndicator()
+        logger.info("Deleting task collection in backend.")
+        model.removeObject(at: indexPath) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Delete task collection failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityDeletionTitle, error: error, viewController: self)
+                completionHandler(false)
+                return
+            }
+            self.logger.info("Delete task collection finished successfully.")
+            DispatchQueue.main.async {
+                completionHandler(true)
+                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityDeletionBody)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                if self.selectedIndex == indexPath {
+                    self.selectedIndex = nil
+                }
+                self.makeSelection()
+            }
+        }
+    }
+    
     // MARK: Handle highlighting of selected cell
 
     private func makeSelection() {
