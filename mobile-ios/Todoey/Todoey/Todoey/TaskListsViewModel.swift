@@ -84,6 +84,16 @@ class TaskListsViewModel {
         }
     }
     
+    func setObjectAsDefault(_ object: TaskList, completionHandler: @escaping (Error?) -> Void) {
+        taskService.setDefaultTaskCollection(collectionID: object.ID) { error in
+            if error == nil {
+                self.reloadData(completionHandler: completionHandler)
+            } else {
+                completionHandler(error)
+            }
+        }
+    }
+    
 }
 
 fileprivate enum Section: Int {

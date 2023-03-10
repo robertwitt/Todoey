@@ -35,6 +35,7 @@ class LocalizedStrings {
         static let errorLoadingData = NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up.")
         static let errorEntityCreationTitle = NSLocalizedString("keyErrorEntityCreationTitle", value: "Create entry failed", comment: "XTIT: Title of alert message about entity creation error.")
         static let entityCreationBody = NSLocalizedString("keyEntityCreationBody", value: "Created", comment: "XMSG: Title of alert message about successful entity creation.")
+        static let errorSetDefaultTaskListTitle = NSLocalizedString("keyErrorSetDefaultTaskListTitle", value: "Set default failed", comment: "")
     }
 
     enum OfflineOData {
@@ -69,6 +70,11 @@ class LocalizedStrings {
         static let indigo = NSLocalizedString("keyIndigo", value: "Indigo", comment: "")
         static let grey = NSLocalizedString("keyGrey", value: "Grey", comment: "")
         static let none = NSLocalizedString("keyNone", value: "None", comment: "")
+    }
+    
+    enum TaskListView {
+        static let setDefaultActionTitle = NSLocalizedString("keySetDefaultActionTitle", value: "Set Default", comment: "")
+        static let deleteActionTitle = NSLocalizedString("keyDeleteActionTitle", value: "Delete", comment: "")
     }
     
     enum TaskView {
