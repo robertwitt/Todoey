@@ -171,6 +171,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         let storyboard = UIStoryboard(name: "TaskCollections", bundle: nil)
         let navigationController = storyboard.instantiateViewController(withIdentifier: "TaskCollectionCreateViewController") as! UINavigationController
         navigationController.modalPresentationStyle = .popover
+        navigationController.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)
         
         let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
         viewController.collection = taskList as? TaskCollections
@@ -338,7 +339,25 @@ extension TaskListsViewController: TaskCollectionEditViewControllerDelegate {
     }
     
     private func updateTaskCollection(_ taskCollection: TaskCollections, from viewController: UIViewController) {
-        
+        showFioriLoadingIndicator()
+        logger.info("Creating task collection in backend.")
+        model.updateObject(taskCollection) { indexPath, error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Update task collection failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityUpdateTitle, error: error, viewController: self)
+                return
+            }
+            if let indexPath = indexPath {
+                self.logger.info("Update task collection finished successfully.")
+                DispatchQueue.main.async {
+                    viewController.dismiss(animated: true) {
+                        FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+        }
     }
     
 }

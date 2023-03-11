@@ -34,9 +34,11 @@ class LocalizedStrings {
         static let oDataServiceFailedMessage = NSLocalizedString("keyODataServiceFailedMessage", value: "OData service is not reachable, please onboard again.", comment: "")
         static let errorLoadingData = NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up.")
         static let errorEntityCreationTitle = NSLocalizedString("keyErrorEntityCreationTitle", value: "Create entry failed", comment: "XTIT: Title of alert message about entity creation error.")
-        static let entityCreationBody = NSLocalizedString("keyEntityCreationBody", value: "Created", comment: "XMSG: Title of alert message about successful entity creation.")
-        static let errorSetDefaultTaskListTitle = NSLocalizedString("keyErrorSetDefaultTaskListTitle", value: "Set default failed", comment: "")
+        static let errorEntityUpdateTitle = NSLocalizedString("keyErrorEntityUpdateTitle", value: "Update entry failed", comment: "")
         static let errorEntityDeletionTitle = NSLocalizedString("keyErrorEntityDeletionTitle", value: "Delete entry failed", comment: "")
+        static let errorSetDefaultTaskListTitle = NSLocalizedString("keyErrorSetDefaultTaskListTitle", value: "Set default failed", comment: "")
+        static let entityCreationBody = NSLocalizedString("keyEntityCreationBody", value: "Created", comment: "XMSG: Title of alert message about successful entity creation.")
+        static let entityUpdateBody = NSLocalizedString("keyEntityUpdateBody", value: "Updated", comment: "XMSG: Title of alert message about successful entity update.")
         static let entityDeletionBody = NSLocalizedString("keyEntityDeletionBody", value: "Deleted", comment: "XMSG: Title of alert message about successful entity deletion.")
     }
 
