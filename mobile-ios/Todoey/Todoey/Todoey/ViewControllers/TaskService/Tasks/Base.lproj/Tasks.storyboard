@@ -81,7 +81,7 @@
                             <outlet property="delegate" destination="AbA-MP-qfJ" id="QOm-q4-gCY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="sht-lU-R1A">
+                    <navigationItem key="navigationItem" title="Task Details" id="sht-lU-R1A">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="HZs-jd-fwP">
                             <connections>
                                 <segue destination="8XE-iP-P2X" kind="presentation" identifier="updateEntity" modalPresentationStyle="formSheet" id="Vnb-38-Ux4"/>
