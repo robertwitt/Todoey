@@ -143,7 +143,14 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     // MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectTaskList(at: indexPath)
+        if !tableView.isEditing {
+            selectTaskList(at: indexPath)
+            return
+        }
+        let taskList = model.object(at: indexPath)
+        if taskList.isEditable {
+            editTaskList(taskList, at: indexPath)
+        }
     }
     
     private func selectTaskList(at indexPath: IndexPath) {
@@ -158,6 +165,18 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         let rightNavigationController = mainStoryBoard.instantiateViewController(withIdentifier: "RightNavigationController") as! UINavigationController
         rightNavigationController.viewControllers = [viewController]
         splitViewController?.showDetailViewController(rightNavigationController, sender: nil)
+    }
+    
+    private func editTaskList(_ taskList: TaskList, at indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "TaskCollections", bundle: nil)
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "TaskCollectionCreateViewController") as! UINavigationController
+        navigationController.modalPresentationStyle = .popover
+        
+        let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
+        viewController.collection = taskList as? TaskCollections
+        viewController.delegate = self
+        
+        present(navigationController, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -277,9 +296,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         navigationController.popoverPresentationController?.barButtonItem = sender
         
         let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
-        let collection = TaskCollections()
-        collection.id = GuidValue.random()
-        viewController.collection = collection
+        viewController.collection = TaskCollections(withDefaults: false)
         viewController.delegate = self
         
         present(navigationController, animated: true)
@@ -290,6 +307,15 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
 extension TaskListsViewController: TaskCollectionEditViewControllerDelegate {
     
     func taskCollectionViewController(_ viewController: TaskCollectionEditViewController, didEndEditing taskCollection: TaskCollections) {
+        if taskCollection.id == nil {
+            taskCollection.id = GuidValue.random()
+            createTaskCollection(taskCollection, from: viewController)
+        } else {
+            updateTaskCollection(taskCollection, from: viewController)
+        }
+    }
+    
+    private func createTaskCollection(_ taskCollection: TaskCollections, from viewController: UIViewController) {
         showFioriLoadingIndicator()
         logger.info("Creating task collection in backend.")
         model.appendObject(taskCollection) { indexPath, error in
@@ -309,6 +335,10 @@ extension TaskListsViewController: TaskCollectionEditViewControllerDelegate {
                 }
             }
         }
+    }
+    
+    private func updateTaskCollection(_ taskCollection: TaskCollections, from viewController: UIViewController) {
+        
     }
     
 }
