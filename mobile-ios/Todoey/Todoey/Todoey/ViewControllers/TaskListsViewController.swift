@@ -31,9 +31,14 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         setupTableView()
         setupDataService()
         updateTable()
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
     private func setupTableView() {
@@ -153,6 +158,24 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         let rightNavigationController = mainStoryBoard.instantiateViewController(withIdentifier: "RightNavigationController") as! UINavigationController
         rightNavigationController.viewControllers = [viewController]
         splitViewController?.showDetailViewController(rightNavigationController, sender: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let taskList = model.object(at: indexPath)
+        return taskList.isEditable
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        let taskList = model.object(at: indexPath)
+        return taskList.isEditable ? .delete : .none
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let taskList = model.object(at: indexPath)
+        guard taskList.isEditable && editingStyle == .delete else {
+            return
+        }
+        deleteTaskList(at: indexPath) { committed in }
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
