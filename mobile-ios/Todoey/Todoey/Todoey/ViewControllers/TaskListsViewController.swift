@@ -31,9 +31,14 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         setupTableView()
         setupDataService()
         updateTable()
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
     private func setupTableView() {
@@ -138,7 +143,14 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     // MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectTaskList(at: indexPath)
+        if !tableView.isEditing {
+            selectTaskList(at: indexPath)
+            return
+        }
+        let taskList = model.object(at: indexPath)
+        if taskList.isEditable {
+            editTaskList(taskList, at: indexPath)
+        }
     }
     
     private func selectTaskList(at indexPath: IndexPath) {
@@ -153,6 +165,37 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         let rightNavigationController = mainStoryBoard.instantiateViewController(withIdentifier: "RightNavigationController") as! UINavigationController
         rightNavigationController.viewControllers = [viewController]
         splitViewController?.showDetailViewController(rightNavigationController, sender: nil)
+    }
+    
+    private func editTaskList(_ taskList: TaskList, at indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "TaskCollections", bundle: nil)
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "TaskCollectionCreateViewController") as! UINavigationController
+        navigationController.modalPresentationStyle = .popover
+        navigationController.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)
+        
+        let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
+        viewController.collection = taskList as? TaskCollections
+        viewController.delegate = self
+        
+        present(navigationController, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let taskList = model.object(at: indexPath)
+        return taskList.isEditable
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        let taskList = model.object(at: indexPath)
+        return taskList.isEditable ? .delete : .none
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let taskList = model.object(at: indexPath)
+        guard taskList.isEditable && editingStyle == .delete else {
+            return
+        }
+        deleteTaskList(at: indexPath) { committed in }
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -254,9 +297,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         navigationController.popoverPresentationController?.barButtonItem = sender
         
         let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
-        let collection = TaskCollections()
-        collection.id = GuidValue.random()
-        viewController.collection = collection
+        viewController.collection = TaskCollections(withDefaults: false)
         viewController.delegate = self
         
         present(navigationController, animated: true)
@@ -267,6 +308,15 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
 extension TaskListsViewController: TaskCollectionEditViewControllerDelegate {
     
     func taskCollectionViewController(_ viewController: TaskCollectionEditViewController, didEndEditing taskCollection: TaskCollections) {
+        if taskCollection.id == nil {
+            taskCollection.id = GuidValue.random()
+            createTaskCollection(taskCollection, from: viewController)
+        } else {
+            updateTaskCollection(taskCollection, from: viewController)
+        }
+    }
+    
+    private func createTaskCollection(_ taskCollection: TaskCollections, from viewController: UIViewController) {
         showFioriLoadingIndicator()
         logger.info("Creating task collection in backend.")
         model.appendObject(taskCollection) { indexPath, error in
@@ -282,6 +332,28 @@ extension TaskListsViewController: TaskCollectionEditViewControllerDelegate {
                     viewController.dismiss(animated: true) {
                         FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityCreationBody)
                         self.tableView.insertRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func updateTaskCollection(_ taskCollection: TaskCollections, from viewController: UIViewController) {
+        showFioriLoadingIndicator()
+        logger.info("Creating task collection in backend.")
+        model.updateObject(taskCollection) { indexPath, error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Update task collection failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityUpdateTitle, error: error, viewController: self)
+                return
+            }
+            if let indexPath = indexPath {
+                self.logger.info("Update task collection finished successfully.")
+                DispatchQueue.main.async {
+                    viewController.dismiss(animated: true) {
+                        FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
                     }
                 }
             }
