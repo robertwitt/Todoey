@@ -66,7 +66,26 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     }
     
     @objc func myDayPressed() {
+        showFioriLoadingIndicator()
+        logger.info("(Un-)Planning task for my day in backend.")
         
+        task.isPlannedForMyDay = !(task.isPlannedForMyDay ?? false)
+        let headers = HTTPHeaders()
+        headers.setHeader(withName: "If-Match", value: task.etag)
+        
+        dataService.updateEntity(task, headers: headers) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Un-)Planning task for my day failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityUpdateTitle, error: error, viewController: self)
+                return
+            }
+            self.logger.info("Un-)Planning task for my day finished successfully.")
+            DispatchQueue.main.async {
+                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
+                self.tableView.reloadData()
+            }
+        }
     }
     
     @objc func setDonePressed() {
@@ -84,4 +103,18 @@ fileprivate enum Row: Int {
     case setDone = 1
     case delete = 2
     static let count = 3
+}
+
+fileprivate extension Tasks {
+    
+    var etag: String {
+        if let entityTag = entityTag {
+            return entityTag
+        }
+        guard let lastModifiedAt = lastModifiedAt else {
+            return ""
+        }
+        return "W/\"\(lastModifiedAt)\""
+    }
+    
 }
