@@ -48,7 +48,27 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
     }
     
     @objc func taskUpdated(_ notification: Notification) {
+        guard let task = notification.userInfo?["Task"] as? Tasks else {
+            return
+        }
+        let index = tasks.firstIndex { $0.id == task.id }
         
+        if !taskList.shouldList(task: task), let index = index {
+            // Delete rows
+            tasks.remove(at: index)
+            tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            return
+        }
+        
+        if let index = index {
+            // Update row
+            tasks[index] = task
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        } else {
+            // Add row
+            tasks.append(task)
+            tableView.insertRows(at: [IndexPath(row: tasks.count - 1, section: 0)], with: .automatic)
+        }
     }
     
     @objc func taskRemoved(_ notification: Notification) {

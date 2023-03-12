@@ -21,6 +21,8 @@ protocol TaskList {
     var isEditable: Bool { get }
     var tasks: [Tasks] { get }
     
+    func shouldList(task: Tasks) -> Bool
+    
 }
 
 enum TaskListType {

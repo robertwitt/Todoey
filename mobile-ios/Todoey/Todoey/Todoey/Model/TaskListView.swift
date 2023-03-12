@@ -27,25 +27,41 @@ class TaskListView: TaskList {
         self.tasks = tasks
     }
     
-    static func myDay(tasks: [Tasks]) -> TaskListView {
-        let today = LocalDate.from(utc: Date.now)
-        let myDayTasks = tasks.filter { task in
-            if let isPlannedForMyDay = task.isPlannedForMyDay, isPlannedForMyDay {
-                return true
-            }
-            guard let dueDate = task.dueDate else {
-                return false
-            }
-            return dueDate <= today
+    func shouldList(task: Tasks) -> Bool {
+        switch (type) {
+        case .myDay:
+            return TaskListView.isTaskForMyDay(task)
+        case .tomorrow:
+            return TaskListView.isTaskForTomorrow(task)
+        default:
+            return false
         }
-        
+    }
+    
+    static func myDay(tasks: [Tasks]) -> TaskListView {
+        let myDayTasks = tasks.filter { isTaskForMyDay($0) }
         return TaskListView(title: LocalizedStrings.Model.myDayTaskListView, type: .myDay, tasks: myDayTasks)
     }
     
+    private static func isTaskForMyDay(_ task: Tasks) -> Bool {
+        let today = LocalDate.from(utc: Date.now)
+        if let isPlannedForMyDay = task.isPlannedForMyDay, isPlannedForMyDay {
+            return true
+        }
+        guard let dueDate = task.dueDate else {
+            return false
+        }
+        return dueDate <= today
+    }
+    
     static func tomorrow(tasks: [Tasks]) -> TaskListView {
-        let tomorrow = LocalDate.from(utc: Date.now.addingTimeInterval(86400))
-        let tomorrowsTasks = tasks.filter{ $0.dueDate != nil && $0.dueDate! == tomorrow }
+        let tomorrowsTasks = tasks.filter{ isTaskForTomorrow($0) }
         return TaskListView(title: LocalizedStrings.Model.tomorrowTaskListView, type: .tomorrow, tasks: tomorrowsTasks)
+    }
+    
+    private static func isTaskForTomorrow(_ task: Tasks) -> Bool {
+        let tomorrow = LocalDate.from(utc: Date.now.addingTimeInterval(86400))
+        return task.dueDate != nil && task.dueDate! == tomorrow
     }
     
 }
