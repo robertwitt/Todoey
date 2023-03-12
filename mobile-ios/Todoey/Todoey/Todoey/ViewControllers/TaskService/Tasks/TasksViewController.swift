@@ -14,9 +14,14 @@ import TaskServiceFmwk
 class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     
     var dataService: TaskService<OnlineODataProvider>!
-    var taskList: TaskList!
+    var taskList: TaskList! {
+        didSet {
+            tasks = taskList.tasks
+        }
+    }
     var loadingIndicator: FUILoadingIndicatorView?
 
+    private var tasks = [Tasks]()
     private let cellIdentifier = "TaskCell"
     private let logger = Logger.shared(named: "TasksViewControllerLogger")
 
@@ -24,6 +29,7 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         super.viewDidLoad()
         setupNavigationItem()
         setupTableView()
+        setupObserver()
     }
     
     private func setupNavigationItem() {
@@ -35,6 +41,47 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     }
+    
+    private func setupObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(taskUpdated), name: .taskUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(taskRemoved), name: .taskRemoved, object: nil)
+    }
+    
+    @objc func taskUpdated(_ notification: Notification) {
+        guard let task = notification.userInfo?["Task"] as? Tasks else {
+            return
+        }
+        let index = tasks.firstIndex { $0.id == task.id }
+        
+        if !taskList.shouldList(task: task), let index = index {
+            // Delete rows
+            tasks.remove(at: index)
+            tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            return
+        }
+        
+        if let index = index {
+            // Update row
+            tasks[index] = task
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        } else {
+            // Add row
+            tasks.append(task)
+            tableView.insertRows(at: [IndexPath(row: tasks.count - 1, section: 0)], with: .automatic)
+        }
+    }
+    
+    @objc func taskRemoved(_ notification: Notification) {
+        guard let task = notification.userInfo?["Task"] as? Tasks else {
+            return
+        }
+        let index = tasks.firstIndex { $0.id == task.id }
+        guard let index = index else {
+            return
+        }
+        tasks.remove(at: index)
+        tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,11 +91,11 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
     // MARK: Table view data source
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return taskList.tasks.count
+        return tasks.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let task = taskList.tasks[indexPath.row]
+        let task = tasks[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as! FUIObjectTableViewCell
         cell.iconImages = [task.priorityIcon.withRenderingMode(.alwaysTemplate)]
@@ -96,54 +143,4 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
 //        }
     }
 
-}
-
-fileprivate extension Tasks {
-    
-    var priorityIcon: UIImage {
-        guard let priorityCode = priorityCode else {
-            return UIImage()
-        }
-        switch priorityCode {
-        case 1:
-            return FUIIconLibrary.indicator.veryHighPriority
-        case 3:
-            return FUIIconLibrary.indicator.highPriority
-        case 5:
-            return FUIIconLibrary.indicator.mediumPriority
-        default:
-            return UIImage()
-        }
-    }
-    
-    var dueDateTime: Date? {
-        guard let dueDate = dueDate else {
-            return nil
-        }
-        let dateComponents = DateComponents(year: dueDate.year,
-                                            month: dueDate.month,
-                                            day: dueDate.day,
-                                            hour: dueTime?.hour,
-                                            minute: dueTime?.minute,
-                                            second: dueTime?.second)
-        return Calendar.current.date(from: dateComponents)
-    }
-    
-    var formattedDueDateTime: String? {
-        guard let dateTime = dueDateTime else {
-            return nil
-        }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = dueTime != nil ? .short : .none
-        return dateFormatter.string(from: dateTime)
-    }
-    
-    var isOverdue: Bool {
-        guard let dueDateTime = dueDateTime else {
-            return false
-        }
-        return dueDateTime < Date.now
-    }
-    
 }

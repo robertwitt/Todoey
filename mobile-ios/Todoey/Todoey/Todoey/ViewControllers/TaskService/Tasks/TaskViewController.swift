@@ -17,92 +17,25 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     var task: Tasks!
     var loadingIndicator: FUILoadingIndicatorView?
     
-    private var taskCollections = [TaskCollections]()
-    private var taskPriorities = [TaskPriorities]()
     private let logger = Logger.shared(named: "TaskViewControllerLogger")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
         setupTableView()
-        updateValueHelps()
-    }
-    
-    private func setupNavigationBar() {
-        navigationItem.leftItemsSupplementBackButton = true
-        navigationItem.title = task == nil ? LocalizedStrings.TaskView.createTaskTitle : LocalizedStrings.TaskView.editTaskTitle
     }
     
     private func setupTableView() {
-        tableView.register(FUITextFieldFormCell.self, forCellReuseIdentifier: FUITextFieldFormCell.reuseIdentifier)
-        tableView.register(FUIListPickerFormCell.self, forCellReuseIdentifier: FUIListPickerFormCell.reuseIdentifier)
-        tableView.register(FUIValuePickerFormCell.self, forCellReuseIdentifier: FUIValuePickerFormCell.reuseIdentifier)
-        tableView.register(FUIDatePickerFormCell.self, forCellReuseIdentifier: FUIDatePickerFormCell.reuseIdentifier)
-        tableView.register(FUISwitchFormCell.self, forCellReuseIdentifier: FUISwitchFormCell.reuseIdentifier)
+        let objectHeader = FUIObjectHeader()
+        objectHeader.headlineText = task.title
+        objectHeader.subheadlineText = task.collection?.title
+        objectHeader.statusImage = task.priorityIcon
+        objectHeader.substatusText = task.formattedDueDateTime
+        objectHeader.substatusLabel.textColor = task.isOverdue ? .preferredFioriColor(forStyle: .criticalLabel) : nil
+        tableView.tableHeaderView = objectHeader
         
-        tableView.estimatedSectionHeaderHeight = 10
-        tableView.estimatedRowHeight = 200
+        tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
-    }
-    
-    // MARK: Load data
-    
-    private func updateValueHelps() {
-        showFioriLoadingIndicator()
-        DispatchQueue.global().async {
-            self.loadValueHelps {
-                self.hideFioriLoadingIndicator()
-            }
-        }
-    }
-    
-    private func loadValueHelps(completionHandler: @escaping () -> Void) {
-        requestValueHelps { error in
-            defer {
-                completionHandler()
-            }
-            if let error = error {
-                AlertHelper.displayAlert(with: NSLocalizedString("keyErrorLoadingData", value: "Loading data failed!", comment: "XTIT: Title of loading data error pop up."), error: error, viewController: self)
-                self.logger.error("Could not update table. Error: \(error)", error: error)
-                return
-            }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.logger.info("Table updated successfully!")
-            }
-        }
-    }
-    
-    private func requestValueHelps(completionHandler: @escaping (Error?) -> Void) {
-        taskCollections = []
-        taskPriorities = []
-        
-        let batch = RequestBatch()
-        let queryCollections = DataQuery()
-            .from(dataService.entitySet(withName: "TaskCollections"))
-            .select(TaskCollections.id, TaskCollections.title)
-            .orderBy(TaskCollections.title)
-        batch.addQuery(queryCollections)
-        let queryPriorities = DataQuery()
-            .from(dataService.entitySet(withName: "TaskPriorities"))
-            .select(TaskPriorities.code, TaskPriorities.name)
-            .orderBy(TaskPriorities.code)
-        batch.addQuery(queryPriorities)
-        
-        dataService.processBatch(batch) { error in
-            if let error = error {
-                completionHandler(error)
-            }
-            do {
-                self.taskCollections = try batch.queryResult(for: queryCollections).entityList().toArray() as! [TaskCollections]
-                self.taskPriorities = try batch.queryResult(for: queryPriorities).entityList().toArray() as! [TaskPriorities]
-                completionHandler(nil)
-            } catch {
-                completionHandler(error)
-            }
-            
-        }
+        //tableView.separatorStyle = .none
     }
     
     // MARK: Table view data source
@@ -112,82 +45,118 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: FUIButtonFormCell.reuseIdentifier, for: indexPath) as! FUIButtonFormCell
         switch Row(rawValue: indexPath.row) {
-        case .title:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FUITextFieldFormCell.reuseIdentifier, for: indexPath) as! FUITextFieldFormCell
-            cell.keyName = LocalizedStrings.Model.taskTitle
-            cell.value = task.title ?? ""
-            cell.isEditable = true
-            cell.isStacked = false
-            cell.onChangeHandler = { newValue in
-                // TODO
-            }
+        case .myDay:
+            cell.button.titleLabel?.text = (task.isPlannedForMyDay ?? false) ? LocalizedStrings.TaskView.removeFromMyDayTitle : LocalizedStrings.TaskView.addToMyDayTitle
+            cell.button.addTarget(self, action: #selector(myDayPressed), for: .touchUpInside)
             return cell
-        case .collection:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FUIListPickerFormCell.reuseIdentifier, for: indexPath) as! FUIListPickerFormCell
-            cell.keyName = LocalizedStrings.Model.taskCollection
-            cell.value = taskCollections.count == 0 ? [] : [taskCollections.firstIndex { $0.id == task.collectionID }!]
-            cell.isEditable = true
-            cell.allowsMultipleSelection = false
-            cell.allowsEmptySelection = false
-            cell.valueLabel.text = task.collection?.title
-            cell.valueOptions = taskCollections.map { $0.title ?? "" }
-            cell.onChangeHandler = { [weak self] newValues in
-                // TODO newValues is array of index of selected item in valueOptions
-            }
+        case .setDone:
+            cell.button.titleLabel?.text = LocalizedStrings.TaskView.setDoneTitle
+            cell.button.addTarget(self, action: #selector(setDonePressed), for: .touchUpInside)
             return cell
-        case .priority:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FUIValuePickerFormCell.reuseIdentifier, for: indexPath) as! FUIValuePickerFormCell
-            cell.keyName = LocalizedStrings.Model.taskPriority
-            cell.value = taskPriorities.count == 0 ? 0 : (taskPriorities.firstIndex { $0.code == task.priorityCode } ?? -1) + 1
-            cell.valueOptions = [""] + taskPriorities.map { $0.name ?? "" }
-            cell.onChangeHandler = { valueIndex in
-                // TODO
-            }
-            return cell
-        case .dueDate:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FUIDatePickerFormCell.reuseIdentifier, for: indexPath) as! FUIDatePickerFormCell
-            cell.keyName = LocalizedStrings.Model.taskDueDate
-            cell.datePickerMode = .date
-            if let dueDate = task.dueDate?.date {
-                cell.value = dueDate
-            }
-            cell.onChangeHandler = { [weak self] newValue in
-                // TODO
-            }
-            return cell
-        case .dueTime:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FUIDatePickerFormCell.reuseIdentifier, for: indexPath) as! FUIDatePickerFormCell
-            cell.keyName = LocalizedStrings.Model.taskDueTime
-            cell.datePickerMode = .time
-            if let dueTime = task.dueTime?.date {
-                cell.value = dueTime
-            }
-            cell.onChangeHandler = { [weak self] newValue in
-                // TODO
-            }
-            return cell
-        case .isPlannedForMyDay:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FUISwitchFormCell.reuseIdentifier, for: indexPath) as! FUISwitchFormCell
-            cell.keyName = LocalizedStrings.Model.taskIsPlannedForMyDay
-            cell.value = task.isPlannedForMyDay ?? false
-            cell.onChangeHandler = { newValue in
-                // TODO
-            }
+        case .delete:
+            cell.button.titleLabel?.text = LocalizedStrings.TaskView.deleteTitle
+            cell.button.addTarget(self, action: #selector(deletePressed), for: .touchUpInside)
+            cell.setTintColor(.preferredFioriColor(forStyle: .negativeLabel), for: .normal)
             return cell
         default:
             return UITableViewCell()
         }
     }
     
+    @objc func myDayPressed() {
+        showFioriLoadingIndicator()
+        logger.info("(Un-)Planning task for my day in backend.")
+        
+        task.isPlannedForMyDay = !(task.isPlannedForMyDay ?? false)
+        
+        dataService.updateEntity(task, headers: requestHeaders) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Un-)Planning task for my day failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityUpdateTitle, error: error, viewController: self)
+                return
+            }
+            self.logger.info("Un-)Planning task for my day finished successfully.")
+            DispatchQueue.main.async {
+                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
+                self.tableView.reloadData()
+                self.postNotification(name: .taskUpdated)
+            }
+        }
+    }
+    
+    @objc func setDonePressed() {
+        showFioriLoadingIndicator()
+        logger.info("Setting task to done in backend.")
+        
+        dataService.setToDone(in: task, headers: requestHeaders) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Setting task to done failed: Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityUpdateTitle, error: error, viewController: self)
+                return
+            }
+            self.logger.info("Setting task to done finished successfully.")
+            DispatchQueue.main .async {
+                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
+                self.postNotification(name: .taskRemoved)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    @objc func deletePressed() {
+        showFioriLoadingIndicator()
+        logger.info("Deleting task in backend.")
+        
+        dataService.deleteEntity(task, headers: requestHeaders) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Deleting task failed: Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityDeletionTitle, error: error, viewController: self)
+                return
+            }
+            self.logger.info("Deleting task finished successfully.")
+            DispatchQueue.main .async {
+                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityDeletionBody)
+                self.postNotification(name: .taskRemoved)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    private var requestHeaders: HTTPHeaders {
+        let headers = HTTPHeaders()
+        headers.setHeader(withName: "If-Match", value: task.etag)
+        return headers
+
+    }
+    
+    private func postNotification(name: Notification.Name) {
+        NotificationCenter.default.post(name: name, object: nil, userInfo: ["Task": self.task!])
+    }
+    
 }
 
 fileprivate enum Row: Int {
-    case title = 0
-    case collection = 1
-    case priority = 2
-    case dueDate = 3
-    case dueTime = 4
-    case isPlannedForMyDay = 5
-    static let count = 6
+    case myDay = 0
+    case setDone = 1
+    case delete = 2
+    static let count = 3
+}
+
+fileprivate extension Tasks {
+    
+    var etag: String {
+        if let entityTag = entityTag {
+            return entityTag
+        }
+        guard let lastModifiedAt = lastModifiedAt else {
+            return ""
+        }
+        return "W/\"\(lastModifiedAt)\""
+    }
+    
 }

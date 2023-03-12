@@ -55,4 +55,8 @@ extension TaskCollections: TaskList {
         return true
     }
     
+    func shouldList(task: Tasks) -> Bool {
+        return task.collectionID == id
+    }
+    
 }
