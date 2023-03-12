@@ -14,9 +14,14 @@ import TaskServiceFmwk
 class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     
     var dataService: TaskService<OnlineODataProvider>!
-    var taskList: TaskList!
+    var taskList: TaskList! {
+        didSet {
+            tasks = taskList.tasks
+        }
+    }
     var loadingIndicator: FUILoadingIndicatorView?
 
+    private var tasks = [Tasks]()
     private let cellIdentifier = "TaskCell"
     private let logger = Logger.shared(named: "TasksViewControllerLogger")
 
@@ -24,6 +29,7 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         super.viewDidLoad()
         setupNavigationItem()
         setupTableView()
+        setupObserver()
     }
     
     private func setupNavigationItem() {
@@ -35,6 +41,27 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     }
+    
+    private func setupObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(taskUpdated), name: .taskUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(taskRemoved), name: .taskRemoved, object: nil)
+    }
+    
+    @objc func taskUpdated(_ notification: Notification) {
+        
+    }
+    
+    @objc func taskRemoved(_ notification: Notification) {
+        guard let task = notification.userInfo?["Task"] as? Tasks else {
+            return
+        }
+        let index = tasks.firstIndex { $0.id == task.id }
+        guard let index = index else {
+            return
+        }
+        tasks.remove(at: index)
+        tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,11 +71,11 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
     // MARK: Table view data source
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return taskList.tasks.count
+        return tasks.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let task = taskList.tasks[indexPath.row]
+        let task = tasks[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as! FUIObjectTableViewCell
         cell.iconImages = [task.priorityIcon.withRenderingMode(.alwaysTemplate)]

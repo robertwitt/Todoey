@@ -135,7 +135,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     }
     
     private func postNotification(name: Notification.Name) {
-        NotificationCenter.default.post(name: name, object: self, userInfo: ["Task": self.task!])
+        NotificationCenter.default.post(name: name, object: nil, userInfo: ["Task": self.task!])
     }
     
 }
