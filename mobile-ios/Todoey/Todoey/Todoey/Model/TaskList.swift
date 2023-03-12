@@ -19,7 +19,7 @@ protocol TaskList {
     var displayColor: UIColor? { get }
     var isDefault: Bool? { get }
     var isEditable: Bool { get }
-    var tasks: [Tasks] { get }
+    var tasks: [Tasks] { get set }
     
     func shouldList(task: Tasks) -> Bool
     

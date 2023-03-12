@@ -19,7 +19,7 @@ class TaskListView: TaskList {
     let displayColor: UIColor? = nil
     let isDefault: Bool? = false
     let isEditable = false
-    let tasks: [Tasks]
+    var tasks: [Tasks]
     
     private init(title: String?, type: TaskListType, tasks: [Tasks]) {
         self.title = title

@@ -33,6 +33,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         super.viewDidLoad()
         setupNavigationBar()
         setupTableView()
+        setupObserver()
         setupDataService()
         updateTable()
     }
@@ -50,6 +51,14 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         self.refreshControl = refreshControl
         tableView.addSubview(refreshControl)
+    }
+    
+    private func setupObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(taskListUpdated), name: .taskListUpdated, object: nil)
+    }
+    
+    @objc func taskListUpdated(_ notification: Notification) {
+        tableView.reloadData()
     }
     
     private func setupDataService() {
