@@ -70,10 +70,8 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
         logger.info("(Un-)Planning task for my day in backend.")
         
         task.isPlannedForMyDay = !(task.isPlannedForMyDay ?? false)
-        let headers = HTTPHeaders()
-        headers.setHeader(withName: "If-Match", value: task.etag)
         
-        dataService.updateEntity(task, headers: headers) { error in
+        dataService.updateEntity(task, headers: requestHeaders) { error in
             self.hideFioriLoadingIndicator()
             if let error = error {
                 self.logger.error("Un-)Planning task for my day failed. Error: \(error)", error: error)
@@ -84,16 +82,60 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
             DispatchQueue.main.async {
                 FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
                 self.tableView.reloadData()
+                self.postNotification(name: .taskUpdated)
             }
         }
     }
     
     @objc func setDonePressed() {
+        showFioriLoadingIndicator()
+        logger.info("Setting task to done in backend.")
         
+        dataService.setToDone(in: task, headers: requestHeaders) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Setting task to done failed: Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityUpdateTitle, error: error, viewController: self)
+                return
+            }
+            self.logger.info("Setting task to done finished successfully.")
+            DispatchQueue.main .async {
+                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
+                self.postNotification(name: .taskRemoved)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     @objc func deletePressed() {
+        showFioriLoadingIndicator()
+        logger.info("Deleting task in backend.")
         
+        dataService.deleteEntity(task, headers: requestHeaders) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Deleting task failed: Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityDeletionTitle, error: error, viewController: self)
+                return
+            }
+            self.logger.info("Deleting task finished successfully.")
+            DispatchQueue.main .async {
+                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityDeletionBody)
+                self.postNotification(name: .taskRemoved)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    private var requestHeaders: HTTPHeaders {
+        let headers = HTTPHeaders()
+        headers.setHeader(withName: "If-Match", value: task.etag)
+        return headers
+
+    }
+    
+    private func postNotification(name: Notification.Name) {
+        NotificationCenter.default.post(name: name, object: self, userInfo: ["Task": self.task!])
     }
     
 }
