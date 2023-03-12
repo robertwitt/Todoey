@@ -269,5 +269,10 @@ describe("Tasks", () => {
       { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
     );
     expect(status).to.equal(204);
+
+    const { data } = await GET(
+      "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9"
+    );
+    expect(data.status).to.equal("D");
   });
 });

@@ -78,10 +78,10 @@ module.exports = (srv) => {
   });
 
   srv.on("setToDone", Tasks, async (req) => {
-    const task = await req.query.columns("ID");
+    const tasks = await req.query.columns("ID");
     const db = await cds.connect.to("db");
     const { Tasks } = db.entities("de.robertwitt.todoey");
-    await db.update(Tasks).set({ status: "O" }).where({ ID: task.ID });
+    return db.update(Tasks).set({ status: "D" }).where({ ID: tasks[0].ID });
   });
 
   srv.on("getDefaultTaskCollection", (_req) =>
