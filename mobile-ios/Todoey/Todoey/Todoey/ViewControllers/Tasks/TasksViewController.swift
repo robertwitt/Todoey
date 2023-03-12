@@ -14,14 +14,9 @@ import TaskServiceFmwk
 class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     
     var dataService: TaskService<OnlineODataProvider>!
-    var taskList: TaskList! {
-        didSet {
-            tasks = taskList.tasks
-        }
-    }
+    var taskList: TaskList!
     var loadingIndicator: FUILoadingIndicatorView?
 
-    private var tasks = [Tasks]()
     private let cellIdentifier = "TaskCell"
     private let logger = Logger.shared(named: "TasksViewControllerLogger")
 
@@ -51,36 +46,43 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         guard let task = notification.userInfo?["Task"] as? Tasks else {
             return
         }
-        let index = tasks.firstIndex { $0.id == task.id }
+        let index = taskList.tasks.firstIndex { $0.id == task.id }
         
         if !taskList.shouldList(task: task), let index = index {
             // Delete rows
-            tasks.remove(at: index)
+            taskList.tasks.remove(at: index)
             tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            postTaskListUpdatedNotification()
             return
         }
         
         if let index = index {
             // Update row
-            tasks[index] = task
+            taskList.tasks[index] = task
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         } else {
             // Add row
-            tasks.append(task)
-            tableView.insertRows(at: [IndexPath(row: tasks.count - 1, section: 0)], with: .automatic)
+            taskList.tasks.append(task)
+            tableView.insertRows(at: [IndexPath(row: taskList.tasks.count - 1, section: 0)], with: .automatic)
         }
+        postTaskListUpdatedNotification()
     }
     
     @objc func taskRemoved(_ notification: Notification) {
         guard let task = notification.userInfo?["Task"] as? Tasks else {
             return
         }
-        let index = tasks.firstIndex { $0.id == task.id }
+        let index = taskList.tasks.firstIndex { $0.id == task.id }
         guard let index = index else {
             return
         }
-        tasks.remove(at: index)
+        taskList.tasks.remove(at: index)
         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        postTaskListUpdatedNotification()
+    }
+    
+    private func postTaskListUpdatedNotification() {
+        NotificationCenter.default.post(name: .taskListUpdated, object: nil, userInfo: ["TaskList": taskList!])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -91,11 +93,11 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
     // MARK: Table view data source
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return tasks.count
+        return taskList.tasks.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let task = tasks[indexPath.row]
+        let task = taskList.tasks[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as! FUIObjectTableViewCell
         cell.iconImages = [task.priorityIcon.withRenderingMode(.alwaysTemplate)]
