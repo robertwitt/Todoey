@@ -128,21 +128,44 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
             detailViewController.dataService = dataService
             detailViewController.task = taskList.tasks[indexPath.row]
         }
-//        else if segue.identifier == "addEntity" {
-//            // Show the Detail view with a new Entity, which can be filled to create on the server
-//            logger.info("Showing view to add new entity.")
-//            let dest = segue.destination as! UINavigationController
-//            let detailViewController = dest.viewControllers[0] as! TasksDetailViewController
-//            detailViewController.title = NSLocalizedString("keyAddEntityTitle", value: "Add Entity", comment: "XTIT: Title of add new entity screen.")
-//            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: detailViewController, action: #selector(detailViewController.createEntity))
-//            detailViewController.navigationItem.rightBarButtonItem = doneButton
-//            let cancelButton = UIBarButtonItem(title: NSLocalizedString("keyCancelButtonToGoPreviousScreen", value: "Cancel", comment: "XBUT: Title of Cancel button."), style: .plain, target: detailViewController, action: #selector(detailViewController.cancel))
-//            detailViewController.navigationItem.leftBarButtonItem = cancelButton
-//            detailViewController.allowsEditableCells = true
-//            detailViewController.tableUpdater = self
-//            detailViewController.dataService = dataService
-//            detailViewController.entitySetName = entitySetName
-//        }
+        else if segue.identifier == "addEntity" {
+            logger.info("Showing view to add new entity.")
+            let navigationController = segue.destination as! UINavigationController
+            let viewController = navigationController.viewControllers[0] as! TaskEditViewController
+            viewController.task = Tasks(withDefaults: false)
+            viewController.dataService = dataService
+            viewController.delegate = self
+        }
     }
 
+}
+
+extension TasksViewController: TaskEditViewControllerDelegate {
+    
+    func taskViewController(_ viewController: TaskEditViewController, didEndEditing task: TaskServiceFmwk.Tasks) {
+        showFioriLoadingIndicator()
+        logger.info("Creating task collection in backend.")
+        
+        task.id = GuidValue.random()
+        
+        dataService.createEntity(task) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Create task failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityCreationTitle, error: error, viewController: self)
+                return
+            }
+            self.logger.info("Create task finished successfully.")
+            DispatchQueue.main.async {
+                viewController.dismiss(animated: true) {
+                    FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityCreationBody)
+                    let indexPath = IndexPath(row: self.taskList.tasks.count, section: 0)
+                    self.taskList.tasks.append(task)
+                    self.tableView.insertRows(at: [indexPath], with: .automatic)
+                    self.postTaskListUpdatedNotification()
+                }
+            }
+        }
+    }
+    
 }

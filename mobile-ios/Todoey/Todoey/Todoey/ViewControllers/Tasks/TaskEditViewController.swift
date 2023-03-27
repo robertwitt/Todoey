@@ -82,7 +82,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         let batch = RequestBatch()
         let queryCollections = DataQuery()
             .from(dataService.entitySet(withName: "TaskCollections"))
-            .select(TaskCollections.id, TaskCollections.title)
+            .select(TaskCollections.id, TaskCollections.title, TaskCollections.isDefault_)
             .orderBy(TaskCollections.title)
         batch.addQuery(queryCollections)
         let queryPriorities = DataQuery()
@@ -125,7 +125,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         case .collection:
             let cell = tableView.dequeueReusableCell(withIdentifier: FUIListPickerFormCell.reuseIdentifier, for: indexPath) as! FUIListPickerFormCell
             cell.keyName = LocalizedStrings.Model.taskCollection
-            cell.value = taskCollections.count == 0 ? [] : [taskCollections.firstIndex { $0.id == task.collectionID }!]
+            cell.value = taskCollections.count == 0 ? [] : [taskCollections.firstIndex(where: referencedOrDefaultCollection(_:))!]
             cell.isEditable = true
             cell.allowsMultipleSelection = false
             cell.allowsEmptySelection = false
@@ -181,6 +181,13 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         default:
             return UITableViewCell()
         }
+    }
+    
+    private func referencedOrDefaultCollection(_ collection: TaskCollections) -> Bool {
+        guard let collectionID = task.collectionID else {
+            return collection.isDefault ?? false
+        }
+        return collectionID == task.collectionID
     }
     
     @IBAction func cancelPressed(_ sender: Any) {
