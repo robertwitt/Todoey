@@ -118,11 +118,9 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             let cell = tableView.dequeueReusableCell(withIdentifier: FUITextFieldFormCell.reuseIdentifier, for: indexPath) as! FUITextFieldFormCell
             cell.keyName = LocalizedStrings.Model.taskTitle
             cell.value = task.title ?? ""
+            cell.valueTextField.delegate = self
             cell.isEditable = true
             cell.isStacked = false
-            cell.onChangeHandler = { newValue in
-                self.task.title = newValue
-            }
             return cell
         case .collection:
             let cell = tableView.dequeueReusableCell(withIdentifier: FUIListPickerFormCell.reuseIdentifier, for: indexPath) as! FUIListPickerFormCell
@@ -191,6 +189,17 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     
     @IBAction func savePressed(_ sender: Any) {
         delegate?.taskViewController(self, didEndEditing: task)
+    }
+    
+}
+
+extension TaskEditViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = textField.text, let range = Range(range, in: text) {
+            task?.title = text.replacingCharacters(in: range, with: string)
+        }
+        return true
     }
     
 }

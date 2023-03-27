@@ -25,6 +25,12 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     }
     
     private func setupTableView() {
+        updateTableViewHeader()
+        tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    private func updateTableViewHeader() {
         let objectHeader = FUIObjectHeader()
         objectHeader.headlineText = task.title
         objectHeader.subheadlineText = task.collection?.title
@@ -32,10 +38,6 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
         objectHeader.substatusText = task.formattedDueDateTime
         objectHeader.substatusLabel.textColor = task.isOverdue ? .preferredFioriColor(forStyle: .criticalLabel) : nil
         tableView.tableHeaderView = objectHeader
-        
-        tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
-        tableView.rowHeight = UITableView.automaticDimension
-        //tableView.separatorStyle = .none
     }
     
     // MARK: Table view data source
@@ -155,6 +157,7 @@ extension TaskViewController: TaskEditViewControllerDelegate {
                 viewController?.dismiss(animated: true)
                 FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
                 self.task = task
+                self.updateTableViewHeader()
                 self.tableView.reloadData()
                 self.postNotification(name: .taskUpdated)
             }
