@@ -24,14 +24,8 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
         setupTableView()
         updateValueHelps()
-    }
-    
-    private func setupNavigationBar() {
-        navigationItem.leftItemsSupplementBackButton = true
-        navigationItem.title = task == nil ? LocalizedStrings.TaskView.createTaskTitle : LocalizedStrings.TaskView.editTaskTitle
     }
     
     private func setupTableView() {

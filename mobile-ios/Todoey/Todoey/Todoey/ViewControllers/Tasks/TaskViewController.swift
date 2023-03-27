@@ -128,6 +128,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let navigationController = segue.destination as! UINavigationController
         let viewController = navigationController.viewControllers[0] as! TaskEditViewController
+        viewController.title = LocalizedStrings.TaskView.editTaskTitle
         viewController.task = task
         viewController.dataService = dataService
         viewController.delegate = self

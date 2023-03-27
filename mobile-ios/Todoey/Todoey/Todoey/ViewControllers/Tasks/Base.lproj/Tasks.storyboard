@@ -109,7 +109,7 @@
             </objects>
             <point key="canvasLocation" x="1334" y="-595"/>
         </scene>
-        <!--Task Details-->
+        <!--Task Edit View Controller-->
         <scene sceneID="Lv5-ME-tIy">
             <objects>
                 <tableViewController id="PDk-ba-rk4" customClass="TaskEditViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -122,7 +122,7 @@
                             <outlet property="delegate" destination="PDk-ba-rk4" id="2tE-8P-KX0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Task Details" id="oCd-9A-8OH">
+                    <navigationItem key="navigationItem" id="oCd-9A-8OH">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="bVM-np-v6l">
                             <connections>
                                 <action selector="cancelPressed:" destination="PDk-ba-rk4" id="xV2-Lk-XA5"/>

@@ -132,6 +132,7 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
             logger.info("Showing view to add new entity.")
             let navigationController = segue.destination as! UINavigationController
             let viewController = navigationController.viewControllers[0] as! TaskEditViewController
+            viewController.title = LocalizedStrings.TaskView.createTaskTitle
             viewController.task = Tasks(withDefaults: false)
             viewController.dataService = dataService
             viewController.delegate = self
