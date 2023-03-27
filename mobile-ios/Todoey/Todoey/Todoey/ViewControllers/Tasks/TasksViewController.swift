@@ -46,6 +46,10 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         guard let task = notification.userInfo?["Task"] as? Tasks else {
             return
         }
+        updateTaskListAfterUpdating(task: task)
+    }
+    
+    private func updateTaskListAfterUpdating(task: Tasks) {
         let index = taskList.tasks.firstIndex { $0.id == task.id }
         
         if !taskList.shouldList(task: task), let index = index {
@@ -60,7 +64,7 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
             // Update row
             taskList.tasks[index] = task
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-        } else {
+        } else if taskList.shouldList(task: task) {
             // Add row
             taskList.tasks.append(task)
             tableView.insertRows(at: [IndexPath(row: taskList.tasks.count - 1, section: 0)], with: .automatic)
@@ -160,10 +164,7 @@ extension TasksViewController: TaskEditViewControllerDelegate {
             DispatchQueue.main.async {
                 viewController.dismiss(animated: true) {
                     FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityCreationBody)
-                    let indexPath = IndexPath(row: self.taskList.tasks.count, section: 0)
-                    self.taskList.tasks.append(task)
-                    self.tableView.insertRows(at: [indexPath], with: .automatic)
-                    self.postTaskListUpdatedNotification()
+                    self.updateTaskListAfterUpdating(task: task)
                 }
             }
         }
