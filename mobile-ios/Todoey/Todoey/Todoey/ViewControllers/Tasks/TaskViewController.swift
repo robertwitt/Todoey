@@ -25,6 +25,12 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     }
     
     private func setupTableView() {
+        updateTableViewHeader()
+        tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    private func updateTableViewHeader() {
         let objectHeader = FUIObjectHeader()
         objectHeader.headlineText = task.title
         objectHeader.subheadlineText = task.collection?.title
@@ -32,10 +38,6 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
         objectHeader.substatusText = task.formattedDueDateTime
         objectHeader.substatusLabel.textColor = task.isOverdue ? .preferredFioriColor(forStyle: .criticalLabel) : nil
         tableView.tableHeaderView = objectHeader
-        
-        tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
-        tableView.rowHeight = UITableView.automaticDimension
-        //tableView.separatorStyle = .none
     }
     
     // MARK: Table view data source
@@ -66,25 +68,8 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     }
     
     @objc func myDayPressed() {
-        showFioriLoadingIndicator()
-        logger.info("(Un-)Planning task for my day in backend.")
-        
         task.isPlannedForMyDay = !(task.isPlannedForMyDay ?? false)
-        
-        dataService.updateEntity(task, headers: requestHeaders) { error in
-            self.hideFioriLoadingIndicator()
-            if let error = error {
-                self.logger.error("Un-)Planning task for my day failed. Error: \(error)", error: error)
-                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityUpdateTitle, error: error, viewController: self)
-                return
-            }
-            self.logger.info("Un-)Planning task for my day finished successfully.")
-            DispatchQueue.main.async {
-                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
-                self.tableView.reloadData()
-                self.postNotification(name: .taskUpdated)
-            }
-        }
+        updateTask(task)
     }
     
     @objc func setDonePressed() {
@@ -136,6 +121,47 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     
     private func postNotification(name: Notification.Name) {
         NotificationCenter.default.post(name: name, object: nil, userInfo: ["Task": self.task!])
+    }
+    
+    // MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navigationController = segue.destination as! UINavigationController
+        let viewController = navigationController.viewControllers[0] as! TaskEditViewController
+        viewController.task = task
+        viewController.dataService = dataService
+        viewController.delegate = self
+    }
+    
+}
+
+extension TaskViewController: TaskEditViewControllerDelegate {
+    
+    func taskViewController(_ viewController: TaskEditViewController, didEndEditing task: TaskServiceFmwk.Tasks) {
+        updateTask(task, from: viewController)
+    }
+    
+    private func updateTask(_ task: Tasks, from viewController: UIViewController? = nil) {
+        showFioriLoadingIndicator()
+        logger.info("Updating task in backend.")
+        
+        dataService.updateEntity(task, headers: requestHeaders) { error in
+            self.hideFioriLoadingIndicator()
+            if let error = error {
+                self.logger.error("Update task failed. Error: \(error)", error: error)
+                AlertHelper.displayAlert(with: LocalizedStrings.OnlineOData.errorEntityUpdateTitle, error: error, viewController: self)
+                return
+            }
+            self.logger.info("Update task finished successfully.")
+            DispatchQueue.main.async {
+                viewController?.dismiss(animated: true)
+                FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityUpdateBody)
+                self.task = task
+                self.updateTableViewHeader()
+                self.tableView.reloadData()
+                self.postNotification(name: .taskUpdated)
+            }
+        }
     }
     
 }

@@ -16,6 +16,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     var dataService: TaskService<OnlineODataProvider>!
     var task: Tasks!
     var loadingIndicator: FUILoadingIndicatorView?
+    var delegate: TaskEditViewControllerDelegate?
     
     private var taskCollections = [TaskCollections]()
     private var taskPriorities = [TaskPriorities]()
@@ -117,11 +118,9 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             let cell = tableView.dequeueReusableCell(withIdentifier: FUITextFieldFormCell.reuseIdentifier, for: indexPath) as! FUITextFieldFormCell
             cell.keyName = LocalizedStrings.Model.taskTitle
             cell.value = task.title ?? ""
+            cell.valueTextField.delegate = self
             cell.isEditable = true
             cell.isStacked = false
-            cell.onChangeHandler = { newValue in
-                // TODO
-            }
             return cell
         case .collection:
             let cell = tableView.dequeueReusableCell(withIdentifier: FUIListPickerFormCell.reuseIdentifier, for: indexPath) as! FUIListPickerFormCell
@@ -132,8 +131,10 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             cell.allowsEmptySelection = false
             cell.valueLabel.text = task.collection?.title
             cell.valueOptions = taskCollections.map { $0.title ?? "" }
-            cell.onChangeHandler = { [weak self] newValues in
-                // TODO newValues is array of index of selected item in valueOptions
+            cell.onChangeHandler = { newValues in
+                let collection = self.taskCollections[newValues[0]]
+                self.task.collectionID = collection.id
+                self.task.collection = collection
             }
             return cell
         case .priority:
@@ -142,7 +143,9 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             cell.value = taskPriorities.count == 0 ? 0 : (taskPriorities.firstIndex { $0.code == task.priorityCode } ?? -1) + 1
             cell.valueOptions = [""] + taskPriorities.map { $0.name ?? "" }
             cell.onChangeHandler = { valueIndex in
-                // TODO
+                let priority = valueIndex == 0 ? nil : self.taskPriorities[valueIndex - 1]
+                self.task.priorityCode = priority?.code
+                self.task.priority = priority
             }
             return cell
         case .dueDate:
@@ -152,8 +155,8 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             if let dueDate = task.dueDate?.date {
                 cell.value = dueDate
             }
-            cell.onChangeHandler = { [weak self] newValue in
-                // TODO
+            cell.onChangeHandler = { newValue in
+                self.task.dueDate = LocalDate.from(utc: newValue)
             }
             return cell
         case .dueTime:
@@ -163,8 +166,8 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             if let dueTime = task.dueTime?.date {
                 cell.value = dueTime
             }
-            cell.onChangeHandler = { [weak self] newValue in
-                // TODO
+            cell.onChangeHandler = { newValue in
+                self.task.dueTime = LocalTime.from(utc: newValue)
             }
             return cell
         case .isPlannedForMyDay:
@@ -172,7 +175,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             cell.keyName = LocalizedStrings.Model.taskIsPlannedForMyDay
             cell.value = task.isPlannedForMyDay ?? false
             cell.onChangeHandler = { newValue in
-                // TODO
+                self.task.isPlannedForMyDay = newValue
             }
             return cell
         default:
@@ -180,6 +183,29 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         }
     }
     
+    @IBAction func cancelPressed(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    @IBAction func savePressed(_ sender: Any) {
+        delegate?.taskViewController(self, didEndEditing: task)
+    }
+    
+}
+
+extension TaskEditViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = textField.text, let range = Range(range, in: text) {
+            task?.title = text.replacingCharacters(in: range, with: string)
+        }
+        return true
+    }
+    
+}
+
+protocol TaskEditViewControllerDelegate {
+    func taskViewController(_ viewController: TaskEditViewController, didEndEditing task: Tasks)
 }
 
 fileprivate enum Row: Int {

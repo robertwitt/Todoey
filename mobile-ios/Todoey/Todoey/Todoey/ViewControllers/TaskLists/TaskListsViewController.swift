@@ -349,7 +349,7 @@ extension TaskListsViewController: TaskCollectionEditViewControllerDelegate {
     
     private func updateTaskCollection(_ taskCollection: TaskCollections, from viewController: UIViewController) {
         showFioriLoadingIndicator()
-        logger.info("Creating task collection in backend.")
+        logger.info("Updating task collection in backend.")
         model.updateObject(taskCollection) { indexPath, error in
             self.hideFioriLoadingIndicator()
             if let error = error {

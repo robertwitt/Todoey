@@ -118,12 +118,42 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="AbA-MP-qfJ" kind="relationship" relationship="rootViewController" id="tt5-tn-ZZX"/>
+                        <segue destination="PDk-ba-rk4" kind="relationship" relationship="rootViewController" id="fjM-Xl-gau"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zMw-ax-mWR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1334" y="-595"/>
+        </scene>
+        <!--Task Details-->
+        <scene sceneID="Lv5-ME-tIy">
+            <objects>
+                <tableViewController id="PDk-ba-rk4" customClass="TaskEditViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Rku-o2-8tm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="PDk-ba-rk4" id="yuH-xJ-icH"/>
+                            <outlet property="delegate" destination="PDk-ba-rk4" id="2tE-8P-KX0"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Task Details" id="oCd-9A-8OH">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="bVM-np-v6l">
+                            <connections>
+                                <action selector="cancelPressed:" destination="PDk-ba-rk4" id="xV2-Lk-XA5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="Z0p-Jl-zXL">
+                            <connections>
+                                <action selector="savePressed:" destination="PDk-ba-rk4" id="Rcm-g3-yMx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SyB-Xo-Vwo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2234" y="-595"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
