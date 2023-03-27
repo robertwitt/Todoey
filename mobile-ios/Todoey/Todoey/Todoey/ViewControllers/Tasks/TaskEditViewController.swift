@@ -121,7 +121,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             cell.isEditable = true
             cell.isStacked = false
             cell.onChangeHandler = { newValue in
-                // TODO
+                self.task.title = newValue
             }
             return cell
         case .collection:
@@ -133,8 +133,10 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             cell.allowsEmptySelection = false
             cell.valueLabel.text = task.collection?.title
             cell.valueOptions = taskCollections.map { $0.title ?? "" }
-            cell.onChangeHandler = { [weak self] newValues in
-                // TODO newValues is array of index of selected item in valueOptions
+            cell.onChangeHandler = { newValues in
+                let collection = self.taskCollections[newValues[0]]
+                self.task.collectionID = collection.id
+                self.task.collection = collection
             }
             return cell
         case .priority:
@@ -143,7 +145,9 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             cell.value = taskPriorities.count == 0 ? 0 : (taskPriorities.firstIndex { $0.code == task.priorityCode } ?? -1) + 1
             cell.valueOptions = [""] + taskPriorities.map { $0.name ?? "" }
             cell.onChangeHandler = { valueIndex in
-                // TODO
+                let priority = valueIndex == 0 ? nil : self.taskPriorities[valueIndex - 1]
+                self.task.priorityCode = priority?.code
+                self.task.priority = priority
             }
             return cell
         case .dueDate:
@@ -153,8 +157,8 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             if let dueDate = task.dueDate?.date {
                 cell.value = dueDate
             }
-            cell.onChangeHandler = { [weak self] newValue in
-                // TODO
+            cell.onChangeHandler = { newValue in
+                self.task.dueDate = LocalDate.from(utc: newValue)
             }
             return cell
         case .dueTime:
@@ -164,8 +168,8 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             if let dueTime = task.dueTime?.date {
                 cell.value = dueTime
             }
-            cell.onChangeHandler = { [weak self] newValue in
-                // TODO
+            cell.onChangeHandler = { newValue in
+                self.task.dueTime = LocalTime.from(utc: newValue)
             }
             return cell
         case .isPlannedForMyDay:
@@ -173,7 +177,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             cell.keyName = LocalizedStrings.Model.taskIsPlannedForMyDay
             cell.value = task.isPlannedForMyDay ?? false
             cell.onChangeHandler = { newValue in
-                // TODO
+                self.task.isPlannedForMyDay = newValue
             }
             return cell
         default:
