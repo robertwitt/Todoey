@@ -16,6 +16,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     var dataService: TaskService<OnlineODataProvider>!
     var task: Tasks!
     var loadingIndicator: FUILoadingIndicatorView?
+    var delegate: TaskEditViewControllerDelegate?
     
     private var taskCollections = [TaskCollections]()
     private var taskPriorities = [TaskPriorities]()
@@ -180,6 +181,18 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         }
     }
     
+    @IBAction func cancelPressed(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    @IBAction func savePressed(_ sender: Any) {
+        delegate?.taskViewController(self, didEndEditing: task)
+    }
+    
+}
+
+protocol TaskEditViewControllerDelegate {
+    func taskViewController(_ viewController: TaskEditViewController, didEndEditing task: Tasks)
 }
 
 fileprivate enum Row: Int {

@@ -138,6 +138,24 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
         NotificationCenter.default.post(name: name, object: nil, userInfo: ["Task": self.task!])
     }
     
+    // MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navigationController = segue.destination as! UINavigationController
+        let viewController = navigationController.viewControllers[0] as! TaskEditViewController
+        viewController.task = task
+        viewController.dataService = dataService
+        viewController.delegate = self
+    }
+    
+}
+
+extension TaskViewController: TaskEditViewControllerDelegate {
+    
+    func taskViewController(_ viewController: TaskEditViewController, didEndEditing task: TaskServiceFmwk.Tasks) {
+        
+    }
+    
 }
 
 fileprivate enum Row: Int {
