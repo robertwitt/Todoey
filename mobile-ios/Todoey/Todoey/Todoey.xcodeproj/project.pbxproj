@@ -42,6 +42,7 @@
 		9690532B299CD66B0046EA01 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9690532A299CD66B0046EA01 /* TaskList.swift */; };
 		9690532D299CD8230046EA01 /* TaskCollections+TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9690532C299CD8230046EA01 /* TaskCollections+TaskList.swift */; };
 		9690532F299CD9B50046EA01 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9690532E299CD9B50046EA01 /* TaskListView.swift */; };
+		969DB4C829D30890002CF59F /* SubTask+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969DB4C729D30890002CF59F /* SubTask+UI.swift */; };
 		96C4A94629BCDB4500AC562E /* Tasks+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C4A94529BCDB4500AC562E /* Tasks+UI.swift */; };
 		96C4A94929BD97C900AC562E /* NotificationCenter.Name+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C4A94829BD97C900AC562E /* NotificationCenter.Name+Notifications.swift */; };
 		96C4A94C29BDAD3400AC562E /* TaskListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C4A94A29BDAD3400AC562E /* TaskListsViewController.swift */; };
@@ -135,6 +136,7 @@
 		9690532A299CD66B0046EA01 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		9690532C299CD8230046EA01 /* TaskCollections+TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskCollections+TaskList.swift"; sourceTree = "<group>"; };
 		9690532E299CD9B50046EA01 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
+		969DB4C729D30890002CF59F /* SubTask+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SubTask+UI.swift"; sourceTree = "<group>"; };
 		96C4A94529BCDB4500AC562E /* Tasks+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tasks+UI.swift"; sourceTree = "<group>"; };
 		96C4A94829BD97C900AC562E /* NotificationCenter.Name+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NotificationCenter.Name+Notifications.swift"; path = "Utils/NotificationCenter.Name+Notifications.swift"; sourceTree = "<group>"; };
 		96C4A94A29BDAD3400AC562E /* TaskListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListsViewController.swift; path = ViewControllers/TaskLists/TaskListsViewController.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				9690532C299CD8230046EA01 /* TaskCollections+TaskList.swift */,
 				9690532E299CD9B50046EA01 /* TaskListView.swift */,
 				96C4A94529BCDB4500AC562E /* Tasks+UI.swift */,
+				969DB4C729D30890002CF59F /* SubTask+UI.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				9690532F299CD9B50046EA01 /* TaskListView.swift in Sources */,
 				004AF3FC82B1CD30D672FA73 /* SAPFioriLoadingIndicator.swift in Sources */,
 				81C31451C51AE746E46E5FE4 /* CellCreationHelper.swift in Sources */,
+				969DB4C829D30890002CF59F /* SubTask+UI.swift in Sources */,
 				0965865E534ABBD32824D0AC /* AlertHelper.swift in Sources */,
 				96C4A95829BDAD6A00AC562E /* TaskViewController.swift in Sources */,
 				5112B1131722EE032CDB86CE /* ODataOnboardingStep.swift in Sources */,

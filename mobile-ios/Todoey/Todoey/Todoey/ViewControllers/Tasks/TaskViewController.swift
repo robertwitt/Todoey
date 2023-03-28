@@ -26,7 +26,9 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     
     private func setupTableView() {
         updateTableViewHeader()
+        tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: FUIObjectTableViewCell.reuseIdentifier)
         tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
+        tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
     }
     
@@ -42,13 +44,45 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
     
     // MARK: Table view data source
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return Section.count
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Row.count
+        switch Section(rawValue: section) {
+        case .subTasks:
+            return task.subTasks.count
+        case .actions:
+            return ActionRow.count
+        default:
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch Section(rawValue: indexPath.section) {
+        case .subTasks:
+            return subTaskCell(forRowAt: indexPath)
+        case .actions:
+            return actionCell(forRowAt: indexPath)
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    private func subTaskCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let subTask = task.subTasks[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: FUIObjectTableViewCell.reuseIdentifier, for: indexPath as IndexPath) as! FUIObjectTableViewCell
+        cell.iconImages = [subTask.checkmark.withRenderingMode(.alwaysTemplate)]
+        cell.headlineText = subTask.title
+        
+        return cell
+    }
+    
+    private func actionCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FUIButtonFormCell.reuseIdentifier, for: indexPath) as! FUIButtonFormCell
-        switch Row(rawValue: indexPath.row) {
+        switch ActionRow(rawValue: indexPath.row) {
         case .myDay:
             cell.button.titleLabel?.text = (task.isPlannedForMyDay ?? false) ? LocalizedStrings.TaskView.removeFromMyDayTitle : LocalizedStrings.TaskView.addToMyDayTitle
             cell.button.addTarget(self, action: #selector(myDayPressed), for: .touchUpInside)
@@ -167,7 +201,13 @@ extension TaskViewController: TaskEditViewControllerDelegate {
     
 }
 
-fileprivate enum Row: Int {
+fileprivate enum Section: Int {
+    case subTasks = 0
+    case actions = 1
+    static let count = 2
+}
+
+fileprivate enum ActionRow: Int {
     case myDay = 0
     case setDone = 1
     case delete = 2
