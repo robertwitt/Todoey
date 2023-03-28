@@ -35,6 +35,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         tableView.register(FUIDatePickerFormCell.self, forCellReuseIdentifier: FUIDatePickerFormCell.reuseIdentifier)
         tableView.register(FUISwitchFormCell.self, forCellReuseIdentifier: FUISwitchFormCell.reuseIdentifier)
         tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: FUIObjectTableViewCell.reuseIdentifier)
+        tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
         
         tableView.estimatedSectionHeaderHeight = 10
         tableView.estimatedRowHeight = 200
@@ -114,7 +115,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         case .header:
             return HeaderRow.count
         case .subTasks:
-            return task.subTasks.count
+            return task.subTasks.count + 1
         default:
             return 0
         }
@@ -219,6 +220,13 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     }
     
     private func subTaskCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row < task.subTasks.count else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: FUIButtonFormCell.reuseIdentifier, for: indexPath as IndexPath) as! FUIButtonFormCell
+            cell.button.titleLabel?.text = LocalizedStrings.TaskView.addSubTaskTitle
+            cell.button.addTarget(self, action: #selector(addSubTaskPressed), for: .touchUpInside)
+            return cell
+        }
+        
         let subTask = task.subTasks[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: FUIObjectTableViewCell.reuseIdentifier, for: indexPath as IndexPath) as! FUIObjectTableViewCell
@@ -226,6 +234,27 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         cell.headlineText = subTask.title
         
         return cell
+    }
+    
+    @objc func addSubTaskPressed() {
+        let alert = UIAlertController(title: LocalizedStrings.TaskView.addSubTaskTitle, message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = LocalizedStrings.TaskView.subTaskTitlePlaceholder
+        }
+        
+        let action = UIAlertAction(title: LocalizedStrings.TaskView.addSubTaskCloseButtonTitle, style: .default) { _ in
+            guard let textField = alert.textFields?[0], let text = textField.text, !text.isEmpty else {
+                return
+            }
+            let subTask = SubTask()
+            subTask.title = text
+            let indexPath = IndexPath(row: self.task.subTasks.count, section: Section.subTasks.rawValue)
+            self.task.subTasks.append(subTask)
+            self.tableView.insertRows(at: [indexPath], with: .automatic)
+        }
+        alert.addAction(action)
+        
+        present(alert, animated: true)
     }
     
     // MARK: Table view delegate
@@ -240,7 +269,7 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return Section(rawValue: indexPath.section) == .subTasks
+        return Section(rawValue: indexPath.section) == .subTasks && indexPath.row < task.subTasks.count
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
