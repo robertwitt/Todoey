@@ -269,6 +269,10 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return isSubTaskRow(at: indexPath)
+    }
+    
+    private func isSubTaskRow(at indexPath: IndexPath) -> Bool {
         return Section(rawValue: indexPath.section) == .subTasks && indexPath.row < task.subTasks.count
     }
     
@@ -278,6 +282,18 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         }
         task.subTasks.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return isSubTaskRow(at: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard isSubTaskRow(at: destinationIndexPath) && sourceIndexPath != destinationIndexPath else {
+            return
+        }
+        task.subTasks.insert(task.subTasks.remove(at: sourceIndexPath.row), at: destinationIndexPath.row)
+        tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
     }
     
     @IBAction func cancelPressed(_ sender: Any) {
