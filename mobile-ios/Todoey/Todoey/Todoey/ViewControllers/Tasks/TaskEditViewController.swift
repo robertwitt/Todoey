@@ -230,6 +230,15 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     
     // MARK: Table view delegate
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard Section(rawValue: indexPath.section) == .subTasks else {
+            return
+        }
+        let subTask = task.subTasks[indexPath.row]
+        subTask.isDone = !(subTask.isDone ?? false)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return Section(rawValue: indexPath.section) == .subTasks
     }
