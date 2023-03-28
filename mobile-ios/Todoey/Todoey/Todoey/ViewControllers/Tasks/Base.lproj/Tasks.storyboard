@@ -37,7 +37,7 @@
                     <navigationItem key="navigationItem" id="KGn-oz-Wwf">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="FVD-WG-jSQ">
                             <connections>
-                                <segue destination="RAN-fi-s37" kind="presentation" identifier="addEntity" modalPresentationStyle="formSheet" id="1Mp-uy-6Yx"/>
+                                <segue destination="8XE-iP-P2X" kind="presentation" identifier="addEntity" id="3pc-HW-Pg5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -94,22 +94,6 @@
             <point key="canvasLocation" x="534" y="152"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="ch5-fM-FqB">
-            <objects>
-                <navigationController id="RAN-fi-s37" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Iqg-Xs-vAK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="AbA-MP-qfJ" kind="relationship" relationship="rootViewController" id="3Cy-1Q-3c5"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="94r-h3-mws" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-234" y="873"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="wJH-q1-mQE">
             <objects>
                 <navigationController id="8XE-iP-P2X" sceneMemberID="viewController">
@@ -125,7 +109,7 @@
             </objects>
             <point key="canvasLocation" x="1334" y="-595"/>
         </scene>
-        <!--Task Details-->
+        <!--Task Edit View Controller-->
         <scene sceneID="Lv5-ME-tIy">
             <objects>
                 <tableViewController id="PDk-ba-rk4" customClass="TaskEditViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -138,7 +122,7 @@
                             <outlet property="delegate" destination="PDk-ba-rk4" id="2tE-8P-KX0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Task Details" id="oCd-9A-8OH">
+                    <navigationItem key="navigationItem" id="oCd-9A-8OH">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="bVM-np-v6l">
                             <connections>
                                 <action selector="cancelPressed:" destination="PDk-ba-rk4" id="xV2-Lk-XA5"/>
@@ -157,7 +141,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="892-0b-67e"/>
+        <segue reference="3pc-HW-Pg5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

@@ -183,6 +183,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         navigationController.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath)
         
         let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
+        viewController.title = LocalizedStrings.TaskListView.editTaskCollectionTitle
         viewController.collection = taskList as? TaskCollections
         viewController.delegate = self
         
@@ -306,6 +307,7 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
         navigationController.popoverPresentationController?.barButtonItem = sender
         
         let viewController = navigationController.viewControllers[0] as! TaskCollectionEditViewController
+        viewController.title = LocalizedStrings.TaskListView.createTaskCollectionTitle
         viewController.collection = TaskCollections(withDefaults: false)
         viewController.delegate = self
         

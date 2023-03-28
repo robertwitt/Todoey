@@ -77,13 +77,15 @@ class LocalizedStrings {
     }
     
     enum TaskListView {
+        static let createTaskCollectionTitle = NSLocalizedString("keyCreateTaskCollectionTitle", value: "New Collection", comment: "")
+        static let editTaskCollectionTitle = NSLocalizedString("keyEditTaskCollectionTitle", value: "Edit Colletion", comment: "")
         static let setDefaultActionTitle = NSLocalizedString("keySetDefaultActionTitle", value: "Set Default", comment: "")
         static let deleteActionTitle = NSLocalizedString("keyDeleteActionTitle", value: "Delete", comment: "")
     }
     
     enum TaskView {
         static let createTaskTitle = NSLocalizedString("keyCreateTaskTitle", value: "New Task", comment: "")
-        static let editTaskTitle = NSLocalizedString("keyEditTaskTitle", value: "Task Details", comment: "")
+        static let editTaskTitle = NSLocalizedString("keyEditTaskTitle", value: "Edit Task", comment: "")
         static let addToMyDayTitle = NSLocalizedString("keyAddToMyDayTitle", value: "Add to My Day", comment: "")
         static let removeFromMyDayTitle = NSLocalizedString("keyRemoveFromMyDayTitle", value: "Remove from My Day", comment: "")
         static let setDoneTitle = NSLocalizedString("keySetDoneTitle", value: "Set Done", comment: "")

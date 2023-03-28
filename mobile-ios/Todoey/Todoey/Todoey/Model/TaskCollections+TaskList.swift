@@ -59,4 +59,13 @@ extension TaskCollections: TaskList {
         return task.collectionID == id
     }
     
+    func newTask() -> Tasks {
+        let task = Tasks(withDefaults: false)
+        task.id = GuidValue.random()
+        task.collectionID = id
+        task.collection = self
+        
+        return task
+    }
+    
 }

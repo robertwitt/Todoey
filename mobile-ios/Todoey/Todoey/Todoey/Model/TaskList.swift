@@ -23,6 +23,8 @@ protocol TaskList {
     
     func shouldList(task: Tasks) -> Bool
     
+    func newTask() -> Tasks
+    
 }
 
 enum TaskListType {

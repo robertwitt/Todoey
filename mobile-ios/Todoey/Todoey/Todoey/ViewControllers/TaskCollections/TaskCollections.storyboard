@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--New Collection-->
+        <!--Task Collection Edit View Controller-->
         <scene sceneID="uny-Ll-MkG">
             <objects>
                 <tableViewController id="B2E-0G-BOw" customClass="TaskCollectionEditViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -21,7 +21,7 @@
                             <outlet property="delegate" destination="B2E-0G-BOw" id="OKH-UU-kwU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Collection" id="YMe-fj-WCv">
+                    <navigationItem key="navigationItem" id="YMe-fj-WCv">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="GQV-FG-dEQ">
                             <connections>
                                 <action selector="cancelPressed:" destination="B2E-0G-BOw" id="24H-L5-Wad"/>

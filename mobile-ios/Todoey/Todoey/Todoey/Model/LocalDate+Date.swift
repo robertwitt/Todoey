@@ -11,6 +11,10 @@ import SAPOData
 
 extension LocalDate {
     
+    static var tomorrow: LocalDate {
+        return LocalDate.from(utc: Date.now.addingTimeInterval(86400))
+    }
+    
     var date: Date {
         let dateComponents = DateComponents(year: year, month: month, day: day)
         return Calendar.current.date(from: dateComponents)!
