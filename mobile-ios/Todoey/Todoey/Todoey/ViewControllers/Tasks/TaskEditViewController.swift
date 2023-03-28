@@ -102,12 +102,34 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     
     // MARK: Table view data source
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return Section.count
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Row.count
+        switch Section(rawValue: section) {
+        case .header:
+            return HeaderRow.count
+        case .subTasks:
+            return task.subTasks.count
+        default:
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch Row(rawValue: indexPath.row) {
+        switch Section(rawValue: indexPath.section) {
+        case .header:
+            return headerCell(forRowAt: indexPath)
+        case .subTasks:
+            return subTaskCell(forRowAt: indexPath)
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    private func headerCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch HeaderRow(rawValue: indexPath.row) {
         case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: FUITextFieldFormCell.reuseIdentifier, for: indexPath) as! FUITextFieldFormCell
             cell.keyName = LocalizedStrings.Model.taskTitle
@@ -177,6 +199,10 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         }
     }
     
+    private func subTaskCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
     private func referencedOrDefaultCollection(_ collection: TaskCollections) -> Bool {
         guard let collectionID = task.collectionID else {
             return collection.isDefault_ ?? false
@@ -209,7 +235,13 @@ protocol TaskEditViewControllerDelegate {
     func taskViewController(_ viewController: TaskEditViewController, didEndEditing task: Tasks)
 }
 
-fileprivate enum Row: Int {
+fileprivate enum Section: Int {
+    case header = 0
+    case subTasks = 1
+    static let count = 2
+}
+
+fileprivate enum HeaderRow: Int {
     case title = 0
     case collection = 1
     case priority = 2
