@@ -101,6 +101,18 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
         }
     }
     
+    // MARK: Table view data source
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard Section(rawValue: indexPath.section) == .subTasks else {
+            return
+        }
+        
+        let subTask = task.subTasks[indexPath.row]
+        subTask.isDone = !(subTask.isDone ?? false)
+        updateTask(task)
+    }
+    
     @objc func myDayPressed() {
         task.isPlannedForMyDay = !(task.isPlannedForMyDay ?? false)
         updateTask(task)
