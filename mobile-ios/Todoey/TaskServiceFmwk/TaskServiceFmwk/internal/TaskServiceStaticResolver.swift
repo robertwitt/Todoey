@@ -9,6 +9,7 @@ internal enum TaskServiceStaticResolver {
     }
 
     private static func resolve1() {
+        _ = TaskServiceMetadata.ComplexTypes.subTask
         _ = TaskServiceMetadata.EntityTypes.taskCollections
         _ = TaskServiceMetadata.EntityTypes.taskPriorities
         _ = TaskServiceMetadata.EntityTypes.taskPrioritiesTexts
@@ -22,6 +23,8 @@ internal enum TaskServiceStaticResolver {
         _ = TaskServiceMetadata.BoundActions.setToDone
         _ = TaskServiceMetadata.ActionImports.setDefaultTaskCollection
         _ = TaskServiceMetadata.FunctionImports.getDefaultTaskCollection
+        _ = SubTask.title
+        _ = SubTask.isDone
         _ = TaskCollections.id
         _ = TaskCollections.title
         _ = TaskCollections.color
@@ -45,6 +48,7 @@ internal enum TaskServiceStaticResolver {
         _ = Tasks.dueDate
         _ = Tasks.dueTime
         _ = Tasks.isPlannedForMyDay
+        _ = Tasks.subTasks
         _ = Tasks.lastModifiedAt
     }
 }
