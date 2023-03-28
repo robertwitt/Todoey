@@ -35,6 +35,7 @@ describe("Tasks", () => {
         priority_code: 5,
         isPlannedForMyDay: true,
         modifiedAt: "2023-01-31T00:00:00.000Z",
+        subTasks: [{ title: "Dark" }, { title: "Whites" }],
       },
       {
         ID: "5d41d440-e6c0-4daf-a4d0-221162f32d72",
@@ -73,16 +74,26 @@ describe("Tasks", () => {
     );
     expect(status).to.equal(200);
     expect(data.value).to.containSubset([
-      { ID: "d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9" },
-      { ID: "5d41d440-e6c0-4daf-a4d0-221162f32d72" },
+      {
+        ID: "d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
+        subTasks: [
+          { title: "Dark", isDone: false },
+          { title: "Whites", isDone: false },
+        ],
+      },
+      {
+        ID: "5d41d440-e6c0-4daf-a4d0-221162f32d72",
+        subTasks: [],
+      },
     ]);
   });
 
-  it("can be created in default collection", async () => {
+  it("can be created with sub-tasks in default collection", async () => {
     const { status, data } = await POST("/api/task/Tasks", {
       title: "New task",
       status: "O",
       isPlannedForMyDay: false,
+      subTasks: [{ title: "New sub-task" }],
     });
     expect(status).to.equal(201);
     expect(data.ID).not.to.equal(undefined);
@@ -91,6 +102,7 @@ describe("Tasks", () => {
       collection_ID: "f566a466-70d7-4fca-89e2-24a4f686f4a6",
       status: "O",
       isPlannedForMyDay: false,
+      subTasks: [{ title: "New sub-task", isDone: false }],
     });
   });
 
@@ -244,6 +256,40 @@ describe("Tasks", () => {
     );
     expect(status).to.equal(200);
     expect(data.status).to.equal("O");
+  });
+
+  it("can be updated with reordered list of sub-tasks", async () => {
+    const { status, data } = await PATCH(
+      "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
+      {
+        subTasks: [
+          { title: "Whites", isDone: false },
+          { title: "Dark", isDone: false },
+        ],
+      },
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
+    );
+    expect(status).to.equal(200);
+    expect(data).to.containSubset({
+      subTasks: [
+        { title: "Whites", isDone: false },
+        { title: "Dark", isDone: false },
+      ],
+    });
+  });
+
+  it("can be updated with removed sub-task", async () => {
+    const { status, data } = await PATCH(
+      "/api/task/Tasks/d8be86ee-e2fd-4ff3-b126-cbf21c9f18e9",
+      {
+        subTasks: [{ title: "Whites", isDone: false }],
+      },
+      { headers: { "If-Match": 'W/"2023-01-31T00:00:00.000Z"' } }
+    );
+    expect(status).to.equal(200);
+    expect(data).to.containSubset({
+      subTasks: [{ title: "Whites", isDone: false }],
+    });
   });
 
   it("can be deleted if still open", async () => {
