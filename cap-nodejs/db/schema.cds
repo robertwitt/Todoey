@@ -5,6 +5,8 @@ using {
   cuid,
   managed
 } from '@sap/cds/common';
+using {SubTask} from './types';
+
 
 entity TaskPriorities : CodeList {
   key code : UInt8;
@@ -17,13 +19,14 @@ type TaskStatus : String(1) enum {
 }
 
 entity Tasks : cuid, managed {
-  title             : String(40);
-  collection        : Association to one TaskCollections not null;
-  status            : TaskStatus not null default 'O';
-  priority          : Association to one TaskPriorities;
-  dueDate           : Date;
-  dueTime           : Time;
-  isPlannedForMyDay : Boolean not null default false;
+  title             :      String(40);
+  collection        :      Association to one TaskCollections not null;
+  status            :      TaskStatus not null default 'O';
+  priority          :      Association to one TaskPriorities;
+  dueDate           :      Date;
+  dueTime           :      Time;
+  isPlannedForMyDay :      Boolean not null default false;
+  subTasks          : many SubTask;
 }
 
 entity TaskCollections : cuid {

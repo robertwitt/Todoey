@@ -67,6 +67,15 @@ service TaskAPI {
       Description         : 'Flag whether or not a task is planned for the day'
     };
     lastModifiedAt    @odata.etag;
+    subTasks          @Core.Description: 'Sub-tasks of a task';
+  }
+
+  annotate SubTask {
+    title  @Core.Description: 'Title or subject of a sub-task';
+    isDone @Core            : {
+      ComputedDefaultValue: true,
+      Description         : 'Flag whether or not a sub-task is done'
+    }
   }
 
   function getDefaultTaskCollection() returns TaskCollections;
