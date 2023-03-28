@@ -137,7 +137,7 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
             let navigationController = segue.destination as! UINavigationController
             let viewController = navigationController.viewControllers[0] as! TaskEditViewController
             viewController.title = LocalizedStrings.TaskView.createTaskTitle
-            viewController.task = Tasks(withDefaults: false)
+            viewController.task = taskList.newTask()
             viewController.dataService = dataService
             viewController.delegate = self
         }
@@ -150,8 +150,6 @@ extension TasksViewController: TaskEditViewControllerDelegate {
     func taskViewController(_ viewController: TaskEditViewController, didEndEditing task: TaskServiceFmwk.Tasks) {
         showFioriLoadingIndicator()
         logger.info("Creating task collection in backend.")
-        
-        task.id = GuidValue.random()
         
         dataService.createEntity(task) { error in
             self.hideFioriLoadingIndicator()

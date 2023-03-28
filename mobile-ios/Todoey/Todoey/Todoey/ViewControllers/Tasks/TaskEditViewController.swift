@@ -179,9 +179,9 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     
     private func referencedOrDefaultCollection(_ collection: TaskCollections) -> Bool {
         guard let collectionID = task.collectionID else {
-            return collection.isDefault ?? false
+            return collection.isDefault_ ?? false
         }
-        return collectionID == task.collectionID
+        return collectionID == collection.id
     }
     
     @IBAction func cancelPressed(_ sender: Any) {

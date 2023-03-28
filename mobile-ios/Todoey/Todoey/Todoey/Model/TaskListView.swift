@@ -37,7 +37,22 @@ class TaskListView: TaskList {
             return false
         }
     }
+
+    func newTask() -> Tasks {
+        let task = Tasks(withDefaults: false)
+        task.id = GuidValue.random()
+        
+        if type == .myDay {
+            task.isPlannedForMyDay = true
+        }
+        if type == .tomorrow {
+            task.dueDate = LocalDate.tomorrow
+        }
+        
+        return task
+    }
     
+
     static func myDay(tasks: [Tasks]) -> TaskListView {
         let myDayTasks = tasks.filter { isTaskForMyDay($0) }
         return TaskListView(title: LocalizedStrings.Model.myDayTaskListView, type: .myDay, tasks: myDayTasks)
@@ -60,7 +75,7 @@ class TaskListView: TaskList {
     }
     
     private static func isTaskForTomorrow(_ task: Tasks) -> Bool {
-        let tomorrow = LocalDate.from(utc: Date.now.addingTimeInterval(86400))
+        let tomorrow = LocalDate.tomorrow
         return task.dueDate != nil && task.dueDate! == tomorrow
     }
     
