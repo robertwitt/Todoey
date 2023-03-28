@@ -34,11 +34,14 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         tableView.register(FUIValuePickerFormCell.self, forCellReuseIdentifier: FUIValuePickerFormCell.reuseIdentifier)
         tableView.register(FUIDatePickerFormCell.self, forCellReuseIdentifier: FUIDatePickerFormCell.reuseIdentifier)
         tableView.register(FUISwitchFormCell.self, forCellReuseIdentifier: FUISwitchFormCell.reuseIdentifier)
+        tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: FUIObjectTableViewCell.reuseIdentifier)
         
         tableView.estimatedSectionHeaderHeight = 10
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        
+        tableView.setEditing(true, animated: false)
     }
     
     // MARK: Load data
@@ -114,6 +117,15 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
             return task.subTasks.count
         default:
             return 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch Section(rawValue: section) {
+        case .subTasks:
+            return LocalizedStrings.Model.taskSubTasks
+        default:
+            return nil
         }
     }
     
@@ -199,15 +211,35 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         }
     }
     
-    private func subTaskCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
     private func referencedOrDefaultCollection(_ collection: TaskCollections) -> Bool {
         guard let collectionID = task.collectionID else {
             return collection.isDefault_ ?? false
         }
         return collectionID == collection.id
+    }
+    
+    private func subTaskCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let subTask = task.subTasks[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: FUIObjectTableViewCell.reuseIdentifier, for: indexPath as IndexPath) as! FUIObjectTableViewCell
+        cell.iconImages = [subTask.checkmark.withRenderingMode(.alwaysTemplate)]
+        cell.headlineText = subTask.title
+        
+        return cell
+    }
+    
+    // MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return Section(rawValue: indexPath.section) == .subTasks
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete && Section(rawValue: indexPath.section) == .subTasks else {
+            return
+        }
+        task.subTasks.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     @IBAction func cancelPressed(_ sender: Any) {

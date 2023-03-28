@@ -61,7 +61,8 @@ class LocalizedStrings {
         static let taskPriority = NSLocalizedString("keyTaskPriority", value: "Priority", comment: "")
         static let taskDueDate = NSLocalizedString("keyTaskDueDate", value: "Due Date", comment: "")
         static let taskDueTime = NSLocalizedString("keyTaskDueTime", value: "Due Time", comment: "")
-        static let taskIsPlannedForMyDay = NSLocalizedString("keyTaskIsPlannedForMyDay", value: "Add to My Day", comment: "")
+        static let taskIsPlannedForMyDay = NSLocalizedString("keyTaskIsPlannedForMyDay", value: "Is planned for My Day", comment: "")
+        static let taskSubTasks = NSLocalizedString("keyTaskSubTasks", value: "Sub-Tasks", comment: "")
     }
     
     enum TaskCollectionColor {
