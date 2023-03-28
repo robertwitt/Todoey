@@ -8,16 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		004AF3FC82B1CD30D672FA73 /* SAPFioriLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3E5C031FCFD3FD690A6A3E /* SAPFioriLoadingIndicator.swift */; };
-		08B160AD185DA145B0097A63 /* TaskCollectionsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78CA3A9EEDE480A915099D8 /* TaskCollectionsDetailViewController.swift */; };
 		0965865E534ABBD32824D0AC /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBD8C330580738D2484CF7C /* AlertHelper.swift */; };
-		0D73373926CE48C53FC79E10 /* TaskPrioritiesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CDB837D280FB1F6CDEEFC9 /* TaskPrioritiesDetailViewController.swift */; };
 		1277F7611F8E66AF0060AF58 /* SAPLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1277F7601F8E66AC0060AF58 /* SAPLogo@2x.png */; };
 		2850E2F95A0F338388CA0007 /* SharedFmwk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94C46E087539131CFD8685CE /* SharedFmwk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		289CBF66B1A6852C51AEFDDD /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98374C713FF9D708A7C69355 /* LocalizedStrings.swift */; };
 		333A80EAEE9F168651BD0477 /* ConfigurationProvider.plist in Resources */ = {isa = PBXBuildFile; fileRef = E99B01CCBBA039510688BA31 /* ConfigurationProvider.plist */; };
 		3C8360F0AD97A17A38A0D46D /* OnboardingFlowProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3E9747E5B2E4C5876C0BF4 /* OnboardingFlowProvider.swift */; };
 		413EE2D02331622E9E256D71 /* OnboardingErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC7D32C79493283CBA315B /* OnboardingErrorHandler.swift */; };
-		42ADDB2F23C518E680DA3D47 /* TaskPrioritiesTexts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7024F044861515580AFEB19 /* TaskPrioritiesTexts.storyboard */; };
 		4343E385E6655CFF2F9BB081 /* SAPCommon.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6B526ED01DA751139A81D5E9 /* SAPCommon.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4E17BC360DA74004F8D9E490 /* SAPFiori.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ECBD9243464D54DF135741A2 /* SAPFiori.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5112B1131722EE032CDB86CE /* ODataOnboardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4E6CDBF2855F0445F67DD2 /* ODataOnboardingStep.swift */; };
@@ -30,10 +27,7 @@
 		7CB86349E828354AEC1C4E7A /* ApplicationUIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91F31C2C5342D74F5F42761 /* ApplicationUIManager.swift */; };
 		7E5D9B070D47380DDAD1DB76 /* AppParameters.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B8E307A1E0AAB82DB1988C /* AppParameters.plist */; };
 		81C31451C51AE746E46E5FE4 /* CellCreationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CEF932A15F5602D18B8B9 /* CellCreationHelper.swift */; };
-		83B657C43E33EB2E97444810 /* TaskPrioritiesTextsMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4EA51D8C2E99B6680BBDCB /* TaskPrioritiesTextsMasterViewController.swift */; };
-		83D93F3F6D6249C777500F1A /* TaskCollectionsMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9574E9B2158CBD919AD40B56 /* TaskCollectionsMasterViewController.swift */; };
 		88A7859FD65D852CCBC3BBE2 /* SAPOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B80EE103256EE4F944FBB6C /* SAPOData.xcframework */; };
-		8CEBA2CBD867A0DDBDB090EE /* TaskService.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52FFC4EAF55E5AE03C0740C2 /* TaskService.storyboard */; };
 		8D0BB946A81680C40487029A /* TaskServiceFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051D9C68714006221269F220 /* TaskServiceFmwk.framework */; };
 		927B4DF53B311A3EE0B6510C /* TaskServiceFmwk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051D9C68714006221269F220 /* TaskServiceFmwk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		96539D4929A1259B00234A4D /* LocalDate+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96539D4829A1259B00234A4D /* LocalDate+Date.swift */; };
@@ -57,15 +51,10 @@
 		990155B65D59AFAEC98169F9 /* SAPFioriFlows.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E60320830AEAD2DC066604 /* SAPFioriFlows.xcframework */; };
 		9F43F5D84B31727AB52FCA39 /* SAPFoundation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9B0E23748A6189B30AAAF8 /* SAPFoundation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A54EBFCA417597ADAE6C36E9 /* SharedFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C46E087539131CFD8685CE /* SharedFmwk.framework */; };
-		B2F390471A9E48CA4C517E9E /* TaskServiceCollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA8E29A6B94821ECE9D4BC /* TaskServiceCollectionsViewController.swift */; };
-		B9CF2F0D16C93C4231D7CF52 /* TaskPrioritiesMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240007C5559695216A4A9B3C /* TaskPrioritiesMasterViewController.swift */; };
-		BADFE9A2EE610F24A085B683 /* TaskPrioritiesTextsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAB743D02EF49496F17D824 /* TaskPrioritiesTextsDetailViewController.swift */; };
 		BE4C59C4B3B820132F27DBD6 /* SAPOData.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0B80EE103256EE4F944FBB6C /* SAPOData.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CBCA7A991E3778A9001AF49E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBCA7A9B1E3778A9001AF49E /* Main.storyboard */; };
 		D2FFBEE615A6B73EC38C6EAE /* SAPCommon.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B526ED01DA751139A81D5E9 /* SAPCommon.xcframework */; };
-		D50C0FADD62BFED223081BB2 /* TaskPriorities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E784DD16335A3439F8AF640 /* TaskPriorities.storyboard */; };
 		F9AE93BF8F3EC774A7449091 /* SAPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9B0E23748A6189B30AAAF8 /* SAPFoundation.xcframework */; };
-		FE11155AC3CA5F3CD6202B4C /* TaskCollections.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF86DB0FEA658469E2186EB3 /* TaskCollections.storyboard */; };
 		FE13CDD83F3D276F08392C32 /* SAPFiori.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECBD9243464D54DF135741A2 /* SAPFiori.xcframework */; };
 /* End PBXBuildFile section */
 
@@ -100,23 +89,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0074746024292AA7016B6C38 /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskPriorities.storyboard; sourceTree = "<group>"; };
 		051D9C68714006221269F220 /* TaskServiceFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 1; path = TaskServiceFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3E5C031FCFD3FD690A6A3E /* SAPFioriLoadingIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SAPFioriLoadingIndicator.swift; path = Utils/SAPFioriLoadingIndicator.swift; sourceTree = "<group>"; };
-		0B4EA51D8C2E99B6680BBDCB /* TaskPrioritiesTextsMasterViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskPrioritiesTextsMasterViewController.swift; path = ViewControllers/TaskService/TaskPrioritiesTexts/TaskPrioritiesTextsMasterViewController.swift; sourceTree = "<group>"; };
 		0B80EE103256EE4F944FBB6C /* SAPOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOData.xcframework; path = "../Release-xcframework/SAPOData.xcframework"; sourceTree = "<group>"; };
 		0F4E6CDBF2855F0445F67DD2 /* ODataOnboardingStep.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ODataOnboardingStep.swift; path = OData/ODataOnboardingStep.swift; sourceTree = "<group>"; };
 		1277F7601F8E66AC0060AF58 /* SAPLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SAPLogo@2x.png"; sourceTree = "<group>"; };
 		15E60320830AEAD2DC066604 /* SAPFioriFlows.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFioriFlows.xcframework; path = "../Release-xcframework/SAPFioriFlows.xcframework"; sourceTree = "<group>"; };
 		1CBD8C330580738D2484CF7C /* AlertHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AlertHelper.swift; path = Utils/AlertHelper.swift; sourceTree = "<group>"; };
-		240007C5559695216A4A9B3C /* TaskPrioritiesMasterViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskPrioritiesMasterViewController.swift; path = ViewControllers/TaskService/TaskPriorities/TaskPrioritiesMasterViewController.swift; sourceTree = "<group>"; };
 		24EC7D32C79493283CBA315B /* OnboardingErrorHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OnboardingErrorHandler.swift; path = Onboarding/OnboardingErrorHandler.swift; sourceTree = "<group>"; };
 		2F3E9747E5B2E4C5876C0BF4 /* OnboardingFlowProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OnboardingFlowProvider.swift; path = Onboarding/OnboardingFlowProvider.swift; sourceTree = "<group>"; };
-		33CB2AEE5EAC75A610DCA55D /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskPrioritiesTexts.storyboard; sourceTree = "<group>"; };
 		423CEF932A15F5602D18B8B9 /* CellCreationHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CellCreationHelper.swift; path = Utils/CellCreationHelper.swift; sourceTree = "<group>"; };
 		5F9B0E23748A6189B30AAAF8 /* SAPFoundation.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFoundation.xcframework; path = "../Release-xcframework/SAPFoundation.xcframework"; sourceTree = "<group>"; };
 		6B526ED01DA751139A81D5E9 /* SAPCommon.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPCommon.xcframework; path = "../Release-xcframework/SAPCommon.xcframework"; sourceTree = "<group>"; };
-		73CDB837D280FB1F6CDEEFC9 /* TaskPrioritiesDetailViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskPrioritiesDetailViewController.swift; path = ViewControllers/TaskService/TaskPriorities/TaskPrioritiesDetailViewController.swift; sourceTree = "<group>"; };
 		7A1315B51D4B982000A5DA56 /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1315B81D4B982000A5DA56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7A1315C11D4B982000A5DA56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,10 +110,8 @@
 		7A5744B321DE553600E58C7F /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A5744B521DE553600E58C7F /* UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
 		7A5744B721DE553700E58C7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7CB78057A69786200A435EEE /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskCollections.storyboard; sourceTree = "<group>"; };
 		9137606C255ABF5C0059ABE7 /* Todoey.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Todoey.entitlements; sourceTree = "<group>"; };
 		94C46E087539131CFD8685CE /* SharedFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 1; path = SharedFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9574E9B2158CBD919AD40B56 /* TaskCollectionsMasterViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskCollectionsMasterViewController.swift; path = ViewControllers/TaskService/TaskCollections/TaskCollectionsMasterViewController.swift; sourceTree = "<group>"; };
 		96539D4829A1259B00234A4D /* LocalDate+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalDate+Date.swift"; sourceTree = "<group>"; };
 		96539D4A29A1260700234A4D /* LocalTime+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalTime+Date.swift"; sourceTree = "<group>"; };
 		96905327299CCAD00046EA01 /* ApplicationOnboardingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationOnboardingSession.swift; path = Onboarding/ApplicationOnboardingSession.swift; sourceTree = "<group>"; };
@@ -150,14 +132,10 @@
 		96C4A95B29BDAD8A00AC562E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ViewControllers/Tasks/Base.lproj/Tasks.storyboard; sourceTree = "<group>"; };
 		98374C713FF9D708A7C69355 /* LocalizedStrings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		B91F31C2C5342D74F5F42761 /* ApplicationUIManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApplicationUIManager.swift; path = Onboarding/ApplicationUIManager.swift; sourceTree = "<group>"; };
-		C002C2ED39EF58A412344209 /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskService.storyboard; sourceTree = "<group>"; };
 		CB909D801E38CA8800218154 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		CDAB743D02EF49496F17D824 /* TaskPrioritiesTextsDetailViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskPrioritiesTextsDetailViewController.swift; path = ViewControllers/TaskService/TaskPrioritiesTexts/TaskPrioritiesTextsDetailViewController.swift; sourceTree = "<group>"; };
-		D7FA8E29A6B94821ECE9D4BC /* TaskServiceCollectionsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceCollectionsViewController.swift; path = ViewControllers/TaskService/TaskServiceCollectionsViewController.swift; sourceTree = "<group>"; };
 		E3B8E307A1E0AAB82DB1988C /* AppParameters.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = AppParameters.plist; path = Onboarding/AppParameters.plist; sourceTree = "<group>"; };
 		E99B01CCBBA039510688BA31 /* ConfigurationProvider.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = ConfigurationProvider.plist; path = Onboarding/ConfigurationProvider.plist; sourceTree = "<group>"; };
 		ECBD9243464D54DF135741A2 /* SAPFiori.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFiori.xcframework; path = "../Release-xcframework/SAPFiori.xcframework"; sourceTree = "<group>"; };
-		F78CA3A9EEDE480A915099D8 /* TaskCollectionsDetailViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskCollectionsDetailViewController.swift; path = ViewControllers/TaskService/TaskCollections/TaskCollectionsDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,18 +174,6 @@
 				E3B8E307A1E0AAB82DB1988C /* AppParameters.plist */,
 			);
 			name = Onboarding;
-			sourceTree = "<group>";
-		};
-		59C7E806BBB0778C2D79AAD4 /* TaskService */ = {
-			isa = PBXGroup;
-			children = (
-				BB3C4651B86D397FBB3EAD4C /* TaskPrioritiesTexts */,
-				B0A83E780E67F5A9D6A37CA6 /* TaskPriorities */,
-				9FD292095426D35CCAD97163 /* TaskCollections */,
-				D7FA8E29A6B94821ECE9D4BC /* TaskServiceCollectionsViewController.swift */,
-				52FFC4EAF55E5AE03C0740C2 /* TaskService.storyboard */,
-			);
-			name = TaskService;
 			sourceTree = "<group>";
 		};
 		7A1315AC1D4B982000A5DA56 = {
@@ -325,16 +291,6 @@
 			name = OData;
 			sourceTree = "<group>";
 		};
-		9FD292095426D35CCAD97163 /* TaskCollections */ = {
-			isa = PBXGroup;
-			children = (
-				9574E9B2158CBD919AD40B56 /* TaskCollectionsMasterViewController.swift */,
-				F78CA3A9EEDE480A915099D8 /* TaskCollectionsDetailViewController.swift */,
-				EF86DB0FEA658469E2186EB3 /* TaskCollections.storyboard */,
-			);
-			name = TaskCollections;
-			sourceTree = "<group>";
-		};
 		A3EAD42A37F22F9D986A2FC3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,33 +302,12 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
-		B0A83E780E67F5A9D6A37CA6 /* TaskPriorities */ = {
-			isa = PBXGroup;
-			children = (
-				240007C5559695216A4A9B3C /* TaskPrioritiesMasterViewController.swift */,
-				73CDB837D280FB1F6CDEEFC9 /* TaskPrioritiesDetailViewController.swift */,
-				7E784DD16335A3439F8AF640 /* TaskPriorities.storyboard */,
-			);
-			name = TaskPriorities;
-			sourceTree = "<group>";
-		};
-		BB3C4651B86D397FBB3EAD4C /* TaskPrioritiesTexts */ = {
-			isa = PBXGroup;
-			children = (
-				0B4EA51D8C2E99B6680BBDCB /* TaskPrioritiesTextsMasterViewController.swift */,
-				CDAB743D02EF49496F17D824 /* TaskPrioritiesTextsDetailViewController.swift */,
-				E7024F044861515580AFEB19 /* TaskPrioritiesTexts.storyboard */,
-			);
-			name = TaskPrioritiesTexts;
-			sourceTree = "<group>";
-		};
 		CDB160785C7F8B9EA61D6CC2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				96539D44299EBFCC00234A4D /* TaskLists */,
 				96C06DAB29B46EE3006917ED /* TaskCollections */,
 				93FB04A3ECB5BC0E2977D7A9 /* Tasks */,
-				59C7E806BBB0778C2D79AAD4 /* TaskService */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -469,10 +404,6 @@
 				CBCA7A991E3778A9001AF49E /* Main.storyboard in Resources */,
 				1277F7611F8E66AF0060AF58 /* SAPLogo@2x.png in Resources */,
 				96C4A95329BDAD5100AC562E /* TaskCollections.storyboard in Resources */,
-				42ADDB2F23C518E680DA3D47 /* TaskPrioritiesTexts.storyboard in Resources */,
-				D50C0FADD62BFED223081BB2 /* TaskPriorities.storyboard in Resources */,
-				FE11155AC3CA5F3CD6202B4C /* TaskCollections.storyboard in Resources */,
-				8CEBA2CBD867A0DDBDB090EE /* TaskService.storyboard in Resources */,
 				333A80EAEE9F168651BD0477 /* ConfigurationProvider.plist in Resources */,
 				7E5D9B070D47380DDAD1DB76 /* AppParameters.plist in Resources */,
 				96C4A95C29BDAD8A00AC562E /* Tasks.storyboard in Resources */,
@@ -520,14 +451,7 @@
 				96C4A95129BDAD5100AC562E /* TaskCollectionColorViewModel.swift in Sources */,
 				7A1315B91D4B982000A5DA56 /* AppDelegate.swift in Sources */,
 				96C4A95929BDAD6A00AC562E /* TaskEditViewController.swift in Sources */,
-				83B657C43E33EB2E97444810 /* TaskPrioritiesTextsMasterViewController.swift in Sources */,
-				BADFE9A2EE610F24A085B683 /* TaskPrioritiesTextsDetailViewController.swift in Sources */,
-				B9CF2F0D16C93C4231D7CF52 /* TaskPrioritiesMasterViewController.swift in Sources */,
 				96C4A94629BCDB4500AC562E /* Tasks+UI.swift in Sources */,
-				0D73373926CE48C53FC79E10 /* TaskPrioritiesDetailViewController.swift in Sources */,
-				83D93F3F6D6249C777500F1A /* TaskCollectionsMasterViewController.swift in Sources */,
-				08B160AD185DA145B0097A63 /* TaskCollectionsDetailViewController.swift in Sources */,
-				B2F390471A9E48CA4C517E9E /* TaskServiceCollectionsViewController.swift in Sources */,
 				9690532F299CD9B50046EA01 /* TaskListView.swift in Sources */,
 				004AF3FC82B1CD30D672FA73 /* SAPFioriLoadingIndicator.swift in Sources */,
 				81C31451C51AE746E46E5FE4 /* CellCreationHelper.swift in Sources */,
@@ -568,30 +492,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		52FFC4EAF55E5AE03C0740C2 /* TaskService.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C002C2ED39EF58A412344209 /* Base */,
-			);
-			name = TaskService.storyboard;
-			path = ViewControllers/TaskService;
-			sourceTree = "<group>";
-		};
 		7A1315C31D4B982000A5DA56 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7A1315C41D4B982000A5DA56 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		7E784DD16335A3439F8AF640 /* TaskPriorities.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0074746024292AA7016B6C38 /* Base */,
-			);
-			name = TaskPriorities.storyboard;
-			path = ViewControllers/TaskService/TaskPriorities;
 			sourceTree = "<group>";
 		};
 		96C4A95A29BDAD8A00AC562E /* Tasks.storyboard */ = {
@@ -608,24 +514,6 @@
 				CB909D801E38CA8800218154 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E7024F044861515580AFEB19 /* TaskPrioritiesTexts.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				33CB2AEE5EAC75A610DCA55D /* Base */,
-			);
-			name = TaskPrioritiesTexts.storyboard;
-			path = ViewControllers/TaskService/TaskPrioritiesTexts;
-			sourceTree = "<group>";
-		};
-		EF86DB0FEA658469E2186EB3 /* TaskCollections.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7CB78057A69786200A435EEE /* Base */,
-			);
-			name = TaskCollections.storyboard;
-			path = ViewControllers/TaskService/TaskCollections;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
