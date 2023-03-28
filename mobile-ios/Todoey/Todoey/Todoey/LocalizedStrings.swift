@@ -61,7 +61,8 @@ class LocalizedStrings {
         static let taskPriority = NSLocalizedString("keyTaskPriority", value: "Priority", comment: "")
         static let taskDueDate = NSLocalizedString("keyTaskDueDate", value: "Due Date", comment: "")
         static let taskDueTime = NSLocalizedString("keyTaskDueTime", value: "Due Time", comment: "")
-        static let taskIsPlannedForMyDay = NSLocalizedString("keyTaskIsPlannedForMyDay", value: "Add to My Day", comment: "")
+        static let taskIsPlannedForMyDay = NSLocalizedString("keyTaskIsPlannedForMyDay", value: "Is planned for My Day", comment: "")
+        static let taskSubTasks = NSLocalizedString("keyTaskSubTasks", value: "Sub-Tasks", comment: "")
     }
     
     enum TaskCollectionColor {
@@ -90,6 +91,9 @@ class LocalizedStrings {
         static let removeFromMyDayTitle = NSLocalizedString("keyRemoveFromMyDayTitle", value: "Remove from My Day", comment: "")
         static let setDoneTitle = NSLocalizedString("keySetDoneTitle", value: "Set Done", comment: "")
         static let deleteTitle = NSLocalizedString("keyDeleteTitle", value: "Delete", comment: "")
+        static let addSubTaskTitle = NSLocalizedString("keyAddSubTaskTitle", value: "Add Sub-Task", comment: "")
+        static let subTaskTitlePlaceholder = NSLocalizedString("keySubTaskTitlePlaceholder", value: "Sub-task title ...", comment: "")
+        static let addSubTaskCloseButtonTitle = NSLocalizedString("keyAddSubTaskCloseButtonTitle", value: "Close", comment: "")
     }
     
 }

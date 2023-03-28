@@ -34,11 +34,15 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         tableView.register(FUIValuePickerFormCell.self, forCellReuseIdentifier: FUIValuePickerFormCell.reuseIdentifier)
         tableView.register(FUIDatePickerFormCell.self, forCellReuseIdentifier: FUIDatePickerFormCell.reuseIdentifier)
         tableView.register(FUISwitchFormCell.self, forCellReuseIdentifier: FUISwitchFormCell.reuseIdentifier)
+        tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: FUIObjectTableViewCell.reuseIdentifier)
+        tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
         
         tableView.estimatedSectionHeaderHeight = 10
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        
+        tableView.setEditing(true, animated: false)
     }
     
     // MARK: Load data
@@ -102,12 +106,43 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
     
     // MARK: Table view data source
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return Section.count
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Row.count
+        switch Section(rawValue: section) {
+        case .header:
+            return HeaderRow.count
+        case .subTasks:
+            return task.subTasks.count + 1
+        default:
+            return 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch Section(rawValue: section) {
+        case .subTasks:
+            return LocalizedStrings.Model.taskSubTasks
+        default:
+            return nil
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch Row(rawValue: indexPath.row) {
+        switch Section(rawValue: indexPath.section) {
+        case .header:
+            return headerCell(forRowAt: indexPath)
+        case .subTasks:
+            return subTaskCell(forRowAt: indexPath)
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    private func headerCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch HeaderRow(rawValue: indexPath.row) {
         case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: FUITextFieldFormCell.reuseIdentifier, for: indexPath) as! FUITextFieldFormCell
             cell.keyName = LocalizedStrings.Model.taskTitle
@@ -184,6 +219,83 @@ class TaskEditViewController: FUIFormTableViewController, SAPFioriLoadingIndicat
         return collectionID == collection.id
     }
     
+    private func subTaskCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row < task.subTasks.count else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: FUIButtonFormCell.reuseIdentifier, for: indexPath as IndexPath) as! FUIButtonFormCell
+            cell.button.titleLabel?.text = LocalizedStrings.TaskView.addSubTaskTitle
+            cell.button.addTarget(self, action: #selector(addSubTaskPressed), for: .touchUpInside)
+            return cell
+        }
+        
+        let subTask = task.subTasks[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: FUIObjectTableViewCell.reuseIdentifier, for: indexPath as IndexPath) as! FUIObjectTableViewCell
+        cell.iconImages = [subTask.checkmark.withRenderingMode(.alwaysTemplate)]
+        cell.headlineText = subTask.title
+        
+        return cell
+    }
+    
+    @objc func addSubTaskPressed() {
+        let alert = UIAlertController(title: LocalizedStrings.TaskView.addSubTaskTitle, message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = LocalizedStrings.TaskView.subTaskTitlePlaceholder
+        }
+        
+        let action = UIAlertAction(title: LocalizedStrings.TaskView.addSubTaskCloseButtonTitle, style: .default) { _ in
+            guard let textField = alert.textFields?[0], let text = textField.text, !text.isEmpty else {
+                return
+            }
+            let subTask = SubTask()
+            subTask.title = text
+            let indexPath = IndexPath(row: self.task.subTasks.count, section: Section.subTasks.rawValue)
+            self.task.subTasks.append(subTask)
+            self.tableView.insertRows(at: [indexPath], with: .automatic)
+        }
+        alert.addAction(action)
+        
+        present(alert, animated: true)
+    }
+    
+    // MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard Section(rawValue: indexPath.section) == .subTasks else {
+            return
+        }
+        let subTask = task.subTasks[indexPath.row]
+        subTask.isDone = !(subTask.isDone ?? false)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return isSubTaskRow(at: indexPath)
+    }
+    
+    private func isSubTaskRow(at indexPath: IndexPath) -> Bool {
+        return Section(rawValue: indexPath.section) == .subTasks && indexPath.row < task.subTasks.count
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete && Section(rawValue: indexPath.section) == .subTasks else {
+            return
+        }
+        task.subTasks.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return isSubTaskRow(at: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard isSubTaskRow(at: destinationIndexPath) && sourceIndexPath != destinationIndexPath else {
+            return
+        }
+        task.subTasks.insert(task.subTasks.remove(at: sourceIndexPath.row), at: destinationIndexPath.row)
+        tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
+    }
+    
     @IBAction func cancelPressed(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -209,7 +321,13 @@ protocol TaskEditViewControllerDelegate {
     func taskViewController(_ viewController: TaskEditViewController, didEndEditing task: Tasks)
 }
 
-fileprivate enum Row: Int {
+fileprivate enum Section: Int {
+    case header = 0
+    case subTasks = 1
+    static let count = 2
+}
+
+fileprivate enum HeaderRow: Int {
     case title = 0
     case collection = 1
     case priority = 2

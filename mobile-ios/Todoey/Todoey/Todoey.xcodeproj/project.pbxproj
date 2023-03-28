@@ -123,9 +123,9 @@
 		96C4A94829BD97C900AC562E /* NotificationCenter.Name+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NotificationCenter.Name+Notifications.swift"; path = "Utils/NotificationCenter.Name+Notifications.swift"; sourceTree = "<group>"; };
 		96C4A94A29BDAD3400AC562E /* TaskListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListsViewController.swift; path = ViewControllers/TaskLists/TaskListsViewController.swift; sourceTree = "<group>"; };
 		96C4A94B29BDAD3400AC562E /* TaskListsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListsViewModel.swift; path = ViewControllers/TaskLists/TaskListsViewModel.swift; sourceTree = "<group>"; };
-		96C4A94E29BDAD5100AC562E /* TaskCollectionColorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskCollectionColorViewModel.swift; path = Todoey/ViewControllers/TaskCollections/TaskCollectionColorViewModel.swift; sourceTree = SOURCE_ROOT; };
-		96C4A94F29BDAD5100AC562E /* TaskCollectionEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskCollectionEditViewController.swift; path = Todoey/ViewControllers/TaskCollections/TaskCollectionEditViewController.swift; sourceTree = SOURCE_ROOT; };
-		96C4A95029BDAD5100AC562E /* TaskCollections.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = TaskCollections.storyboard; path = Todoey/ViewControllers/TaskCollections/TaskCollections.storyboard; sourceTree = SOURCE_ROOT; };
+		96C4A94E29BDAD5100AC562E /* TaskCollectionColorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskCollectionColorViewModel.swift; path = Todoey/TaskCollections/TaskCollectionColorViewModel.swift; sourceTree = SOURCE_ROOT; };
+		96C4A94F29BDAD5100AC562E /* TaskCollectionEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskCollectionEditViewController.swift; path = Todoey/TaskCollections/TaskCollectionEditViewController.swift; sourceTree = SOURCE_ROOT; };
+		96C4A95029BDAD5100AC562E /* TaskCollections.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = TaskCollections.storyboard; path = Todoey/TaskCollections/TaskCollections.storyboard; sourceTree = SOURCE_ROOT; };
 		96C4A95429BDAD6A00AC562E /* TasksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TasksViewController.swift; path = ViewControllers/Tasks/TasksViewController.swift; sourceTree = "<group>"; };
 		96C4A95529BDAD6A00AC562E /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskViewController.swift; path = ViewControllers/Tasks/TaskViewController.swift; sourceTree = "<group>"; };
 		96C4A95629BDAD6A00AC562E /* TaskEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskEditViewController.swift; path = ViewControllers/Tasks/TaskEditViewController.swift; sourceTree = "<group>"; };
@@ -273,7 +273,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		96C06DAB29B46EE3006917ED /* TaskCollections */ = {
+		969DB4C929D315E4002CF59F /* TaskCollections */ = {
 			isa = PBXGroup;
 			children = (
 				96C4A94E29BDAD5100AC562E /* TaskCollectionColorViewModel.swift */,
@@ -306,7 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				96539D44299EBFCC00234A4D /* TaskLists */,
-				96C06DAB29B46EE3006917ED /* TaskCollections */,
+				969DB4C929D315E4002CF59F /* TaskCollections */,
 				93FB04A3ECB5BC0E2977D7A9 /* Tasks */,
 			);
 			name = ViewControllers;

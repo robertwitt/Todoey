@@ -101,7 +101,7 @@ class TaskViewController: FUIFormTableViewController, SAPFioriLoadingIndicator {
         }
     }
     
-    // MARK: Table view data source
+    // MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard Section(rawValue: indexPath.section) == .subTasks else {
