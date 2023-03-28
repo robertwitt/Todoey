@@ -13,6 +13,9 @@ internal enum TaskServiceMetadataChanges {
 
     private static func merge1(metadata: CSDLDocument) {
         _ = metadata
+        if !TaskServiceMetadata.ComplexTypes.subTask.isRemoved {
+            TaskServiceMetadata.ComplexTypes.subTask = metadata.complexType(withName: "TaskAPI.SubTask")
+        }
         if !TaskServiceMetadata.EntityTypes.taskCollections.isRemoved {
             TaskServiceMetadata.EntityTypes.taskCollections = metadata.entityType(withName: "TaskAPI.TaskCollections")
         }
@@ -51,6 +54,12 @@ internal enum TaskServiceMetadataChanges {
         }
         if !TaskServiceMetadata.FunctionImports.getDefaultTaskCollection.isRemoved {
             TaskServiceMetadata.FunctionImports.getDefaultTaskCollection = metadata.dataMethod(withName: "getDefaultTaskCollection")
+        }
+        if !SubTask.title.isRemoved {
+            SubTask.title = TaskServiceMetadata.ComplexTypes.subTask.property(withName: "title")
+        }
+        if !SubTask.isDone.isRemoved {
+            SubTask.isDone = TaskServiceMetadata.ComplexTypes.subTask.property(withName: "isDone")
         }
         if !TaskCollections.id.isRemoved {
             TaskCollections.id = TaskServiceMetadata.EntityTypes.taskCollections.property(withName: "ID")
@@ -120,6 +129,9 @@ internal enum TaskServiceMetadataChanges {
         }
         if !Tasks.isPlannedForMyDay.isRemoved {
             Tasks.isPlannedForMyDay = TaskServiceMetadata.EntityTypes.tasks.property(withName: "isPlannedForMyDay")
+        }
+        if !Tasks.subTasks.isRemoved {
+            Tasks.subTasks = TaskServiceMetadata.EntityTypes.tasks.property(withName: "subTasks")
         }
         if !Tasks.lastModifiedAt.isRemoved {
             Tasks.lastModifiedAt = TaskServiceMetadata.EntityTypes.tasks.property(withName: "lastModifiedAt")

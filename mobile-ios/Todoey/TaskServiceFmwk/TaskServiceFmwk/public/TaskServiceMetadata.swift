@@ -33,6 +33,29 @@ public enum TaskServiceMetadata {
         return TaskServiceMetadataParser.parsed.immortalize()
     }
 
+    public enum ComplexTypes {
+        private static let subTask__lock = ObjectBase()
+
+        private static var subTask_: ComplexType = TaskServiceMetadataParser.parsed.complexType(withName: "TaskAPI.SubTask")
+
+        public static var subTask: ComplexType {
+            get {
+                objc_sync_enter(subTask__lock)
+                defer { objc_sync_exit(subTask__lock) }
+                do {
+                    return TaskServiceMetadata.ComplexTypes.subTask_
+                }
+            }
+            set(value) {
+                objc_sync_enter(subTask__lock)
+                defer { objc_sync_exit(subTask__lock) }
+                do {
+                    TaskServiceMetadata.ComplexTypes.subTask_ = value
+                }
+            }
+        }
+    }
+
     public enum EntityTypes {
         private static let taskCollections__lock = ObjectBase()
 

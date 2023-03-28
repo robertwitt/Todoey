@@ -7,39 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		018FA343D83D41EB77C0D55B /* TaskServiceStaticResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62EBBB074CB6BD027525C01 /* TaskServiceStaticResolver.swift */; };
-		10E8999D8A7CFBA957007262 /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79E5A5B44D928258839CCD1 /* Tasks.swift */; };
-		160F981F91B78B13D7354862 /* TaskCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90E81034549C2297121E8E2 /* TaskCollections.swift */; };
-		35F10425696691C791B494B3 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20C8822F952A401A7A956C /* TaskService.swift */; };
-		4926FF702E53C85C72E8303F /* TaskServiceMetadataChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1A1134CDA1F6369905F7B /* TaskServiceMetadataChanges.swift */; };
-		5BA71F9CEF2E88C59B85B2C5 /* TaskServiceMetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6507A7204D1F7C6B539B55D5 /* TaskServiceMetadataParser.swift */; };
-		965F7FB1CA57EEBDFD501338 /* SAPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818CE23D5ADA635979361D83 /* SAPFoundation.xcframework */; };
-		9D9BEE1746FCBC989AB99A15 /* SAPOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839E906E25B00881FCF8810E /* SAPOData.xcframework */; };
-		BA8A5141BC14309C42D21918 /* TaskPrioritiesTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6438EC3688EDB421BBCE88F6 /* TaskPrioritiesTexts.swift */; };
-		C04127EEB6B331807E26F411 /* TaskPriorities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BD3D53BCD6FF64662A2F1B /* TaskPriorities.swift */; };
-		D6C5C52679984B3BA80269B6 /* TaskServiceMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171696E706400D43A33C9088 /* TaskServiceMetadata.swift */; };
-		E08F9B4705C63B8107406C12 /* TaskServiceMetadataText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7543CBA5A6400EA659BC7E9 /* TaskServiceMetadataText.swift */; };
-		E3D776C2C9FFCE159C243C36 /* SAPCommon.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8AFD33CBA067B32005006E7 /* SAPCommon.xcframework */; };
-		FDB610317180C288CC2561B6 /* TaskServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49C5076A40AD6A93BC0C17E /* TaskServiceFactory.swift */; };
+		006B1F225795800A2BCA5649 /* SAPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5663D3EDD0D7B6356213554C /* SAPFoundation.xcframework */; };
+		09E903C2C5261837E824296C /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0615491FED08458B9A50DF /* TaskService.swift */; };
+		2CE100AC4D91E2D130A6BCA8 /* TaskServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5110C5E02AE8AB018C7B428 /* TaskServiceFactory.swift */; };
+		37DC2F55064C6190E30E0CFB /* TaskPriorities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC3661A16CC3FFA57427769 /* TaskPriorities.swift */; };
+		3A25A95F128AF813E00B7EAF /* TaskServiceMetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE218B4D274A3DD9B1BA15A4 /* TaskServiceMetadataParser.swift */; };
+		49E8FA2BCE972646A20D6A9E /* TaskServiceMetadataText.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBCB319AEA96CF932EC16D /* TaskServiceMetadataText.swift */; };
+		4D9994F382A644664168BA7B /* TaskServiceMetadataChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA077163148EF1B81065E6C /* TaskServiceMetadataChanges.swift */; };
+		4DE2F35C6701EFECFE1CDBBA /* SAPCommon.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D36C914BF34AC8D3E62759E9 /* SAPCommon.xcframework */; };
+		504CF2C1C99DC1CFE3D46F3F /* TaskServiceMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC0374E574B11B101220072 /* TaskServiceMetadata.swift */; };
+		5D1239F3D0439F6368891BFE /* TaskPrioritiesTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F87B171AAEBD66CD838A25 /* TaskPrioritiesTexts.swift */; };
+		68850C1744C5B35264B1D6C2 /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6025DC2AC3849EBAB695BFC3 /* Tasks.swift */; };
+		7F2521B171D65212CAD6911A /* TaskCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55698EBBABF0F4EABE412FB4 /* TaskCollections.swift */; };
+		94390361C1D23957815D0925 /* TaskServiceStaticResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F339EC656E6F9B3295CFD86 /* TaskServiceStaticResolver.swift */; };
+		9CC7B93A7984769C4AA7C91D /* SAPOData.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA371EFAF17BEA02E297696 /* SAPOData.xcframework */; };
+		F6DDA999FD966D16947C71F5 /* SubTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEFD649B82501D005AD0AB9 /* SubTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		171696E706400D43A33C9088 /* TaskServiceMetadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceMetadata.swift; path = public/TaskServiceMetadata.swift; sourceTree = "<group>"; };
-		1D20C8822F952A401A7A956C /* TaskService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskService.swift; path = public/TaskService.swift; sourceTree = "<group>"; };
-		31BD3D53BCD6FF64662A2F1B /* TaskPriorities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskPriorities.swift; path = public/TaskPriorities.swift; sourceTree = "<group>"; };
-		6438EC3688EDB421BBCE88F6 /* TaskPrioritiesTexts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskPrioritiesTexts.swift; path = public/TaskPrioritiesTexts.swift; sourceTree = "<group>"; };
-		6507A7204D1F7C6B539B55D5 /* TaskServiceMetadataParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceMetadataParser.swift; path = internal/TaskServiceMetadataParser.swift; sourceTree = "<group>"; };
-		818CE23D5ADA635979361D83 /* SAPFoundation.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFoundation.xcframework; path = "../Release-xcframework/SAPFoundation.xcframework"; sourceTree = "<group>"; };
-		839E906E25B00881FCF8810E /* SAPOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOData.xcframework; path = "../Release-xcframework/SAPOData.xcframework"; sourceTree = "<group>"; };
+		09F87B171AAEBD66CD838A25 /* TaskPrioritiesTexts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskPrioritiesTexts.swift; path = public/TaskPrioritiesTexts.swift; sourceTree = "<group>"; };
+		2EC0374E574B11B101220072 /* TaskServiceMetadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceMetadata.swift; path = public/TaskServiceMetadata.swift; sourceTree = "<group>"; };
+		55698EBBABF0F4EABE412FB4 /* TaskCollections.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskCollections.swift; path = public/TaskCollections.swift; sourceTree = "<group>"; };
+		5663D3EDD0D7B6356213554C /* SAPFoundation.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPFoundation.xcframework; path = "../Release-xcframework/SAPFoundation.xcframework"; sourceTree = "<group>"; };
+		6025DC2AC3849EBAB695BFC3 /* Tasks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Tasks.swift; path = public/Tasks.swift; sourceTree = "<group>"; };
+		7AA077163148EF1B81065E6C /* TaskServiceMetadataChanges.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceMetadataChanges.swift; path = internal/TaskServiceMetadataChanges.swift; sourceTree = "<group>"; };
 		91C75DB92463F04100ECC4ED /* TaskServiceFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TaskServiceFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91C75DBD2463F04100ECC4ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C8AFD33CBA067B32005006E7 /* SAPCommon.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPCommon.xcframework; path = "../Release-xcframework/SAPCommon.xcframework"; sourceTree = "<group>"; };
-		CAA1A1134CDA1F6369905F7B /* TaskServiceMetadataChanges.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceMetadataChanges.swift; path = internal/TaskServiceMetadataChanges.swift; sourceTree = "<group>"; };
-		D49C5076A40AD6A93BC0C17E /* TaskServiceFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceFactory.swift; path = internal/TaskServiceFactory.swift; sourceTree = "<group>"; };
-		E62EBBB074CB6BD027525C01 /* TaskServiceStaticResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceStaticResolver.swift; path = internal/TaskServiceStaticResolver.swift; sourceTree = "<group>"; };
-		F7543CBA5A6400EA659BC7E9 /* TaskServiceMetadataText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceMetadataText.swift; path = internal/TaskServiceMetadataText.swift; sourceTree = "<group>"; };
-		F79E5A5B44D928258839CCD1 /* Tasks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Tasks.swift; path = public/Tasks.swift; sourceTree = "<group>"; };
-		F90E81034549C2297121E8E2 /* TaskCollections.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskCollections.swift; path = public/TaskCollections.swift; sourceTree = "<group>"; };
+		9C0615491FED08458B9A50DF /* TaskService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskService.swift; path = public/TaskService.swift; sourceTree = "<group>"; };
+		9F339EC656E6F9B3295CFD86 /* TaskServiceStaticResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceStaticResolver.swift; path = internal/TaskServiceStaticResolver.swift; sourceTree = "<group>"; };
+		AE218B4D274A3DD9B1BA15A4 /* TaskServiceMetadataParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceMetadataParser.swift; path = internal/TaskServiceMetadataParser.swift; sourceTree = "<group>"; };
+		AEEBCB319AEA96CF932EC16D /* TaskServiceMetadataText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceMetadataText.swift; path = internal/TaskServiceMetadataText.swift; sourceTree = "<group>"; };
+		D36C914BF34AC8D3E62759E9 /* SAPCommon.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPCommon.xcframework; path = "../Release-xcframework/SAPCommon.xcframework"; sourceTree = "<group>"; };
+		DCA371EFAF17BEA02E297696 /* SAPOData.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = SAPOData.xcframework; path = "../Release-xcframework/SAPOData.xcframework"; sourceTree = "<group>"; };
+		DDEFD649B82501D005AD0AB9 /* SubTask.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubTask.swift; path = public/SubTask.swift; sourceTree = "<group>"; };
+		F5110C5E02AE8AB018C7B428 /* TaskServiceFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskServiceFactory.swift; path = internal/TaskServiceFactory.swift; sourceTree = "<group>"; };
+		FDC3661A16CC3FFA57427769 /* TaskPriorities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskPriorities.swift; path = public/TaskPriorities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,35 +49,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				965F7FB1CA57EEBDFD501338 /* SAPFoundation.xcframework in Frameworks */,
-				9D9BEE1746FCBC989AB99A15 /* SAPOData.xcframework in Frameworks */,
-				E3D776C2C9FFCE159C243C36 /* SAPCommon.xcframework in Frameworks */,
+				4DE2F35C6701EFECFE1CDBBA /* SAPCommon.xcframework in Frameworks */,
+				9CC7B93A7984769C4AA7C91D /* SAPOData.xcframework in Frameworks */,
+				006B1F225795800A2BCA5649 /* SAPFoundation.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		291AEC88C82036B4CDB5540D /* internal */ = {
+		02BE05780D00E3A021ECCB32 /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				E62EBBB074CB6BD027525C01 /* TaskServiceStaticResolver.swift */,
-				F7543CBA5A6400EA659BC7E9 /* TaskServiceMetadataText.swift */,
-				6507A7204D1F7C6B539B55D5 /* TaskServiceMetadataParser.swift */,
-				CAA1A1134CDA1F6369905F7B /* TaskServiceMetadataChanges.swift */,
-				D49C5076A40AD6A93BC0C17E /* TaskServiceFactory.swift */,
+				9F339EC656E6F9B3295CFD86 /* TaskServiceStaticResolver.swift */,
+				AEEBCB319AEA96CF932EC16D /* TaskServiceMetadataText.swift */,
+				AE218B4D274A3DD9B1BA15A4 /* TaskServiceMetadataParser.swift */,
+				7AA077163148EF1B81065E6C /* TaskServiceMetadataChanges.swift */,
+				F5110C5E02AE8AB018C7B428 /* TaskServiceFactory.swift */,
 			);
 			name = internal;
 			sourceTree = "<group>";
 		};
-		7339EB62289BFF61CA856283 /* Frameworks */ = {
+		49DD82A03428C7C3EB6FD47C /* public */ = {
 			isa = PBXGroup;
 			children = (
-				818CE23D5ADA635979361D83 /* SAPFoundation.xcframework */,
-				839E906E25B00881FCF8810E /* SAPOData.xcframework */,
-				C8AFD33CBA067B32005006E7 /* SAPCommon.xcframework */,
+				6025DC2AC3849EBAB695BFC3 /* Tasks.swift */,
+				2EC0374E574B11B101220072 /* TaskServiceMetadata.swift */,
+				9C0615491FED08458B9A50DF /* TaskService.swift */,
+				09F87B171AAEBD66CD838A25 /* TaskPrioritiesTexts.swift */,
+				FDC3661A16CC3FFA57427769 /* TaskPriorities.swift */,
+				55698EBBABF0F4EABE412FB4 /* TaskCollections.swift */,
+				DDEFD649B82501D005AD0AB9 /* SubTask.swift */,
 			);
-			name = Frameworks;
+			name = public;
 			sourceTree = "<group>";
 		};
 		91C75DAF2463F04100ECC4ED = {
@@ -83,7 +89,7 @@
 			children = (
 				91C75DBB2463F04100ECC4ED /* TaskServiceFmwk */,
 				91C75DBA2463F04100ECC4ED /* Products */,
-				7339EB62289BFF61CA856283 /* Frameworks */,
+				ADF301A868A075700A43BE1C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,23 +105,20 @@
 			isa = PBXGroup;
 			children = (
 				91C75DBD2463F04100ECC4ED /* Info.plist */,
-				CDA8ACD98FA1F6DC993F7304 /* public */,
-				291AEC88C82036B4CDB5540D /* internal */,
+				49DD82A03428C7C3EB6FD47C /* public */,
+				02BE05780D00E3A021ECCB32 /* internal */,
 			);
 			path = TaskServiceFmwk;
 			sourceTree = "<group>";
 		};
-		CDA8ACD98FA1F6DC993F7304 /* public */ = {
+		ADF301A868A075700A43BE1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F79E5A5B44D928258839CCD1 /* Tasks.swift */,
-				171696E706400D43A33C9088 /* TaskServiceMetadata.swift */,
-				1D20C8822F952A401A7A956C /* TaskService.swift */,
-				6438EC3688EDB421BBCE88F6 /* TaskPrioritiesTexts.swift */,
-				31BD3D53BCD6FF64662A2F1B /* TaskPriorities.swift */,
-				F90E81034549C2297121E8E2 /* TaskCollections.swift */,
+				D36C914BF34AC8D3E62759E9 /* SAPCommon.xcframework */,
+				DCA371EFAF17BEA02E297696 /* SAPOData.xcframework */,
+				5663D3EDD0D7B6356213554C /* SAPFoundation.xcframework */,
 			);
-			name = public;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,17 +199,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10E8999D8A7CFBA957007262 /* Tasks.swift in Sources */,
-				D6C5C52679984B3BA80269B6 /* TaskServiceMetadata.swift in Sources */,
-				35F10425696691C791B494B3 /* TaskService.swift in Sources */,
-				BA8A5141BC14309C42D21918 /* TaskPrioritiesTexts.swift in Sources */,
-				C04127EEB6B331807E26F411 /* TaskPriorities.swift in Sources */,
-				160F981F91B78B13D7354862 /* TaskCollections.swift in Sources */,
-				018FA343D83D41EB77C0D55B /* TaskServiceStaticResolver.swift in Sources */,
-				E08F9B4705C63B8107406C12 /* TaskServiceMetadataText.swift in Sources */,
-				5BA71F9CEF2E88C59B85B2C5 /* TaskServiceMetadataParser.swift in Sources */,
-				4926FF702E53C85C72E8303F /* TaskServiceMetadataChanges.swift in Sources */,
-				FDB610317180C288CC2561B6 /* TaskServiceFactory.swift in Sources */,
+				68850C1744C5B35264B1D6C2 /* Tasks.swift in Sources */,
+				504CF2C1C99DC1CFE3D46F3F /* TaskServiceMetadata.swift in Sources */,
+				09E903C2C5261837E824296C /* TaskService.swift in Sources */,
+				5D1239F3D0439F6368891BFE /* TaskPrioritiesTexts.swift in Sources */,
+				37DC2F55064C6190E30E0CFB /* TaskPriorities.swift in Sources */,
+				7F2521B171D65212CAD6911A /* TaskCollections.swift in Sources */,
+				F6DDA999FD966D16947C71F5 /* SubTask.swift in Sources */,
+				94390361C1D23957815D0925 /* TaskServiceStaticResolver.swift in Sources */,
+				49E8FA2BCE972646A20D6A9E /* TaskServiceMetadataText.swift in Sources */,
+				3A25A95F128AF813E00B7EAF /* TaskServiceMetadataParser.swift in Sources */,
+				4D9994F382A644664168BA7B /* TaskServiceMetadataChanges.swift in Sources */,
+				2CE100AC4D91E2D130A6BCA8 /* TaskServiceFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

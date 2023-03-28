@@ -48,6 +48,10 @@ open class Tasks: EntityValue {
 
     private static var isPlannedForMyDay_: Property = TaskServiceMetadata.EntityTypes.tasks.property(withName: "isPlannedForMyDay")
 
+    private static let subTasks__lock = ObjectBase()
+
+    private static var subTasks_: Property = TaskServiceMetadata.EntityTypes.tasks.property(withName: "subTasks")
+
     private static let lastModifiedAt__lock = ObjectBase()
 
     private static var lastModifiedAt_: Property = TaskServiceMetadata.EntityTypes.tasks.property(withName: "lastModifiedAt")
@@ -333,6 +337,32 @@ open class Tasks: EntityValue {
         }
         set(value) {
             self.setOptionalValue(for: Tasks.status, to: StringValue.of(optional: value))
+        }
+    }
+
+    open class var subTasks: Property {
+        get {
+            objc_sync_enter(subTasks__lock)
+            defer { objc_sync_exit(subTasks__lock) }
+            do {
+                return Tasks.subTasks_
+            }
+        }
+        set(value) {
+            objc_sync_enter(subTasks__lock)
+            defer { objc_sync_exit(subTasks__lock) }
+            do {
+                Tasks.subTasks_ = value
+            }
+        }
+    }
+
+    open var subTasks: [SubTask] {
+        get {
+            return ArrayConverter.convert(Tasks.subTasks.complexList(from: self).toArray(), [SubTask]())
+        }
+        set(value) {
+            Tasks.subTasks.setComplexList(in: self, to: ComplexValueList.fromArray(ArrayConverter.convert(value, [ComplexValue]())))
         }
     }
 
