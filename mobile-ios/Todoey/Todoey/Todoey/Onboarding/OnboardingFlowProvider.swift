@@ -102,7 +102,7 @@ public class OnboardingFlowProvider: OnboardingFlowProviding {
         let destinations = appParameters["Destinations"] as! NSDictionary
         let discoveryConfigurationTransformer = DiscoveryServiceConfigurationTransformer(applicationID: appParameters["Application Identifier"] as? String,
                                                                                          authenticationPath: destinations["TaskService"] as? String)
-        var providers: [ConfigurationProviding] = [FileConfigurationProvider()]
+        let providers: [ConfigurationProviding] = [FileConfigurationProvider()]
 
         let welcomeScreenStep = WelcomeScreenStep(transformer: discoveryConfigurationTransformer, providers: providers)
 
