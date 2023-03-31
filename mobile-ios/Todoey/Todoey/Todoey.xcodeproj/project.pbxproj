@@ -180,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				7A16F06C1FD1B3C700D2FABD /* README.md */,
+				969DB4CA29D6EE13002CF59F /* Docs */,
 				7A1315B71D4B982000A5DA56 /* Todoey */,
 				7A5744B421DE553600E58C7F /* UITests */,
 				7A1315B61D4B982000A5DA56 /* Products */,
@@ -281,6 +282,13 @@
 				96C4A95029BDAD5100AC562E /* TaskCollections.storyboard */,
 			);
 			path = TaskCollections;
+			sourceTree = "<group>";
+		};
+		969DB4CA29D6EE13002CF59F /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Docs;
 			sourceTree = "<group>";
 		};
 		9CC24A9C53B28D7E05DB4894 /* OData */ = {
