@@ -26,17 +26,6 @@ class TaskListView: TaskList {
         self.type = type
         self.tasks = tasks
     }
-    
-    func shouldList(task: Tasks) -> Bool {
-        switch (type) {
-        case .myDay:
-            return TaskListView.isTaskForMyDay(task)
-        case .tomorrow:
-            return TaskListView.isTaskForTomorrow(task)
-        default:
-            return false
-        }
-    }
 
     func newTask() -> Tasks {
         let task = Tasks(withDefaults: false)
@@ -52,6 +41,42 @@ class TaskListView: TaskList {
         return task
     }
     
+    func onTaskUpdated(_ task: TaskServiceFmwk.Tasks, postProcessor: TaskEditPostProcessing?) {
+        let index = tasks.firstIndex { $0.id == task.id }
+        
+        if !shouldList(task: task), let index = index {
+            // Delete rows
+            tasks.remove(at: index)
+            postProcessor?.afterDelete(at: index)
+        } else if let index = index {
+            // Update row
+            tasks[index] = task
+                postProcessor?.afterUpdate(at: index)
+        } else if shouldList(task: task) {
+            // Add row
+            tasks.append(task)
+            postProcessor?.afterInsert(at: tasks.count - 1)
+        }
+    }
+    
+    private func shouldList(task: Tasks) -> Bool {
+        switch (type) {
+        case .myDay:
+            return TaskListView.isTaskForMyDay(task)
+        case .tomorrow:
+            return TaskListView.isTaskForTomorrow(task)
+        default:
+            return false
+        }
+    }
+    
+    func onTaskRemoved(_ task: TaskServiceFmwk.Tasks, postProcessor: TaskEditPostProcessing?) {
+        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else {
+            return
+        }
+        tasks.remove(at: index)
+        postProcessor?.afterDelete(at: index)
+    }
 
     static func myDay(tasks: [Tasks]) -> TaskListView {
         let myDayTasks = tasks.filter { isTaskForMyDay($0) }

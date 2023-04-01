@@ -46,47 +46,14 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         guard let task = notification.userInfo?["Task"] as? Tasks else {
             return
         }
-        updateTaskListAfterUpdating(task: task)
-    }
-    
-    private func updateTaskListAfterUpdating(task: Tasks) {
-        let index = taskList.tasks.firstIndex { $0.id == task.id }
-        
-        if !taskList.shouldList(task: task), let index = index {
-            // Delete rows
-            taskList.tasks.remove(at: index)
-            tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-            postTaskListUpdatedNotification()
-            return
-        }
-        
-        if let index = index {
-            // Update row
-            taskList.tasks[index] = task
-            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-        } else if taskList.shouldList(task: task) {
-            // Add row
-            taskList.tasks.append(task)
-            tableView.insertRows(at: [IndexPath(row: taskList.tasks.count - 1, section: 0)], with: .automatic)
-        }
-        postTaskListUpdatedNotification()
+        taskList.onTaskUpdated(task, postProcessor: self)
     }
     
     @objc func taskRemoved(_ notification: Notification) {
         guard let task = notification.userInfo?["Task"] as? Tasks else {
             return
         }
-        let index = taskList.tasks.firstIndex { $0.id == task.id }
-        guard let index = index else {
-            return
-        }
-        taskList.tasks.remove(at: index)
-        tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-        postTaskListUpdatedNotification()
-    }
-    
-    private func postTaskListUpdatedNotification() {
-        NotificationCenter.default.post(name: .taskListUpdated, object: nil, userInfo: ["TaskList": taskList!])
+        taskList.onTaskRemoved(task, postProcessor: self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -162,10 +129,27 @@ extension TasksViewController: TaskEditViewControllerDelegate {
             DispatchQueue.main.async {
                 viewController.dismiss(animated: true) {
                     FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityCreationBody)
-                    self.updateTaskListAfterUpdating(task: task)
+                    self.taskList.onTaskUpdated(task, postProcessor: self)
+                    NotificationCenter.default.post(name: .taskUpdated, object: nil, userInfo: ["Task": task])
                 }
             }
         }
+    }
+    
+}
+
+extension TasksViewController: TaskEditPostProcessing {
+    
+    func afterInsert(at rowIndex: Int) {
+        tableView.insertRows(at: [IndexPath(row: rowIndex, section: 0)], with: .automatic)
+    }
+    
+    func afterUpdate(at rowIndex: Int) {
+        tableView.reloadRows(at: [IndexPath(row: rowIndex, section: 0)], with: .automatic)
+    }
+    
+    func afterDelete(at rowIndex: Int) {
+        tableView.deleteRows(at: [IndexPath(row: rowIndex, section: 0)], with: .automatic)
     }
     
 }

@@ -55,10 +55,6 @@ extension TaskCollections: TaskList {
         return true
     }
     
-    func shouldList(task: Tasks) -> Bool {
-        return task.collectionID == id
-    }
-    
     func newTask() -> Tasks {
         let task = Tasks(withDefaults: false)
         task.id = GuidValue.random()
@@ -66,6 +62,32 @@ extension TaskCollections: TaskList {
         task.collection = self
         
         return task
+    }
+    
+    func onTaskUpdated(_ task: TaskServiceFmwk.Tasks, postProcessor: TaskEditPostProcessing?) {
+        let index = tasks.firstIndex { $0.id == task.id }
+        
+        if task.collectionID != id, let index = index {
+            // Delete rows
+            tasks.remove(at: index)
+            postProcessor?.afterDelete(at: index)
+        } else if let index = index {
+            // Update row
+            tasks[index] = task
+                postProcessor?.afterUpdate(at: index)
+        } else if task.collectionID == id {
+            // Add row
+            tasks.append(task)
+            postProcessor?.afterInsert(at: tasks.count - 1)
+        }
+    }
+    
+    func onTaskRemoved(_ task: TaskServiceFmwk.Tasks, postProcessor: TaskEditPostProcessing?) {
+        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else {
+            return
+        }
+        tasks.remove(at: index)
+        postProcessor?.afterDelete(at: index)
     }
     
 }

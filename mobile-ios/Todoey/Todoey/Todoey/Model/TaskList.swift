@@ -21,10 +21,22 @@ protocol TaskList {
     var isEditable: Bool { get }
     var tasks: [Tasks] { get set }
     
-    func shouldList(task: Tasks) -> Bool
-    
     func newTask() -> Tasks
-    
+    func onTaskUpdated(_ task: Tasks, postProcessor: TaskEditPostProcessing?)
+    func onTaskRemoved(_ task: Tasks, postProcessor: TaskEditPostProcessing?)
+  
+}
+
+protocol TaskEditPostProcessing {
+    func afterInsert(at rowIndex: Int)
+    func afterUpdate(at rowIndex: Int)
+    func afterDelete(at rowIndex: Int)
+}
+
+extension TaskEditPostProcessing {
+    func afterInsert(at rowIndex: Int) {}
+    func afterUpdate(at rowIndex: Int) {}
+    func afterDelete(at rowIndex: Int) {}
 }
 
 enum TaskListType {

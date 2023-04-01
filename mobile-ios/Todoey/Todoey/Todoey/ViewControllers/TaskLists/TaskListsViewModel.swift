@@ -129,6 +129,22 @@ class TaskListsViewModel {
         }
     }
     
+    func updateTasksInTaskLists(afterUpdating task: Tasks) {
+        for taskListsInSection in taskLists {
+            for taskList in taskListsInSection {
+                taskList.onTaskUpdated(task, postProcessor: nil)
+            }
+        }
+    }
+    
+    func updateTasksInTaskLists(afterRemoving task: Tasks) {
+        for taskListsInSection in taskLists {
+            for taskList in taskListsInSection {
+                taskList.onTaskRemoved(task, postProcessor: nil)
+            }
+        }
+    }
+    
 }
 
 fileprivate enum Section: Int {
