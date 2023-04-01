@@ -46,12 +46,7 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
         guard let task = notification.userInfo?["Task"] as? Tasks else {
             return
         }
-        updateTaskListAfterUpdating(task: task)
-    }
-    
-    private func updateTaskListAfterUpdating(task: Tasks) {
         taskList.onTaskUpdated(task, postProcessor: self)
-        postTaskListUpdatedNotification()
     }
     
     @objc func taskRemoved(_ notification: Notification) {
@@ -59,11 +54,6 @@ class TasksViewController: FUIFormTableViewController, SAPFioriLoadingIndicator 
             return
         }
         taskList.onTaskRemoved(task, postProcessor: self)
-        postTaskListUpdatedNotification()
-    }
-    
-    private func postTaskListUpdatedNotification() {
-        NotificationCenter.default.post(name: .taskListUpdated, object: nil, userInfo: ["TaskList": taskList!])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -139,7 +129,7 @@ extension TasksViewController: TaskEditViewControllerDelegate {
             DispatchQueue.main.async {
                 viewController.dismiss(animated: true) {
                     FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityCreationBody)
-                    self.updateTaskListAfterUpdating(task: task)
+                    self.taskList.onTaskUpdated(task, postProcessor: self)
                     NotificationCenter.default.post(name: .taskUpdated, object: nil, userInfo: ["Task": task])
                 }
             }

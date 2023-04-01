@@ -54,7 +54,6 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     }
     
     private func setupObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(taskListUpdated), name: .taskListUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(taskListUpdated), name: .taskUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(taskListUpdated), name: .taskRemoved, object: nil)
     }

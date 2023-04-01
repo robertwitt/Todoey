@@ -18,8 +18,4 @@ extension Notification.Name {
         return .init("Task.removed")
     }
     
-    static var taskListUpdated: Notification.Name {
-        return .init("TaskList.updated")
-    }
-    
 }
