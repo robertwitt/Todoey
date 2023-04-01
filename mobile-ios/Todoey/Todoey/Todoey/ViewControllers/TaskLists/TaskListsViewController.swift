@@ -55,9 +55,22 @@ class TaskListsViewController: FUIFormTableViewController, SAPFioriLoadingIndica
     
     private func setupObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(taskListUpdated), name: .taskListUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(taskListUpdated), name: .taskUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(taskListUpdated), name: .taskRemoved, object: nil)
     }
     
     @objc func taskListUpdated(_ notification: Notification) {
+        guard let task = notification.userInfo?["Task"] as? Tasks else {
+            return
+        }
+        switch notification.name {
+        case .taskUpdated:
+            model.updateTasksInTaskLists(afterUpdating: task)
+        case .taskRemoved:
+            model.updateTasksInTaskLists(afterRemoving: task)
+        default:
+            return
+        }
         tableView.reloadData()
     }
     

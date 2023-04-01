@@ -140,6 +140,7 @@ extension TasksViewController: TaskEditViewControllerDelegate {
                 viewController.dismiss(animated: true) {
                     FUIToastMessage.show(message: LocalizedStrings.OnlineOData.entityCreationBody)
                     self.updateTaskListAfterUpdating(task: task)
+                    NotificationCenter.default.post(name: .taskUpdated, object: nil, userInfo: ["Task": task])
                 }
             }
         }

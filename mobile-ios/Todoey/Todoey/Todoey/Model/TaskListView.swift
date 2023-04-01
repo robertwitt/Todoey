@@ -71,8 +71,7 @@ class TaskListView: TaskList {
     }
     
     func onTaskRemoved(_ task: TaskServiceFmwk.Tasks, postProcessor: TaskEditPostProcessing?) {
-        let index = tasks.firstIndex { $0.id == task.id }
-        guard let index = index else {
+        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else {
             return
         }
         tasks.remove(at: index)
